@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoRevive - Give Old Things New Life</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2E7D32',
+                        secondary: '#A5D6A7',
+                        accent: '#4CAF50',
+                        dark: '#1B5E20',
+                        light: '#E8F5E9'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'Roboto', 'system-ui', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        .modal {
+            opacity: 0;
+            visibility: hidden;
+        }
+        
+        /* Auth Modal Styling */
+        .auth-modal {
+            @apply fixed inset-0 z-50 flex items-center justify-center bg-black/60 opacity-0 invisible transition-opacity duration-300;
+        }
+        
+        .auth-modal.active {
+            @apply opacity-100 visible;
+        }
+        
+        .modal-container {
+            @apply bg-gradient-to-br from-dark to-primary w-full max-w-md mx-4 rounded-2xl shadow-2xl overflow-hidden opacity-0 transform translate-y-8 transition-all duration-300;
+        }
+        
+        .modal-container.active {
+            @apply opacity-100 translate-y-0;
+        }
+        
+        .modal-header {
+            @apply relative p-6 text-white;
+        }
+        
+        .modal-body {
+            @apply p-6 bg-white rounded-t-3xl;
+        }
+        
+        .btn-close {
+            @apply absolute top-6 right-6 p-1 text-white/80 hover:text-white hover:bg-white/20 rounded-full transition-colors duration-300;
+        }
+        
+        .form-group {
+            @apply mb-5;
+        }
+        
+        .form-label {
+            @apply block text-sm font-medium text-gray-700 mb-1;
+        }
+        
+        .form-input {
+            @apply w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors duration-200;
+        }
+        
+        .form-input.error {
+            @apply border-red-500 focus:ring-red-500;
+        }
+        
+        .form-input.success {
+            @apply border-green-500 focus:ring-green-500;
+        }
+        
+        .form-error {
+            @apply text-sm text-red-500 mt-1 hidden;
+        }
+        
+        .form-error.visible {
+            @apply block;
+        }
+        
+        .input-icon {
+            @apply absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400;
+        }
+        
+        .divider {
+            @apply flex items-center my-6;
+        }
+        
+        .divider::before, .divider::after {
+            @apply content-[''] flex-1 border-t border-gray-200;
+        }
+        
+        .divider-text {
+            @apply px-3 text-sm text-gray-500;
+        }
+        
+        .btn-social {
+            @apply w-full py-3 px-4 flex items-center justify-center border border-gray-200 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors duration-300;
+        }
+        
+        .toggle-link {
+            @apply text-primary hover:text-dark font-medium cursor-pointer transition-colors duration-300;
+        }
+        
+        .checkbox-container {
+            @apply flex items-center;
+        }
+        
+        .checkbox {
+            @apply h-4 w-4 text-primary focus:ring-primary rounded mr-2;
+        }
+        
+        .checkbox-label {
+            @apply text-sm text-gray-700;
+        }
+        
+        .success-message {
+            @apply flex items-center text-green-500 text-sm bg-green-50 p-3 rounded-lg mb-4 invisible;
+        }
+        
+        .success-message.visible {
+            @apply visible;
+        }
+    </style>
+</head>
+<body class="bg-white font-sans">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-md sticky top-0 z-40 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="flex-shrink-0 flex items-center">
+                        <span class="text-2xl font-bold text-primary">EcoRevive</span>
+                    </a>
+                    <div class="hidden md:ml-6 md:flex md:space-x-8 md:mx-auto justify-center">
+                        <a href="index.html" class="text-primary border-b-2 border-primary px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 transform hover:translate-y-[-2px]">Home</a>
+                        <a href="donate.html" class="text-gray-500 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 hover:border-b-2 hover:border-primary transform hover:translate-y-[-2px]">Donate</a>
+                        <a href="scrap.html" class="text-gray-500 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 hover:border-b-2 hover:border-primary transform hover:translate-y-[-2px]">Sell Scrap</a>
+                        <a href="repair.html" class="text-gray-500 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 hover:border-b-2 hover:border-primary transform hover:translate-y-[-2px]">Repair</a>
+                        <a href="rewards.html" class="text-gray-500 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 hover:border-b-2 hover:border-primary transform hover:translate-y-[-2px]">Rewards</a>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <div class="hidden md:flex items-center space-x-3 mr-4">
+                        <a href="login.html" class="px-4 py-2 text-sm font-medium text-primary border border-primary rounded-md hover:bg-primary hover:text-white transition duration-300">Sign In</a>
+                        <a href="login.html?form=signup" class="px-4 py-2 text-sm font-medium text-white bg-primary border border-primary rounded-md hover:bg-dark transition duration-300">Sign Up</a>
+                    </div>
+                    <div class="md:hidden ml-2">
+                        <button id="mobileMenuBtn" class="text-gray-500 hover:text-primary transition-colors duration-300 p-1 rounded-md hover:bg-gray-100">
+                            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile menu -->
+        <div id="mobileMenu" class="hidden md:hidden">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white shadow-inner">
+                <a href="index.html" class="text-primary block px-3 py-2 rounded-md text-base font-medium border-l-4 border-primary">Home</a>
+                <a href="donate.html" class="text-gray-500 hover:text-primary hover:bg-gray-50 block px-3 py-2 rounded-md text-base font-medium transition-colors duration-300 hover:border-l-4 hover:border-primary">Donate</a>
+                <a href="scrap.html" class="text-gray-500 hover:text-primary hover:bg-gray-50 block px-3 py-2 rounded-md text-base font-medium transition-colors duration-300 hover:border-l-4 hover:border-primary">Sell Scrap</a>
+                <a href="repair.html" class="text-gray-500 hover:text-primary hover:bg-gray-50 block px-3 py-2 rounded-md text-base font-medium transition-colors duration-300 hover:border-l-4 hover:border-primary">Repair</a>
+                <a href="rewards.html" class="text-gray-500 hover:text-primary hover:bg-gray-50 block px-3 py-2 rounded-md text-base font-medium transition-colors duration-300 hover:border-l-4 hover:border-primary">Rewards</a>
+                <!-- Added Sign In / Sign Up Buttons for Mobile -->
+                <div class="mt-4 pt-4 border-t border-gray-200 flex space-x-3 px-3">
+                    <a href="login.html" class="flex-1 text-center px-4 py-2 text-base font-medium text-primary border border-primary rounded-md hover:bg-primary hover:text-white transition duration-300">Sign In</a>
+                    <a href="login.html?form=signup" class="flex-1 text-center px-4 py-2 text-base font-medium text-white bg-primary border border-primary rounded-md hover:bg-dark transition duration-300">Sign Up</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-28 pb-20 bg-gradient-to-b from-light to-white">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col lg:flex-row items-center">
+                <div class="lg:w-1/2 mb-10 lg:mb-0">
+                    <h1 class="hero-text text-4xl md:text-5xl font-bold text-gray-800 leading-tight mb-6">
+                        Give Old Things New Life — Build a Sustainable World with EcoRevive.
+                    </h1>
+                    <p class="hero-text text-xl text-gray-600 mb-8">
+                        Donate, Repair, Sell Scrap — Earn Rewards & Save the Planet.
+                    </p>
+                    <a href="#services" class="hero-btn px-8 py-4 bg-primary text-white rounded-lg text-lg font-semibold hover:bg-dark transition shadow-lg">
+                        Explore Services
+                    </a>
+                </div>
+                <div class="lg:w-1/2 hero-image flex justify-center items-center">
+                    <!-- Hero image - recycling symbol -->
+                    <img src="img/donation_1 (5).jpg" alt="EcoRevive Hero Image" class="rounded-lg w-full object-cover shadow-lg max-h-96 lg:max-h-[500px]" >
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Our Services Section -->
+    <section id="services" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Our Services</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">
+                    Discover how EcoRevive helps you make a positive impact on the environment through our comprehensive services.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 service-blocks">
+                <!-- Service 1: Item Donation -->
+                <a href="donate.html" class="service-block group bg-white rounded-lg shadow-lg hover:shadow-xl transition overflow-hidden transform hover:-translate-y-1">
+                    <div class="bg-gray-200 h-48 carousel-container">
+                        <div class="donation-carousel">
+                            <div><img src="img/donation_1 (1).jpg" alt="Donation Image 1" class="h-48 w-full object-cover"></div>
+                            <div><img src="img/donation_1 (2).jpg" alt="Donation Image 2" class="h-48 w-full object-cover"></div>
+                            <div><img src="img/donation_1 (3).jpg" alt="Donation Image 3" class="h-48 w-full object-cover"></div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-3 group-hover:text-primary transition">Item Donation</h3>
+                        <p class="text-gray-600">Donate your unused items to those in need and make a positive impact on communities.</p>
+                    </div>
+                </a>
+                
+                <!-- Service 2: Scrap Selling -->
+                <a href="scrap.html" class="service-block group bg-white rounded-lg shadow-lg hover:shadow-xl transition overflow-hidden transform hover:-translate-y-1">
+                    <div class="bg-gray-200 h-48 carousel-container">
+                        <div class="scrap-carousel">
+                            <div><img src="img/scrap_1 (1).jpg" alt="Scrap Image 1" class="h-48 w-full object-cover"></div>
+                            <div><img src="img/scrap_1 (2).jpg" alt="Scrap Image 2" class="h-48 w-full object-cover"></div>
+                            <div><img src="img/scrap_1 (3).jpg" alt="Scrap Image 3" class="h-48 w-full object-cover"></div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-3 group-hover:text-primary transition">Scrap Selling</h3>
+                        <p class="text-gray-600">Convert your scrap materials into value while ensuring they're recycled properly.</p>
+                    </div>
+                </a>
+                
+                <!-- Service 3: Repair Service -->
+                <a href="repair.html" class="service-block group bg-white rounded-lg shadow-lg hover:shadow-xl transition overflow-hidden transform hover:-translate-y-1">
+                    <div class="bg-gray-200 h-48 carousel-container">
+                        <div class="repair-carousel">
+                            <div><img src="img/repair_1 (1).jpg" alt="Repair Image 1" class="h-48 w-full object-cover"></div>
+                            <div><img src="img/repair_1 (2).jpg" alt="Repair Image 2" class="h-48 w-full object-cover"></div>
+                            <div><img src="img/repair_1 (3).jpg" alt="Repair Image 3" class="h-48 w-full object-cover"></div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-3 group-hover:text-primary transition">Repair Service</h3>
+                        <p class="text-gray-600">Extend the life of your belongings with our expert repair services and reduce waste.</p>
+                    </div>
+                </a>
+                
+                <!-- Service 4: Rewards & Redeem -->
+                <a href="rewards.html" class="service-block group bg-white rounded-lg shadow-lg hover:shadow-xl transition overflow-hidden transform hover:-translate-y-1">
+                    <div class="bg-gray-200 h-48 carousel-container">
+                        <div class="rewards-carousel">
+                            <div><img src="img/reward_1 (3).jpg" alt="Rewards Image 1" class="h-48 w-full object-cover"></div>
+                            <div><img src="img/reward_1 (4).jpg" alt="Rewards Image 2" class="h-48 w-full object-cover"></div>
+                            <div><img src="img/reward_1 (5).jpg" alt="Rewards Image 3" class="h-48 w-full object-cover"></div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-3 group-hover:text-primary transition">Rewards & Redeem</h3>
+                        <p class="text-gray-600">Earn eco-points for your sustainable actions and redeem them for exciting rewards.</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="py-20 bg-light">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">How It Works</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">
+                    Our simple 3-step process makes it easy for you to contribute to a sustainable future.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Step 1 -->
+                <div class="bg-white p-8 rounded-lg shadow-md text-center">
+                    <div class="w-20 h-20 bg-primary text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-6">1</div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-4">Upload or Select Service</h3>
+                    <p class="text-gray-600">Choose the service you need and provide details about your items or requirements.</p>
+                </div>
+                
+                <!-- Step 2 -->
+                <div class="bg-white p-8 rounded-lg shadow-md text-center">
+                    <div class="w-20 h-20 bg-primary text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-6">2</div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-4">EcoRevive Connects</h3>
+                    <p class="text-gray-600">We connect you with NGOs, repair services, or scrap dealers based on your requirements.</p>
+                </div>
+                
+                <!-- Step 3 -->
+                <div class="bg-white p-8 rounded-lg shadow-md text-center">
+                    <div class="w-20 h-20 bg-primary text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-6">3</div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-4">Earn Rewards / Track Impact</h3>
+                    <p class="text-gray-600">Get rewarded for your sustainable actions and monitor your environmental impact.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-3xl mx-auto text-center">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-8">Why EcoRevive?</h2>
+                <p class="text-xl text-gray-600 leading-relaxed">
+                    EcoRevive helps reduce waste, protect nature, and give old items new purpose. Whether it's donating, repairing, or recycling — you're making the world greener and more caring.
+                </p>
+                <div class="mt-12">
+                    <a href="#services" class="px-6 py-3 bg-primary text-white rounded-lg font-semibold hover:bg-dark transition">Join the Movement</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sharing Section -->
+    <section class="py-16 bg-light">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center justify-between">
+                <div class="md:w-1/2 mb-8 md:mb-0">
+                    <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-4">Spread the Word</h2>
+                    <p class="text-gray-600 mb-6">
+                        Help us create a bigger impact by sharing EcoRevive with your friends and family.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-green-500 flex items-center justify-center text-white hover:bg-green-600 transition">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-pink-600 flex items-center justify-center text-white hover:bg-pink-700 transition">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center text-white hover:bg-blue-700 transition">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-red-500 flex items-center justify-center text-white hover:bg-red-600 transition">
+                            <i class="fas fa-envelope"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="md:w-1/3">
+                    <!-- Community image -->
+                    <img src="img/donation_1 (4).jpg" alt="Community Collaboration" class="rounded-lg shadow-md w-full h-auto">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer id="contact" class="bg-gray-800 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Company Info -->
+                <div>
+                    <h3 class="text-xl font-bold mb-4">EcoRevive 🌱</h3>
+                    <p class="text-gray-300 mb-4">
+                        Building a sustainable future, one item at a time.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-300 hover:text-white transition">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="text-gray-300 hover:text-white transition">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-gray-300 hover:text-white transition">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-gray-300 hover:text-white transition">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Quick Links -->
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-300 hover:text-white transition">Home</a></li>
+                        <li><a href="#services" class="text-gray-300 hover:text-white transition">Our Services</a></li>
+                        <li><a href="#how-it-works" class="text-gray-300 hover:text-white transition">How It Works</a></li>
+                        <li><a href="#about" class="text-gray-300 hover:text-white transition">About</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Legal -->
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Legal</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-300 hover:text-white transition">Terms & Conditions</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition">Privacy Policy</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition">Cookie Policy</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Contact -->
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Contact Us</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt mr-2 mt-1"></i>
+                            <span>123 Eco Street, Green City</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-envelope mr-2 mt-1"></i>
+                            <span>info@ecorevive.com</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-phone-alt mr-2 mt-1"></i>
+                            <span>+1 (555) 123-4567</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 mt-12 pt-8 text-center">
+                <p>&copy; 2023 EcoRevive. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript for basic functionality -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM Content Loaded - Initializing page');
+            
+            // Mobile menu toggle
+            const mobileMenu = document.getElementById('mobileMenu');
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            
+            if (mobileMenuBtn && mobileMenu) {
+                mobileMenuBtn.addEventListener('click', function() {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
+            
+            // Initialize slick carousels
+            $(document).ready(function() {
+                $('.donation-carousel').slick({
+                    dots: true,
+                    arrows: true,
+                    autoplay: true,
+                    autoplaySpeed: 4000,
+                    fade: true,
+                    cssEase: 'linear'
+                });
+
+                $('.scrap-carousel').slick({
+                    dots: true,
+                    arrows: true,
+                    autoplay: true,
+                    autoplaySpeed: 4500,
+                    fade: true,
+                    cssEase: 'linear'
+                });
+
+                $('.repair-carousel').slick({
+                    dots: true,
+                    arrows: true,
+                    autoplay: true,
+                    autoplaySpeed: 5000,
+                    fade: true,
+                    cssEase: 'linear'
+                });
+
+                $('.rewards-carousel').slick({
+                    dots: true,
+                    arrows: true,
+                    autoplay: true,
+                    autoplaySpeed: 3500,
+                    fade: true,
+                    cssEase: 'linear'
+                });
+            });
+        });
+    </script>
+</body>
+</html> 

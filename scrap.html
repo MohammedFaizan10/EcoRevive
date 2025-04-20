@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scrap Price List - EcoRevive</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2E7D32',
+                        secondary: '#81C784',
+                        accent: '#4CAF50',
+                        dark: '#1B5E20',
+                        light: '#E8F5E9'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'Roboto', 'system-ui', 'sans-serif']
+                    },
+                    boxShadow: {
+                        'soft': '0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.03)',
+                        'card': '0 12px 20px -8px rgba(46, 125, 50, 0.15)',
+                        'price-card': '0 4px 12px rgba(0, 0, 0, 0.08)'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        html {
+            scroll-behavior: smooth;
+        }
+        .price-card {
+             @apply bg-white rounded-lg shadow-price-card overflow-hidden text-center transition-transform duration-300 hover:scale-105;
+        }
+        .price-card img {
+            @apply h-32 w-full object-cover;
+        }
+         .price-card h3 {
+             @apply text-lg font-semibold text-gray-800 mt-4 mb-1;
+         }
+         .price-card p {
+             @apply text-xl font-bold text-primary mb-4;
+         }
+         .bg-gradient-soft {
+            @apply bg-gradient-to-br from-light via-white to-light;
+        }
+    </style>
+</head>
+<body class="bg-gradient-soft font-sans">
+    <!-- Navigation Bar -->
+    <nav class="bg-white shadow-md sticky top-0 w-full z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="flex-shrink-0 flex items-center">
+                        <span class="text-2xl font-bold text-primary">EcoRevive</span>
+                    </a>
+                    <div class="hidden md:ml-6 md:flex md:space-x-8 md:mx-auto justify-center">
+                        <a href="index.html" class="text-gray-500 hover:text-primary px-3 py-2 rounded-md text-sm font-medium">Home</a>
+                        <a href="donate.html" class="text-gray-500 hover:text-primary px-3 py-2 rounded-md text-sm font-medium">Donate</a>
+                        <a href="scrap.html" class="text-primary border-b-2 border-primary px-3 py-2 rounded-md text-sm font-medium">Sell Scrap</a>
+                        <a href="repair.html" class="text-gray-500 hover:text-primary px-3 py-2 rounded-md text-sm font-medium">Repair</a>
+                        <a href="rewards.html" class="text-gray-500 hover:text-primary px-3 py-2 rounded-md text-sm font-medium">Rewards</a>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <!-- Moved Desktop Buttons here -->
+                    <div class="hidden md:flex items-center space-x-3 mr-4">
+                        <a href="login.html" class="px-4 py-2 text-sm font-medium text-primary border border-primary rounded-md hover:bg-primary hover:text-white transition duration-300">Sign In</a>
+                        <a href="login.html?form=signup" class="px-4 py-2 text-sm font-medium text-white bg-primary border border-primary rounded-md hover:bg-dark transition duration-300">Sign Up</a>
+                    </div>
+                    <div class="md:hidden ml-2">
+                        <button id="mobileMenuBtn" class="text-gray-500 hover:text-primary">
+                            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile menu -->
+        <div id="mobileMenu" class="hidden md:hidden">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="index.html" class="text-gray-500 hover:text-primary block px-3 py-2 rounded-md text-base font-medium">Home</a>
+                <a href="donate.html" class="text-gray-500 hover:text-primary block px-3 py-2 rounded-md text-base font-medium">Donate</a>
+                <a href="scrap.html" class="text-primary block px-3 py-2 rounded-md text-base font-medium">Sell Scrap</a>
+                <a href="repair.html" class="text-gray-500 hover:text-primary block px-3 py-2 rounded-md text-base font-medium">Repair</a>
+                <a href="rewards.html" class="text-gray-500 hover:text-primary block px-3 py-2 rounded-md text-base font-medium">Rewards</a>
+                <!-- Added Sign In / Sign Up Buttons for Mobile -->
+                <div class="mt-4 pt-4 border-t border-gray-200 flex space-x-3 px-3">
+                    <a href="login.html" class="flex-1 text-center px-4 py-2 text-base font-medium text-primary border border-primary rounded-md hover:bg-primary hover:text-white transition duration-300">Sign In</a>
+                    <a href="login.html?form=signup" class="flex-1 text-center px-4 py-2 text-base font-medium text-white bg-primary border border-primary rounded-md hover:bg-dark transition duration-300">Sign Up</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Title Section -->
+    <section class="pt-24 pb-12">
+        <div class="container mx-auto px-4 lg:px-8 text-center">
+             <h1 class="text-4xl md:text-5xl font-bold text-primary mb-4">EcoRevive Scrap Price List</h1>
+             <p class="text-lg text-gray-600 max-w-2xl mx-auto">Get value for your scrap materials. Prices may vary based on quality and location. Contact us for specific quotes.</p>
+        </div>
+    </section>
+
+    <!-- Scrap Price List Grid -->
+    <section class="pb-16">
+        <div class="container mx-auto px-4 lg:px-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+                
+                <!-- Newspaper -->
+                <div class="price-card">
+                    <img src="img/scrap_1 (4).jpg" alt="Newspaper Scrap">
+                    <div class="p-4">
+                        <h3>Newspaper</h3>
+                        <p>$0.10 / Kg</p>
+                    </div>
+                </div>
+
+                <!-- Books -->
+                <div class="price-card">
+                    <img src="img/donation_1 (2).jpg" alt="Books Scrap">
+                    <div class="p-4">
+                        <h3>Books</h3>
+                        <p>$0.08 / Kg</p>
+                    </div>
+                </div>
+
+                <!-- Plastic (Generic) -->
+                <div class="price-card">
+                    <img src="img/scrap_1 (3).jpg" alt="Plastic Scrap">
+                    <div class="p-4">
+                        <h3>Plastic</h3>
+                        <p>$0.05 / Kg</p>
+                    </div>
+                </div>
+
+                <!-- Cardboard -->
+                <div class="price-card">
+                     <img src="img/scrap_1 (4).jpg" alt="Cardboard Scrap">
+                     <div class="p-4">
+                        <h3>Cardboard</h3>
+                        <p>$0.04 / Kg</p>
+                    </div>
+                </div>
+
+                <!-- Iron -->
+                <div class="price-card">
+                    <img src="img/scrap_1 (1).jpg" alt="Iron Scrap">
+                    <div class="p-4">
+                        <h3>Iron</h3>
+                        <p>$0.25 / Kg</p>
+                    </div>
+                </div>
+
+                <!-- Copper -->
+                 <div class="price-card">
+                     <img src="img/scrap_1 (2).jpg" alt="Copper Scrap"> <!-- Placeholder -->
+                     <div class="p-4">
+                        <h3>Copper</h3>
+                        <p>$6.00 / Kg</p>
+                    </div>
+                </div>
+
+                <!-- Brass -->
+                <div class="price-card">
+                    <img src="img/scrap_1 (1).jpg" alt="Brass Scrap"> <!-- Placeholder -->
+                    <div class="p-4">
+                        <h3>Brass</h3>
+                        <p>$4.00 / Kg</p>
+                    </div>
+                </div>
+
+                <!-- Aluminium -->
+                <div class="price-card">
+                    <img src="img/scrap_1 (3).jpg" alt="Aluminium Scrap">
+                    <div class="p-4">
+                        <h3>Aluminium</h3>
+                        <p>$1.20 / Kg</p>
+                    </div>
+                </div>
+
+                 <!-- Stainless Steel -->
+                 <div class="price-card">
+                    <img src="img/scrap_1 (1).jpg" alt="Stainless Steel Scrap">
+                    <div class="p-4">
+                        <h3>Stainless Steel</h3>
+                        <p>$0.50 / Kg</p>
+                    </div>
+                </div>
+
+                <!-- Battery -->
+                 <div class="price-card">
+                    <img src="img/scrap_1 (2).jpg" alt="Battery Scrap">
+                    <div class="p-4">
+                        <h3>Battery (Lead Acid)</h3>
+                        <p>$0.90 / Kg</p>
+                    </div>
+                </div>
+                
+                <!-- E-waste (Mixed) -->
+                 <div class="price-card">
+                    <img src="img/donation_1 (5).jpg" alt="E-waste Scrap">
+                    <div class="p-4">
+                        <h3>E-waste (Mixed)</h3>
+                        <p>$0.20 / Kg</p>
+                    </div>
+                </div>
+
+                <!-- Laptop -->
+                 <div class="price-card">
+                     <img src="img/donation_1 (1).jpg" alt="Laptop Scrap"> <!-- Placeholder -->
+                     <div class="p-4">
+                        <h3>Laptop</h3>
+                        <p>$5 - $50 / Unit</p>
+                    </div>
+                </div>
+                
+                 <!-- Mobile Phone -->
+                 <div class="price-card">
+                    <img src="img/donation_1 (4).jpg" alt="Mobile Phone Scrap"> <!-- Placeholder -->
+                     <div class="p-4">
+                        <h3>Mobile / Tablet</h3>
+                        <p>$0.20 - $1.00 / Unit</p>
+                    </div>
+                </div>
+
+                <!-- TV (LCD/LED) -->
+                 <div class="price-card">
+                    <img src="img/donation_1 (6).jpg" alt="TV Scrap">
+                     <div class="p-4">
+                        <h3>TV (LCD/LED)</h3>
+                        <p>$2 - $20 / Unit</p>
+                    </div>
+                </div>
+
+                <!-- Fridge -->
+                 <div class="price-card">
+                    <img src="img/donation_1 (3).jpg" alt="Fridge Scrap">
+                     <div class="p-4">
+                        <h3>Fridge</h3>
+                        <p>$10 - $80 / Unit</p>
+                    </div>
+                </div>
+
+                <!-- Washing Machine -->
+                 <div class="price-card">
+                    <img src="img/scrap_1 (1).jpg" alt="Washing Machine Scrap">
+                     <div class="p-4">
+                        <h3>Washing Machine</h3>
+                        <p>$8 - $15 / Unit</p>
+                    </div>
+                </div>
+
+                <!-- AC Unit -->
+                 <div class="price-card">
+                    <img src="img/scrap_1 (2).jpg" alt="AC Scrap">
+                     <div class="p-4">
+                        <h3>Air Conditioner</h3>
+                        <p>$30 - $60 / Unit</p>
+                    </div>
+                </div>
+                
+                <!-- Tyre -->
+                <div class="price-card">
+                    <img src="img/scrap_1 (3).jpg" alt="Tyre Scrap">
+                    <div class="p-4">
+                        <h3>Tyre</h3>
+                        <p>$0.03 / Kg</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+     <!-- Contact / CTA Section -->
+    <section class="py-16 bg-light">
+        <div class="container mx-auto px-4 lg:px-8 text-center">
+             <div class="inline-block bg-primary/10 rounded-lg p-6 md:p-8 shadow-soft">
+                 <h2 class="text-2xl md:text-3xl font-bold text-primary mb-4">Ready to Sell Your Scrap?</h2>
+                 <p class="text-gray-700 mb-6 max-w-xl mx-auto">If you have any questions or want to arrange a pickup for your scrap materials, please get in touch with our team.</p>
+                <div class="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4">
+                    <a href="tel:+15551234567" class="inline-flex items-center justify-center px-6 py-3 bg-primary text-white rounded-lg font-semibold hover:bg-dark transition shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
+                         <i class="fas fa-phone-alt mr-2"></i> Call Us: +1 (555) 123-4567
+                    </a>
+                     <a href="mailto:info@ecorevive.com" class="inline-flex items-center justify-center px-6 py-3 bg-secondary text-dark rounded-lg font-semibold hover:bg-accent hover:text-white transition shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
+                         <i class="fas fa-envelope mr-2"></i> Email Us: info@ecorevive.com
+                    </a>
+                </div>
+                 <p class="text-sm text-gray-600 mt-6">We support responsible and ethical recycling practices.</p>
+             </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer id="contact" class="bg-gray-800 text-white py-12 mt-16">
+        <div class="container mx-auto px-4 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Company Info -->
+                <div>
+                    <h3 class="text-xl font-bold mb-4">EcoRevive 🌱</h3>
+                    <p class="text-gray-300 mb-4">
+                        Building a sustainable future, one item at a time.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center text-gray-300 hover:bg-gray-600 hover:text-white transition">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center text-gray-300 hover:bg-gray-600 hover:text-white transition">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center text-gray-300 hover:bg-gray-600 hover:text-white transition">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center text-gray-300 hover:bg-gray-600 hover:text-white transition">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Quick Links -->
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-300 hover:text-white transition">Home</a></li>
+                        <li><a href="index.html#services" class="text-gray-300 hover:text-white transition">Our Services</a></li>
+                        <li><a href="index.html#how-it-works" class="text-gray-300 hover:text-white transition">How It Works</a></li>
+                        <li><a href="index.html#about" class="text-gray-300 hover:text-white transition">About</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Legal -->
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Legal</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-300 hover:text-white transition">Terms & Conditions</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition">Privacy Policy</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition">Cookie Policy</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Contact -->
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Contact Us</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt mr-2 mt-1"></i>
+                            <span>123 Eco Street, Green City</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-envelope mr-2 mt-1"></i>
+                            <span>info@ecorevive.com</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-phone-alt mr-2 mt-1"></i>
+                            <span>+1 (555) 123-4567</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 mt-12 pt-8 text-center">
+                <p>&copy; 2023 EcoRevive. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript for basic functionality -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM Content Loaded - Initializing page');
+            
+            // Mobile menu toggle
+            const mobileMenu = document.getElementById('mobileMenu');
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            
+            if (mobileMenuBtn && mobileMenu) {
+                mobileMenuBtn.addEventListener('click', function() {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
+        });
+    </script>
+</body>
+</html> 

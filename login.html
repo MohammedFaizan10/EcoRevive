@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login / Sign Up - EcoRevive</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2E7D32', // EcoRevive Green
+                        secondary: '#81C784', // Lighter Green
+                        accent: '#4CAF50', // Accent Green
+                        dark: '#1B5E20',   // Dark Green
+                        light: '#E8F5E9',  // Very Light Green/Background
+                        textDark: '#333333',
+                        textLight: '#666666',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'Roboto', 'system-ui', 'sans-serif']
+                    },
+                     boxShadow: {
+                        'card': '0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.03)',
+                     }
+                }
+            }
+        }
+    </script>
+     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        .form-container {
+            transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+        }
+        .form-hidden {
+            opacity: 0;
+            transform: translateY(10px);
+            height: 0;
+            overflow: hidden;
+            margin-top: 0 !important; /* Override mt-8 */
+        }
+        .form-visible {
+            opacity: 1;
+            transform: translateY(0);
+            height: auto;
+             overflow: visible;
+        }
+         .btn-toggle {
+             @apply px-6 py-3 rounded-lg text-lg font-semibold transition duration-300;
+         }
+         .btn-toggle.active {
+             @apply bg-primary text-white shadow-md;
+         }
+         .btn-toggle.inactive {
+             @apply bg-gray-200 text-gray-700 hover:bg-gray-300;
+         }
+         .form-control {
+             @apply w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition duration-200;
+         }
+         .btn-submit {
+             @apply w-full py-3 px-6 bg-primary text-white rounded-lg text-lg font-semibold hover:bg-dark transition duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5;
+         }
+         .checkbox-label a {
+             @apply text-primary hover:underline;
+         }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-light via-white to-light font-sans flex flex-col min-h-screen">
+
+    <!-- Simple Header -->
+    <header class="bg-white shadow-sm py-4">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
+            <a href="index.html" class="flex-shrink-0 flex items-center">
+                <span class="text-3xl font-bold text-primary">EcoRevive</span>
+            </a>
+             <a href="index.html" class="text-primary hover:text-dark transition group inline-flex items-center">
+                <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+                <span>Back to Home</span>
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-md w-full bg-white p-8 md:p-10 rounded-xl shadow-card">
+            
+            <h2 class="text-center text-3xl font-bold text-textDark mb-6">Welcome Back!</h2>
+            <p class="text-center text-textLight mb-8">Sign in to continue or create an account.</p>
+
+            <!-- Toggle Buttons -->
+            <div class="flex justify-center space-x-4 mb-8">
+                <button id="showSignInBtn" class="btn-toggle active">Sign In</button>
+                <button id="showSignUpBtn" class="btn-toggle inactive">Sign Up</button>
+            </div>
+
+            <!-- Sign In Form -->
+            <div id="signInForm" class="form-container form-visible">
+                <form class="space-y-6" action="#" method="POST">
+                    <div>
+                        <label for="signin-email" class="block text-sm font-medium text-gray-700">Email address</label>
+                        <input id="signin-email" name="email" type="email" autocomplete="email" required class="form-control mt-1" placeholder="you@example.com">
+                    </div>
+                    <div>
+                        <label for="signin-password" class="block text-sm font-medium text-gray-700">Password</label>
+                        <input id="signin-password" name="password" type="password" autocomplete="current-password" required class="form-control mt-1" placeholder="Password">
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center">
+                            <input id="remember-me" name="remember-me" type="checkbox" class="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded">
+                            <label for="remember-me" class="ml-2 block text-sm text-gray-900"> Remember me </label>
+                        </div>
+                        <div class="text-sm">
+                            <a href="#" class="font-medium text-primary hover:text-dark"> Forgot your password? </a>
+                        </div>
+                    </div>
+                    <div>
+                        <button type="submit" class="btn-submit">Sign In</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Sign Up Form -->
+            <div id="signUpForm" class="form-container form-hidden mt-8">
+                 <form class="space-y-6" action="#" method="POST">
+                     <div>
+                        <label for="signup-name" class="block text-sm font-medium text-gray-700">Full Name</label>
+                        <input id="signup-name" name="name" type="text" autocomplete="name" required class="form-control mt-1" placeholder="Your Name">
+                    </div>
+                    <div>
+                        <label for="signup-email" class="block text-sm font-medium text-gray-700">Email address</label>
+                        <input id="signup-email" name="email" type="email" autocomplete="email" required class="form-control mt-1" placeholder="you@example.com">
+                    </div>
+                    <div>
+                        <label for="signup-password" class="block text-sm font-medium text-gray-700">Password</label>
+                        <input id="signup-password" name="password" type="password" autocomplete="new-password" required class="form-control mt-1" placeholder="Create Password">
+                    </div>
+                     <div>
+                        <label for="signup-confirm-password" class="block text-sm font-medium text-gray-700">Confirm Password</label>
+                        <input id="signup-confirm-password" name="confirm-password" type="password" autocomplete="new-password" required class="form-control mt-1" placeholder="Confirm Password">
+                    </div>
+                     <div class="flex items-start">
+                        <div class="flex items-center h-5">
+                            <input id="terms" name="terms" type="checkbox" required class="focus:ring-primary h-4 w-4 text-primary border-gray-300 rounded">
+                        </div>
+                        <div class="ml-3 text-sm">
+                            <label for="terms" class="font-medium text-gray-700 checkbox-label">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></label>
+                        </div>
+                    </div>
+                    <div>
+                        <button type="submit" class="btn-submit">Create Account</button>
+                    </div>
+                </form>
+            </div>
+            
+            <!-- Optional: Social Login Divider and Buttons -->
+             <div class="relative my-8">
+                <div class="absolute inset-0 flex items-center">
+                    <div class="w-full border-t border-gray-300"></div>
+                </div>
+                <div class="relative flex justify-center text-sm">
+                    <span class="px-2 bg-white text-gray-500"> Or continue with </span>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 gap-3">
+                 <div>
+                    <a href="#" class="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                        <span class="sr-only">Sign in with Google</span>
+                        <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
+                           <path fill-rule="evenodd" d="M10 0C4.477 0 0 4.477 0 10c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V10h2.54V7.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V10h2.773l-.443 2.89h-2.33v6.988C16.343 19.128 20 14.991 20 10c0-5.523-4.477-10-10-10z" clip-rule="evenodd" />
+                       </svg>
+                    </a>
+                </div>
+                <!-- Add more social logins if needed -->
+            </div>
+            
+        </div>
+    </main>
+
+    <!-- Simple Footer -->
+    <footer class="bg-white mt-auto py-4 border-t border-gray-200">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-gray-500 text-sm">
+            &copy; 2023 EcoRevive. All rights reserved.
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const showSignInBtn = document.getElementById('showSignInBtn');
+            const showSignUpBtn = document.getElementById('showSignUpBtn');
+            const signInForm = document.getElementById('signInForm');
+            const signUpForm = document.getElementById('signUpForm');
+
+            function showForm(formToShow, btnToActivate) {
+                // Hide both forms initially without transition for setup
+                signInForm.classList.add('form-hidden');
+                signInForm.classList.remove('form-visible');
+                 signUpForm.classList.add('form-hidden');
+                 signUpForm.classList.remove('form-visible');
+                
+                // Deactivate both buttons
+                showSignInBtn.classList.remove('active', 'bg-primary', 'text-white');
+                showSignInBtn.classList.add('inactive', 'bg-gray-200', 'text-gray-700');
+                showSignUpBtn.classList.remove('active', 'bg-primary', 'text-white');
+                 showSignUpBtn.classList.add('inactive', 'bg-gray-200', 'text-gray-700');
+
+                // Show the target form with transition
+                 if (formToShow) {
+                     // Need a slight delay to allow the 'hidden' state to apply before transitioning to 'visible'
+                     setTimeout(() => {
+                        formToShow.classList.remove('form-hidden');
+                        formToShow.classList.add('form-visible');
+                     }, 10); 
+                 }
+                 
+                 // Activate the target button
+                 if (btnToActivate) {
+                    btnToActivate.classList.remove('inactive', 'bg-gray-200', 'text-gray-700');
+                    btnToActivate.classList.add('active', 'bg-primary', 'text-white');
+                 }
+            }
+
+            showSignInBtn.addEventListener('click', () => {
+                showForm(signInForm, showSignInBtn);
+            });
+
+            showSignUpBtn.addEventListener('click', () => {
+                showForm(signUpForm, showSignUpBtn);
+            });
+            
+            // Check URL parameters on load (optional, for linking directly to sign up)
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('form') === 'signup') {
+                showForm(signUpForm, showSignUpBtn);
+            } else {
+                 // Default to showing Sign In form
+                 showForm(signInForm, showSignInBtn);
+            }
+
+        });
+    </script>
+
+</body>
+</html> 

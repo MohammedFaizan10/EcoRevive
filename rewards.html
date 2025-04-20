@@ -1,0 +1,1363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rewards & Redeem - EcoRevive</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'eco-green': '#4CAF50',
+                        'eco-light': '#E8F5E9',
+                        'eco-dark': '#2E7D32',
+                        'gold': '#FFD700',
+                        'silver': '#C0C0C0',
+                        'bronze': '#CD7F32'
+                    },
+                    boxShadow: {
+                        'premium': '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #E8F5E9 0%, #ffffff 100%);
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            transition: transform 0.3s ease;
+        }
+        .points-card {
+            background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%);
+        }
+        .gold-badge {
+            background: linear-gradient(135deg, #FFD700 0%, #FFA000 100%);
+        }
+        .silver-badge {
+            background: linear-gradient(135deg, #E0E0E0 0%, #9E9E9E 100%);
+        }
+        .bronze-badge {
+            background: linear-gradient(135deg, #CD7F32 0%, #A0522D 100%);
+        }
+        .modal {
+            opacity: 0;
+            visibility: hidden;
+        }
+        
+        .modal-header {
+            background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%);
+            @apply rounded-t-xl px-6 py-5 text-white;
+        }
+        
+        .form-control {
+            @apply w-full px-4 py-3 border border-gray-300 bg-white rounded-lg focus:outline-none focus:ring-2 focus:ring-eco-green focus:border-transparent transition-all duration-300;
+        }
+        
+        .btn-primary {
+            @apply px-5 py-3 bg-eco-green text-white rounded-lg hover:bg-eco-dark transition-all duration-300 transform hover:-translate-y-1 hover:shadow-md;
+        }
+        
+        .social-login-btn {
+            @apply w-full flex items-center justify-center py-3 px-4 rounded-lg border border-gray-300 hover:bg-gray-50 transition-all duration-300 text-gray-700 font-medium mb-3;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        .auth-modal {
+            @apply fixed inset-0 z-50 flex items-center justify-center bg-black/60 opacity-0 invisible transition-opacity duration-300;
+        }
+        
+        .auth-modal.active {
+            @apply opacity-100 visible;
+        }
+        
+        .modal-container {
+            @apply bg-gradient-to-br from-dark to-primary w-full max-w-md mx-4 rounded-2xl shadow-2xl overflow-hidden opacity-0 transform translate-y-8 transition-all duration-300;
+        }
+        
+        .modal-container.active {
+            @apply opacity-100 translate-y-0;
+        }
+        
+        .modal-body {
+            @apply p-6 bg-white rounded-t-3xl;
+        }
+        
+        .btn-close {
+            @apply absolute top-6 right-6 p-1 text-white/80 hover:text-white hover:bg-white/20 rounded-full transition-colors duration-300;
+        }
+        
+        .form-group {
+            @apply mb-5;
+        }
+        
+        .form-label {
+            @apply block text-sm font-medium text-gray-700 mb-1;
+        }
+        
+        .form-input {
+            @apply w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors duration-200;
+        }
+        
+        .form-input.error {
+            @apply border-red-500 focus:ring-red-500;
+        }
+        
+        .form-input.success {
+            @apply border-green-500 focus:ring-green-500;
+        }
+        
+        .form-error {
+            @apply text-sm text-red-500 mt-1 hidden;
+        }
+        
+        .form-error.visible {
+            @apply block;
+        }
+        
+        .input-icon {
+            @apply absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400;
+        }
+        
+        .divider {
+            @apply flex items-center my-6;
+        }
+        
+        .divider::before, .divider::after {
+            @apply content-[''] flex-1 border-t border-gray-200;
+        }
+        
+        .divider-text {
+            @apply px-3 text-sm text-gray-500;
+        }
+        
+        .btn-social {
+            @apply w-full py-3 px-4 flex items-center justify-center border border-gray-200 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors duration-300;
+        }
+        
+        .toggle-link {
+            @apply text-primary hover:text-dark font-medium cursor-pointer transition-colors duration-300;
+        }
+        
+        .checkbox-container {
+            @apply flex items-center;
+        }
+        
+        .checkbox {
+            @apply h-4 w-4 text-primary focus:ring-primary rounded mr-2;
+        }
+        
+        .checkbox-label {
+            @apply text-sm text-gray-700;
+        }
+        
+        .success-message {
+            @apply flex items-center text-green-500 text-sm bg-green-50 p-3 rounded-lg mb-4 invisible;
+        }
+        
+        .success-message.visible {
+            @apply visible;
+        }
+
+        .badge {
+            @apply inline-block px-3 py-1 text-xs font-semibold rounded-full;
+        }
+        .badge-gold { @apply bg-yellow-400 text-yellow-900; }
+        .badge-silver { @apply bg-gray-300 text-gray-800; }
+        .badge-bronze { @apply bg-orange-300 text-orange-800; }
+        .progress-bar {
+            @apply w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700;
+        }
+        .progress {
+            @apply bg-primary h-2.5 rounded-full transition-all duration-500 ease-out;
+        }
+
+        /* Slick Carousel Customizations */
+        .slick-dots li button:before {
+            font-size: 10px;
+            color: #A5D6A7; /* secondary color */
+            opacity: 0.5;
+        }
+        .slick-dots li.slick-active button:before {
+            color: #2E7D32; /* primary color */
+            opacity: 1;
+        }
+        .slick-prev:before, .slick-next:before {
+            color: #2E7D32; /* primary color */
+        }
+    </style>
+</head>
+<body class="font-sans antialiased gradient-bg min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="flex-shrink-0 flex items-center">
+                        <span class="text-2xl font-bold text-eco-green">EcoRevive</span>
+                    </a>
+                    <div class="hidden md:ml-6 md:flex md:space-x-8">
+                        <a href="index.html" class="text-gray-500 hover:text-eco-green px-3 py-2 rounded-md text-sm font-medium">Home</a>
+                        <a href="donate.html" class="text-gray-500 hover:text-eco-green px-3 py-2 rounded-md text-sm font-medium">Donate</a>
+                        <a href="scrap.html" class="text-gray-500 hover:text-eco-green px-3 py-2 rounded-md text-sm font-medium">Sell Scrap</a>
+                        <a href="repair.html" class="text-gray-500 hover:text-eco-green px-3 py-2 rounded-md text-sm font-medium">Repair</a>
+                        <a href="rewards.html" class="text-eco-green border-b-2 border-eco-green px-3 py-2 rounded-md text-sm font-medium">Rewards</a>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <!-- Moved Desktop Buttons here -->
+                    <div class="hidden md:flex items-center space-x-3 mr-4"> <!-- Added mr-4 for spacing -->
+                        <a href="login.html" class="px-4 py-2 text-sm font-medium text-primary border border-primary rounded-md hover:bg-primary hover:text-white transition duration-300">Sign In</a>
+                        <a href="login.html?form=signup" class="px-4 py-2 text-sm font-medium text-white bg-primary border border-primary rounded-md hover:bg-dark transition duration-300">Sign Up</a>
+                    </div>
+                    <div class="md:hidden ml-2">
+                        <button id="mobileMenuBtn" class="text-gray-500 hover:text-eco-green">
+                            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile menu -->
+        <div id="mobileMenu" class="hidden md:hidden">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="index.html" class="text-gray-500 hover:text-eco-green block px-3 py-2 rounded-md text-base font-medium">Home</a>
+                <a href="donate.html" class="text-gray-500 hover:text-eco-green block px-3 py-2 rounded-md text-base font-medium">Donate</a>
+                <a href="scrap.html" class="text-gray-500 hover:text-eco-green block px-3 py-2 rounded-md text-base font-medium">Sell Scrap</a>
+                <a href="repair.html" class="text-gray-500 hover:text-eco-green block px-3 py-2 rounded-md text-base font-medium">Repair</a>
+                <a href="rewards.html" class="text-eco-green block px-3 py-2 rounded-md text-base font-medium">Rewards</a>
+                <!-- Added Sign In / Sign Up Buttons for Mobile -->
+                 <div class="mt-4 pt-4 border-t border-gray-200 flex space-x-3 px-3">
+                    <a href="login.html" class="flex-1 text-center px-4 py-2 text-base font-medium text-primary border border-primary rounded-md hover:bg-primary hover:text-white transition duration-300">Sign In</a>
+                    <a href="login.html?form=signup" class="flex-1 text-center px-4 py-2 text-base font-medium text-white bg-primary border border-primary rounded-md hover:bg-dark transition duration-300">Sign Up</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Back to Home Link -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4">
+        <a href="index.html" class="inline-flex items-center text-eco-green hover:text-eco-dark">
+            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            Back to Home
+        </a>
+    </div>
+
+    <!-- Content Section with Left-Right Layout -->
+    <section class="py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col lg:flex-row items-center gap-12">
+                <!-- Left Side: Content -->
+                <div class="lg:w-1/2">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-6">Get Rewarded for Your Eco-Friendly Actions</h2>
+                    <p class="text-lg text-gray-600 mb-6">
+                        EcoRevive rewards you for making sustainable choices. Earn points when you donate, repair, or recycle items, then redeem them for exciting rewards.
+                    </p>
+                    
+                    <div class="space-y-6 mb-8">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 w-12 h-12 bg-eco-light rounded-full flex items-center justify-center mr-4">
+                                <i class="fas fa-gift text-eco-green text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-lg text-gray-800 mb-2">Multiple Reward Options</h3>
+                                <p class="text-gray-600">From gift cards to cash out options, choose rewards that match your preferences and lifestyle.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 w-12 h-12 bg-eco-light rounded-full flex items-center justify-center mr-4">
+                                <i class="fas fa-star text-eco-green text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-lg text-gray-800 mb-2">Achievement Badges</h3>
+                                <p class="text-gray-600">Earn recognition for your eco-friendly actions and climb the leaderboard as a top contributor.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 w-12 h-12 bg-eco-light rounded-full flex items-center justify-center mr-4">
+                                <i class="fas fa-leaf text-eco-green text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-lg text-gray-800 mb-2">Environmental Impact</h3>
+                                <p class="text-gray-600">Track your positive impact on the environment through our metrics and reports.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <a href="#rewards-section" class="bg-eco-green hover:bg-eco-dark text-white px-6 py-3 rounded-lg inline-flex items-center transition duration-300 shadow-md">
+                        See Available Rewards
+                        <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                        </svg>
+                    </a>
+                </div>
+                
+                <!-- Right Side: Image -->
+                <div class="lg:w-1/2">
+                    <div class="rounded-xl overflow-hidden shadow-xl">
+                        <img src="img/reward_1 (2).jpg" alt="Rewards and benefits" class="w-full h-auto object-cover max-h-96 lg:max-h-[500px]">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section A: Reward Points Card -->
+    <section id="rewards-section" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">Your EcoRevive Rewards</h1>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">Track your eco-contributions and redeem exciting rewards for your sustainable actions.</p>
+        </div>
+
+        <div class="max-w-4xl mx-auto">
+            <div class="points-card rounded-xl shadow-premium p-8 text-white transform transition-all duration-300 hover:scale-105 mb-8">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold">Total Reward Points</h2>
+                    <span class="text-4xl font-bold">750</span>
+                </div>
+                <div class="space-y-4">
+                    <div class="flex justify-between items-center">
+                        <span>Donations</span>
+                        <span class="font-semibold">350 pts</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span>Repair Services</span>
+                        <span class="font-semibold">200 pts</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span>Scrap Submissions</span>
+                        <span class="font-semibold">200 pts</span>
+                    </div>
+                </div>
+                
+                <!-- Progress toward next reward level -->
+                <div class="mt-8 pt-6 border-t border-white border-opacity-20">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-sm font-medium">Progress to Silver Badge</span>
+                        <span class="text-sm font-medium">750/1000 points</span>
+                    </div>
+                    <div class="w-full bg-white bg-opacity-20 rounded-full h-4">
+                        <div class="bg-white h-4 rounded-full" style="width: 75%"></div>
+                    </div>
+                    <p class="text-sm opacity-80 mt-2">250 more points needed to reach Silver Badge level!</p>
+                </div>
+            </div>
+            
+            <!-- User Activity Log -->
+            <div class="bg-white rounded-xl shadow-md p-6 mb-8">
+                <h3 class="text-xl font-bold text-gray-800 mb-4">Recent Activity</h3>
+                <div class="space-y-4">
+                    <div class="flex items-start border-b border-gray-100 pb-4">
+                        <div class="h-10 w-10 rounded-full bg-eco-light flex items-center justify-center mr-3">
+                            <i class="fas fa-gift text-eco-green"></i>
+                        </div>
+                        <div class="flex-1">
+                            <div class="flex justify-between">
+                                <h4 class="font-medium text-gray-800">Electronic Item Donated</h4>
+                                <span class="text-eco-green font-bold">+150 pts</span>
+                            </div>
+                            <p class="text-sm text-gray-500">Old laptop in working condition</p>
+                            <span class="text-xs text-gray-400">3 days ago</span>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start border-b border-gray-100 pb-4">
+                        <div class="h-10 w-10 rounded-full bg-eco-light flex items-center justify-center mr-3">
+                            <i class="fas fa-recycle text-eco-green"></i>
+                        </div>
+                        <div class="flex-1">
+                            <div class="flex justify-between">
+                                <h4 class="font-medium text-gray-800">Scrap Metal Recycled</h4>
+                                <span class="text-eco-green font-bold">+100 pts</span>
+                            </div>
+                            <p class="text-sm text-gray-500">5kg of mixed metal scrap</p>
+                            <span class="text-xs text-gray-400">1 week ago</span>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start border-b border-gray-100 pb-4">
+                        <div class="h-10 w-10 rounded-full bg-eco-light flex items-center justify-center mr-3">
+                            <i class="fas fa-tools text-eco-green"></i>
+                        </div>
+                        <div class="flex-1">
+                            <div class="flex justify-between">
+                                <h4 class="font-medium text-gray-800">Item Repaired</h4>
+                                <span class="text-eco-green font-bold">+75 pts</span>
+                            </div>
+                            <p class="text-sm text-gray-500">Smartphone screen replacement</p>
+                            <span class="text-xs text-gray-400">2 weeks ago</span>
+                        </div>
+                    </div>
+                </div>
+                <a href="#" class="text-eco-green hover:text-eco-dark text-sm font-medium flex items-center justify-center mt-4">
+                    View All Activity 
+                    <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                    </svg>
+                </a>
+            </div>
+            
+            <!-- Achievements & Badges -->
+            <div class="bg-white rounded-xl shadow-md p-6 mb-8">
+                <h3 class="text-xl font-bold text-gray-800 mb-4">Your Achievements</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="border border-gray-200 rounded-lg p-4 text-center">
+                        <div class="inline-block rounded-full p-3 bg-eco-light mb-3">
+                            <i class="fas fa-leaf text-eco-green text-xl"></i>
+                        </div>
+                        <h4 class="font-medium text-gray-800">Eco Starter</h4>
+                        <p class="text-sm text-gray-500 mb-2">5 eco-actions completed</p>
+                        <span class="inline-block px-2 py-1 bg-eco-light text-eco-green text-xs rounded-full">Unlocked</span>
+                    </div>
+                    
+                    <div class="border border-gray-200 rounded-lg p-4 text-center">
+                        <div class="inline-block rounded-full p-3 bg-eco-light mb-3">
+                            <i class="fas fa-recycle text-eco-green text-xl"></i>
+                        </div>
+                        <h4 class="font-medium text-gray-800">Recycle Master</h4>
+                        <p class="text-sm text-gray-500 mb-2">Recycled 10+ items</p>
+                        <span class="inline-block px-2 py-1 bg-eco-light text-eco-green text-xs rounded-full">Unlocked</span>
+                    </div>
+                    
+                    <div class="border border-gray-200 rounded-lg p-4 text-center bg-gray-50">
+                        <div class="inline-block rounded-full p-3 bg-gray-200 mb-3">
+                            <i class="fas fa-award text-gray-400 text-xl"></i>
+                        </div>
+                        <h4 class="font-medium text-gray-500">Repair Expert</h4>
+                        <p class="text-sm text-gray-500 mb-2">Repair 5+ devices</p>
+                        <div class="w-full bg-gray-200 rounded-full h-2 mb-1">
+                            <div class="bg-eco-green h-2 rounded-full" style="width: 60%"></div>
+                        </div>
+                        <span class="text-xs text-gray-500">3/5 completed</span>
+                    </div>
+                </div>
+                <a href="#" class="text-eco-green hover:text-eco-dark text-sm font-medium flex items-center justify-center mt-4">
+                    View All Achievements
+                    <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section B: Redeemable Rewards -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="text-center mb-8">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Redeem Your Rewards</h2>
+            <p class="text-lg text-gray-600 max-w-3xl mx-auto">Choose from our selection of eco-friendly rewards and benefits.</p>
+        </div>
+
+        <!-- Search and Filter Options -->
+        <div class="bg-white rounded-xl shadow-md p-6 mb-8">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0">
+                <!-- Search -->
+                <div class="relative w-full md:w-1/3">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <i class="fas fa-search text-gray-400"></i>
+                    </div>
+                    <input type="text" id="rewards-search" placeholder="Search rewards..." class="pl-10 pr-4 py-2 w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-eco-green focus:border-transparent">
+                </div>
+                
+                <!-- Filter by Category -->
+                <div class="flex items-center space-x-2 overflow-x-auto pb-2 md:pb-0">
+                    <button class="px-4 py-2 bg-eco-green text-white rounded-lg text-sm font-medium">All</button>
+                    <button class="px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-50">Gift Cards</button>
+                    <button class="px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-50">Eco Products</button>
+                    <button class="px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-50">Services</button>
+                    <button class="px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-50">Donations</button>
+                </div>
+                
+                <!-- Sort By -->
+                <div class="relative w-full md:w-auto">
+                    <select id="sort-rewards" class="appearance-none pl-4 pr-10 py-2 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-eco-green focus:border-transparent">
+                        <option value="points-low">Points: Low to High</option>
+                        <option value="points-high">Points: High to Low</option>
+                        <option value="popular">Most Popular</option>
+                        <option value="new">Newest</option>
+                    </select>
+                    <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                        <i class="fas fa-chevron-down text-gray-400 text-sm"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Reward Card 1 -->
+            <div class="card">
+                <div class="relative h-48 bg-gray-200 rounded-t-lg overflow-hidden reward-carousel-1">
+                    <div><img src="img/reward_1 (2).jpg" alt="Eco Gift Card Image 1" class="h-48 w-full object-cover"></div>
+                    <div><img src="img/reward_1 (3).jpg" alt="Eco Gift Card Image 2" class="h-48 w-full object-cover"></div>
+                    <div><img src="img/donation_1 (6).jpg" alt="Eco Gift Card Image 3" class="h-48 w-full object-cover"></div>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center mb-2">
+                        <span class="text-xs font-medium bg-eco-light text-eco-green rounded-full px-2 py-1 mr-2">Gift Cards</span>
+                        <div class="flex text-yellow-400">
+                            <i class="fas fa-star text-xs"></i>
+                            <i class="fas fa-star text-xs"></i>
+                            <i class="fas fa-star text-xs"></i>
+                            <i class="fas fa-star text-xs"></i>
+                            <i class="fas fa-star-half-alt text-xs"></i>
+                            <span class="text-xs text-gray-500 ml-1">(128)</span>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Eco Gift Card</h3>
+                    <p class="text-gray-600 mb-4">Redeem for a $25 gift card to use at eco-friendly stores.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-eco-green font-bold">500 Points</span>
+                        <button class="bg-eco-green hover:bg-eco-dark text-white px-4 py-2 rounded-lg text-sm font-medium transition duration-300 flex items-center reward-redeem-btn" data-reward-id="1">
+                            Redeem Now
+                            <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reward Card 2 -->
+            <div class="card">
+                <div class="relative h-48 bg-gray-200 rounded-t-lg overflow-hidden reward-carousel-2">
+                    <div><img src="img/donation_1 (4).jpg" alt="Tree Planting Image 1" class="h-48 w-full object-cover"></div>
+                    <div><img src="img/donation_1 (5).jpg" alt="Tree Planting Image 2" class="h-48 w-full object-cover"></div>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center mb-2">
+                        <span class="text-xs font-medium bg-eco-light text-eco-green rounded-full px-2 py-1 mr-2">Donations</span>
+                        <div class="flex text-yellow-400">
+                            <i class="fas fa-star text-xs"></i>
+                            <i class="fas fa-star text-xs"></i>
+                            <i class="fas fa-star text-xs"></i>
+                            <i class="fas fa-star text-xs"></i>
+                            <i class="fas fa-star text-xs"></i>
+                            <span class="text-xs text-gray-500 ml-1">(96)</span>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Tree Planting Donation</h3>
+                    <p class="text-gray-600 mb-4">We'll plant a tree in your name to help combat climate change.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-eco-green font-bold">300 Points</span>
+                        <button class="bg-eco-green hover:bg-eco-dark text-white px-4 py-2 rounded-lg text-sm font-medium transition duration-300 flex items-center reward-redeem-btn" data-reward-id="2">
+                            Redeem Now
+                            <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reward Card 3 -->
+            <div class="card">
+                <div class="relative h-48 bg-gray-200 rounded-t-lg overflow-hidden reward-carousel-3">
+                    <div><img src="img/reward_1 (4).jpg" alt="Cash Out Image 1" class="h-48 w-full object-cover"></div>
+                    <div><img src="img/reward_1 (5).jpg" alt="Cash Out Image 2" class="h-48 w-full object-cover"></div>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center mb-2">
+                        <span class="text-xs font-medium bg-eco-light text-eco-green rounded-full px-2 py-1 mr-2">Cash</span>
+                        <div class="flex text-yellow-400">
+                            <i class="fas fa-star text-xs"></i>
+                            <i class="fas fa-star text-xs"></i>
+                            <i class="fas fa-star text-xs"></i>
+                            <i class="fas fa-star text-xs"></i>
+                            <i class="far fa-star text-xs"></i>
+                            <span class="text-xs text-gray-500 ml-1">(74)</span>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Cash Out</h3>
+                    <p class="text-gray-600 mb-4">Convert your points to cash and receive it in your account.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-eco-green font-bold">1000 Points</span>
+                        <button class="bg-gray-300 text-gray-600 cursor-not-allowed px-4 py-2 rounded-lg text-sm font-medium flex items-center" disabled>
+                            Need 250 more
+                            <i class="fas fa-lock ml-2"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reward Card 4 -->
+            <div class="card">
+                <div class="relative h-48 bg-gray-200 rounded-t-lg overflow-hidden reward-carousel-4">
+                    <div><img src="img/repair_1 (1).jpg" alt="Repair Service Image 1" class="h-48 w-full object-cover"></div>
+                    <div><img src="img/repair_1 (2).jpg" alt="Repair Service Image 2" class="h-48 w-full object-cover"></div>
+                    <div><img src="img/repair_1 (3).jpg" alt="Repair Service Image 3" class="h-48 w-full object-cover"></div>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center mb-2">
+                        <span class="text-xs font-medium bg-eco-light text-eco-green rounded-full px-2 py-1 mr-2">Services</span>
+                        <div class="flex text-yellow-400">
+                            <i class="fas fa-star text-xs"></i>
+                            <i class="fas fa-star text-xs"></i>
+                            <i class="fas fa-star text-xs"></i>
+                            <i class="fas fa-star text-xs"></i>
+                            <i class="far fa-star text-xs"></i>
+                            <span class="text-xs text-gray-500 ml-1">(52)</span>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Free Repair Service</h3>
+                    <p class="text-gray-600 mb-4">Get one free repair service for any electronic device.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-eco-green font-bold">800 Points</span>
+                        <button class="bg-gray-300 text-gray-600 cursor-not-allowed px-4 py-2 rounded-lg text-sm font-medium flex items-center" disabled>
+                            Need 50 more
+                            <i class="fas fa-lock ml-2"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reward Card 5 -->
+            <div class="card">
+                <div class="relative h-48 bg-gray-200 rounded-t-lg overflow-hidden reward-carousel-5">
+                    <div><img src="img/donation_1 (1).jpg" alt="Workshop Image 1" class="h-48 w-full object-cover"></div>
+                    <div><img src="img/donation_1 (3).jpg" alt="Workshop Image 2" class="h-48 w-full object-cover"></div>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center mb-2">
+                        <span class="text-xs font-medium bg-eco-light text-eco-green rounded-full px-2 py-1 mr-2">Workshops</span>
+                        <div class="flex text-yellow-400">
+                            <i class="fas fa-star text-xs"></i>
+                            <i class="fas fa-star text-xs"></i>
+                            <i class="fas fa-star text-xs"></i>
+                            <i class="fas fa-star text-xs"></i>
+                            <i class="fas fa-star-half-alt text-xs"></i>
+                            <span class="text-xs text-gray-500 ml-1">(43)</span>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Eco Workshop Access</h3>
+                    <p class="text-gray-600 mb-4">Join our exclusive workshop on sustainable living.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-eco-green font-bold">400 Points</span>
+                        <button class="bg-eco-green hover:bg-eco-dark text-white px-4 py-2 rounded-lg text-sm font-medium transition duration-300 flex items-center reward-redeem-btn" data-reward-id="5">
+                            Redeem Now
+                            <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reward Card 6 -->
+            <div class="card">
+                <div class="relative h-48 bg-gray-200 rounded-t-lg overflow-hidden reward-carousel-6">
+                    <div><img src="img/reward_1 (5).jpg" alt="Membership Image 1" class="h-48 w-full object-cover"></div>
+                    <div><img src="img/reward_1 (2).jpg" alt="Membership Image 2" class="h-48 w-full object-cover"></div>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center mb-2">
+                        <span class="text-xs font-medium bg-eco-light text-eco-green rounded-full px-2 py-1 mr-2">Membership</span>
+                        <div class="flex text-yellow-400">
+                            <i class="fas fa-star text-xs"></i>
+                            <i class="fas fa-star text-xs"></i>
+                            <i class="fas fa-star text-xs"></i>
+                            <i class="fas fa-star text-xs"></i>
+                            <i class="fas fa-star text-xs"></i>
+                            <span class="text-xs text-gray-500 ml-1">(112)</span>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Premium Membership</h3>
+                    <p class="text-gray-600 mb-4">3-month premium membership with exclusive benefits.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-eco-green font-bold">1200 Points</span>
+                        <button class="bg-gray-300 text-gray-600 cursor-not-allowed px-4 py-2 rounded-lg text-sm font-medium flex items-center" disabled>
+                            Need 450 more
+                            <i class="fas fa-lock ml-2"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Load More Button -->
+        <div class="text-center mt-8">
+            <button class="bg-white border border-eco-green text-eco-green hover:bg-eco-light px-6 py-3 rounded-lg inline-flex items-center transition duration-300">
+                Load More Rewards
+                <i class="fas fa-sync-alt ml-2"></i>
+            </button>
+        </div>
+
+        <!-- Redeem Confirmation Modal -->
+        <div id="redeemModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 hidden">
+            <div class="bg-white w-full max-w-md mx-4 rounded-xl shadow-2xl overflow-hidden">
+                <div class="bg-eco-green p-6 text-white relative">
+                    <h3 class="text-xl font-bold">Confirm Redemption</h3>
+                    <p class="text-white text-opacity-80 text-sm mt-1">You're about to redeem this reward</p>
+                    <button id="closeRedeemModal" class="absolute top-4 right-4 text-white p-1 hover:bg-white hover:bg-opacity-20 rounded-full">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+                
+                <div class="p-6">
+                    <div class="flex items-center mb-4 pb-4 border-b border-gray-100">
+                        <div class="w-16 h-16 bg-eco-light rounded-lg flex items-center justify-center mr-4">
+                            <i class="fas fa-gift text-eco-green text-2xl"></i>
+                        </div>
+                        <div>
+                            <h4 id="redeemRewardTitle" class="font-bold text-gray-800 text-lg">Eco Gift Card</h4>
+                            <p class="text-sm text-gray-600">This will deduct <span id="redeemPointCost" class="font-bold text-eco-green">500</span> points from your account</p>
+                        </div>
+                    </div>
+                    
+                    <div class="text-sm text-gray-600 mb-6">
+                        <p>After redemption, we'll send you an email with details on how to claim your reward. This process typically takes 1-2 business days.</p>
+                    </div>
+                    
+                    <div class="flex space-x-3">
+                        <button id="cancelRedeemBtn" class="flex-1 border border-gray-300 bg-white text-gray-700 py-3 rounded-lg font-medium hover:bg-gray-50 transition duration-300">
+                            Cancel
+                        </button>
+                        <button id="confirmRedeemBtn" class="flex-1 bg-eco-green text-white py-3 rounded-lg font-medium hover:bg-eco-dark transition duration-300 flex items-center justify-center">
+                            <span>Confirm Redemption</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section C: Leaderboard -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="text-center mb-8">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Top Contributors</h2>
+            <p class="text-lg text-gray-600 max-w-3xl mx-auto">See who's making the biggest impact in our community.</p>
+        </div>
+
+        <!-- Leaderboard Stats -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                <div class="gold-badge p-6 text-white">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-xl font-bold">1st Place</h3>
+                        <div class="bg-white rounded-full h-12 w-12 flex items-center justify-center">
+                            <i class="fas fa-trophy text-yellow-500 text-xl"></i>
+                        </div>
+                    </div>
+                    <div class="mt-2">
+                        <p class="text-sm text-white text-opacity-80">Highest Contributor</p>
+                        <p class="text-2xl font-bold mt-1">Sarah Johnson</p>
+                        <p class="text-xl mt-1">2450 Points</p>
+                    </div>
+                </div>
+                <div class="p-4">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <p class="text-sm text-gray-500">Contributing since</p>
+                            <p class="font-medium">March 2023</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500">Total Actions</p>
+                            <p class="font-medium">37</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                <div class="silver-badge p-6 text-white">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-xl font-bold">2nd Place</h3>
+                        <div class="bg-white rounded-full h-12 w-12 flex items-center justify-center">
+                            <i class="fas fa-medal text-gray-400 text-xl"></i>
+                        </div>
+                    </div>
+                    <div class="mt-2">
+                        <p class="text-sm text-white text-opacity-80">Runner Up</p>
+                        <p class="text-2xl font-bold mt-1">Michael Chen</p>
+                        <p class="text-xl mt-1">2100 Points</p>
+                    </div>
+                </div>
+                <div class="p-4">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <p class="text-sm text-gray-500">Contributing since</p>
+                            <p class="font-medium">April 2023</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500">Total Actions</p>
+                            <p class="font-medium">32</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                <div class="bronze-badge p-6 text-white">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-xl font-bold">3rd Place</h3>
+                        <div class="bg-white rounded-full h-12 w-12 flex items-center justify-center">
+                            <i class="fas fa-award text-yellow-700 text-xl"></i>
+                        </div>
+                    </div>
+                    <div class="mt-2">
+                        <p class="text-sm text-white text-opacity-80">Third Place</p>
+                        <p class="text-2xl font-bold mt-1">Emma Rodriguez</p>
+                        <p class="text-xl mt-1">1780 Points</p>
+                    </div>
+                </div>
+                <div class="p-4">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <p class="text-sm text-gray-500">Contributing since</p>
+                            <p class="font-medium">January 2023</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500">Total Actions</p>
+                            <p class="font-medium">29</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Leaderboard Filter Options -->
+        <div class="bg-white rounded-xl shadow-md p-4 mb-6 flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
+            <div class="flex items-center space-x-2">
+                <button class="px-4 py-2 bg-eco-green text-white rounded-lg text-sm font-medium">All Time</button>
+                <button class="px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-50">This Month</button>
+                <button class="px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-50">This Week</button>
+            </div>
+            
+            <div class="relative w-full sm:w-auto">
+                <select id="sort-leaderboard" class="appearance-none pl-4 pr-10 py-2 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-eco-green focus:border-transparent">
+                    <option value="points">Sort by Points</option>
+                    <option value="actions">Sort by Actions</option>
+                    <option value="recent">Sort by Recent Activity</option>
+                </select>
+                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                    <i class="fas fa-chevron-down text-gray-400 text-sm"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-md overflow-hidden">
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rank</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">User</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Points</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Badge</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Top Contribution</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        <tr class="hover:bg-gray-50 transition-colors duration-200">
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center">
+                                    <span class="text-lg font-bold text-gray-900">1</span>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center">
+                                    <div class="h-10 w-10 rounded-full bg-green-100 flex items-center justify-center mr-3">
+                                        <span class="text-green-800 font-bold">SJ</span>
+                                    </div>
+                                    <div>
+                                        <div class="text-sm font-medium text-gray-900">Sarah Johnson</div>
+                                        <div class="text-xs text-gray-500">Joined Mar 2023</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="text-sm font-bold text-gray-900">2,450</div>
+                                <div class="text-xs text-gray-500">+150 this week</div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="gold-badge px-3 py-1 text-xs font-bold rounded text-white flex items-center w-max">
+                                    <i class="fas fa-trophy mr-1 text-xs"></i>
+                                    Gold
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="text-sm text-gray-900">Donations (65%)</div>
+                                <div class="w-24 bg-gray-200 rounded-full h-2 mt-1">
+                                    <div class="bg-green-500 h-2 rounded-full" style="width: 65%"></div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                <button class="text-eco-green hover:text-eco-dark">
+                                    <i class="fas fa-user"></i> View Profile
+                                </button>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-gray-50 transition-colors duration-200">
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center">
+                                    <span class="text-lg font-bold text-gray-900">2</span>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center">
+                                    <div class="h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center mr-3">
+                                        <span class="text-blue-800 font-bold">MC</span>
+                                    </div>
+                                    <div>
+                                        <div class="text-sm font-medium text-gray-900">Michael Chen</div>
+                                        <div class="text-xs text-gray-500">Joined Apr 2023</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="text-sm font-bold text-gray-900">2,100</div>
+                                <div class="text-xs text-gray-500">+220 this week</div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="gold-badge px-3 py-1 text-xs font-bold rounded text-white flex items-center w-max">
+                                    <i class="fas fa-trophy mr-1 text-xs"></i>
+                                    Gold
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="text-sm text-gray-900">Scrap (70%)</div>
+                                <div class="w-24 bg-gray-200 rounded-full h-2 mt-1">
+                                    <div class="bg-blue-500 h-2 rounded-full" style="width: 70%"></div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                <button class="text-eco-green hover:text-eco-dark">
+                                    <i class="fas fa-user"></i> View Profile
+                                </button>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-gray-50 transition-colors duration-200">
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center">
+                                    <span class="text-lg font-bold text-gray-900">3</span>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center">
+                                    <div class="h-10 w-10 rounded-full bg-purple-100 flex items-center justify-center mr-3">
+                                        <span class="text-purple-800 font-bold">ER</span>
+                                    </div>
+                                    <div>
+                                        <div class="text-sm font-medium text-gray-900">Emma Rodriguez</div>
+                                        <div class="text-xs text-gray-500">Joined Jan 2023</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="text-sm font-bold text-gray-900">1,780</div>
+                                <div class="text-xs text-gray-500">+75 this week</div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="silver-badge px-3 py-1 text-xs font-bold rounded text-white flex items-center w-max">
+                                    <i class="fas fa-medal mr-1 text-xs"></i>
+                                    Silver
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="text-sm text-gray-900">Repair (80%)</div>
+                                <div class="w-24 bg-gray-200 rounded-full h-2 mt-1">
+                                    <div class="bg-purple-500 h-2 rounded-full" style="width: 80%"></div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                <button class="text-eco-green hover:text-eco-dark">
+                                    <i class="fas fa-user"></i> View Profile
+                                </button>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-gray-50 transition-colors duration-200">
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center">
+                                    <span class="text-lg font-bold text-gray-900">4</span>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center">
+                                    <div class="h-10 w-10 rounded-full bg-yellow-100 flex items-center justify-center mr-3">
+                                        <span class="text-yellow-800 font-bold">JW</span>
+                                    </div>
+                                    <div>
+                                        <div class="text-sm font-medium text-gray-900">James Wilson</div>
+                                        <div class="text-xs text-gray-500">Joined Feb 2023</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="text-sm font-bold text-gray-900">1,550</div>
+                                <div class="text-xs text-gray-500">+100 this week</div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="silver-badge px-3 py-1 text-xs font-bold rounded text-white flex items-center w-max">
+                                    <i class="fas fa-medal mr-1 text-xs"></i>
+                                    Silver
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="text-sm text-gray-900">Donation (55%)</div>
+                                <div class="w-24 bg-gray-200 rounded-full h-2 mt-1">
+                                    <div class="bg-yellow-500 h-2 rounded-full" style="width: 55%"></div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                <button class="text-eco-green hover:text-eco-dark">
+                                    <i class="fas fa-user"></i> View Profile
+                                </button>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-gray-50 transition-colors duration-200">
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center">
+                                    <span class="text-lg font-bold text-gray-900">5</span>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center">
+                                    <div class="h-10 w-10 rounded-full bg-red-100 flex items-center justify-center mr-3">
+                                        <span class="text-red-800 font-bold">OT</span>
+                                    </div>
+                                    <div>
+                                        <div class="text-sm font-medium text-gray-900">Olivia Thompson</div>
+                                        <div class="text-xs text-gray-500">Joined May 2023</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="text-sm font-bold text-gray-900">1,320</div>
+                                <div class="text-xs text-gray-500">+180 this week</div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="bronze-badge px-3 py-1 text-xs font-bold rounded text-white flex items-center w-max">
+                                    <i class="fas fa-award mr-1 text-xs"></i>
+                                    Bronze
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="text-sm text-gray-900">Scrap (60%)</div>
+                                <div class="w-24 bg-gray-200 rounded-full h-2 mt-1">
+                                    <div class="bg-red-500 h-2 rounded-full" style="width: 60%"></div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                <button class="text-eco-green hover:text-eco-dark">
+                                    <i class="fas fa-user"></i> View Profile
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="bg-gray-50 px-6 py-4 border-t border-gray-200">
+                <div class="flex justify-between items-center">
+                    <span class="text-sm text-gray-500">Showing 5 of 48 contributors</span>
+                    <div class="flex space-x-2">
+                        <button class="px-3 py-1 border border-gray-300 rounded bg-white text-gray-500 hover:bg-gray-50">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <button class="px-3 py-1 border border-eco-green rounded bg-eco-green text-white">1</button>
+                        <button class="px-3 py-1 border border-gray-300 rounded bg-white text-gray-500 hover:bg-gray-50">2</button>
+                        <button class="px-3 py-1 border border-gray-300 rounded bg-white text-gray-500 hover:bg-gray-50">3</button>
+                        <button class="px-3 py-1 border border-gray-300 rounded bg-white text-gray-500 hover:bg-gray-50">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-white mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="col-span-1 md:col-span-1">
+                    <h3 class="text-lg font-bold text-gray-800 mb-4">EcoRevive</h3>
+                    <p class="text-gray-600 mb-4">Making the world greener through sustainable practices and community engagement.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-eco-green">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-eco-green">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-eco-green">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-eco-green">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-span-1">
+                    <h3 class="text-lg font-bold text-gray-800 mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-600 hover:text-eco-green">Home</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-eco-green">Our Services</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-eco-green">How It Works</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-eco-green">About</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-eco-green">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-span-1">
+                    <h3 class="text-lg font-bold text-gray-800 mb-4">Legal</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-600 hover:text-eco-green">Terms of Service</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-eco-green">Privacy Policy</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-eco-green">Cookie Policy</a></li>
+                    </ul>
+                </div>
+                <div class="col-span-1">
+                    <h3 class="text-lg font-bold text-gray-800 mb-4">Contact</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt text-eco-green mt-1 mr-2"></i>
+                            <span class="text-gray-600">123 Eco Street, Green City, Planet Earth</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone text-eco-green mr-2"></i>
+                            <span class="text-gray-600">+1 (555) 123-4567</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope text-eco-green mr-2"></i>
+                            <span class="text-gray-600">info@ecorevive.com</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-12 pt-8 border-t border-gray-200">
+                <p class="text-gray-500 text-center">&copy; 2023 EcoRevive. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM Content Loaded - Initializing rewards functionality');
+            
+            // Mobile menu toggle
+            const mobileMenu = document.getElementById('mobileMenu');
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            
+            if (mobileMenuBtn && mobileMenu) {
+                mobileMenuBtn.addEventListener('click', function() {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
+            
+            // Rewards redemption functionality
+            const redeemButtons = document.querySelectorAll('.reward-redeem-btn');
+            const redeemModal = document.getElementById('redeemModal');
+            const closeRedeemModal = document.getElementById('closeRedeemModal');
+            const cancelRedeemBtn = document.getElementById('cancelRedeemBtn');
+            const confirmRedeemBtn = document.getElementById('confirmRedeemBtn');
+            const redeemRewardTitle = document.getElementById('redeemRewardTitle');
+            const redeemPointCost = document.getElementById('redeemPointCost');
+
+            // Reward details mapping
+            const rewardDetails = {
+                "1": { title: "Eco Gift Card", points: 500 },
+                "2": { title: "Tree Planting Donation", points: 300 },
+                "5": { title: "Eco Workshop Access", points: 400 }
+            };
+
+            // Open redeem modal
+            function openRedeemModal(rewardId) {
+                if (!redeemModal) return;
+
+                // Set reward details in modal
+                const reward = rewardDetails[rewardId];
+                if (reward) {
+                    if (redeemRewardTitle) redeemRewardTitle.textContent = reward.title;
+                    if (redeemPointCost) redeemPointCost.textContent = reward.points;
+                }
+
+                // Show modal
+                redeemModal.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            }
+
+            // Close redeem modal
+            function closeRedeemModal() {
+                if (!redeemModal) return;
+                
+                redeemModal.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            }
+
+            // Add event listeners for redeem buttons
+            if (redeemButtons && redeemButtons.length > 0) {
+                redeemButtons.forEach(button => {
+                    button.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        const rewardId = this.getAttribute('data-reward-id');
+                        openRedeemModal(rewardId);
+                    });
+                });
+            }
+
+            // Close modal events
+            if (closeRedeemModal) {
+                closeRedeemModal.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    closeRedeemModal();
+                });
+            }
+
+            if (cancelRedeemBtn) {
+                cancelRedeemBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    closeRedeemModal();
+                });
+            }
+
+            // Confirm redemption
+            if (confirmRedeemBtn) {
+                confirmRedeemBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Here you would typically make an API call to process the redemption
+                    
+                    // For demo purposes, show a success message
+                    this.innerHTML = '<i class="fas fa-check mr-2"></i> Redeemed Successfully!';
+                    this.classList.add('bg-green-600');
+                    
+                    // Close modal after delay
+                    setTimeout(() => {
+                        closeRedeemModal();
+                        // Reset button state after closing
+                        setTimeout(() => {
+                            this.innerHTML = '<span>Confirm Redemption</span>';
+                            this.classList.remove('bg-green-600');
+                        }, 500);
+                    }, 1500);
+                });
+            }
+
+            // Search rewards functionality
+            const rewardsSearch = document.getElementById('rewards-search');
+            if (rewardsSearch) {
+                rewardsSearch.addEventListener('input', function() {
+                    const searchTerm = this.value.toLowerCase();
+                    console.log('Searching rewards for:', searchTerm);
+                    // In a real application, you would filter the rewards based on the search term
+                });
+            }
+
+            // Filter category buttons
+            const categoryButtons = document.querySelectorAll('.flex.items-center.space-x-2 button');
+            if (categoryButtons && categoryButtons.length > 0) {
+                categoryButtons.forEach(button => {
+                    button.addEventListener('click', function() {
+                        // Remove active class from all buttons
+                        categoryButtons.forEach(btn => {
+                            btn.classList.remove('bg-eco-green', 'text-white');
+                            btn.classList.add('bg-white', 'border', 'border-gray-300', 'text-gray-700');
+                        });
+                        
+                        // Add active class to clicked button
+                        this.classList.remove('bg-white', 'border', 'border-gray-300', 'text-gray-700');
+                        this.classList.add('bg-eco-green', 'text-white');
+                        
+                        const category = this.textContent.trim();
+                        console.log('Filtering rewards by category:', category);
+                        // In a real application, you would filter the rewards based on the category
+                    });
+                });
+            }
+
+            // Sort dropdown
+            const sortRewards = document.getElementById('sort-rewards');
+            if (sortRewards) {
+                sortRewards.addEventListener('change', function() {
+                    const sortOption = this.value;
+                    console.log('Sorting rewards by:', sortOption);
+                    // In a real application, you would sort the rewards based on the selected option
+                });
+            }
+
+            // Leaderboard filter buttons
+            const leaderboardTimeButtons = document.querySelectorAll('.leaderboard-time-filter button');
+            if (leaderboardTimeButtons && leaderboardTimeButtons.length > 0) {
+                leaderboardTimeButtons.forEach(button => {
+                    button.addEventListener('click', function() {
+                        // Remove active class from all buttons
+                        leaderboardTimeButtons.forEach(btn => {
+                            btn.classList.remove('bg-eco-green', 'text-white');
+                            btn.classList.add('bg-white', 'border', 'border-gray-300', 'text-gray-700');
+                        });
+                        
+                        // Add active class to clicked button
+                        this.classList.remove('bg-white', 'border', 'border-gray-300', 'text-gray-700');
+                        this.classList.add('bg-eco-green', 'text-white');
+                        
+                        const timeFrame = this.textContent.trim();
+                        console.log('Filtering leaderboard by time frame:', timeFrame);
+                        // In a real application, you would filter the leaderboard based on the time frame
+                    });
+                });
+            }
+
+            // Leaderboard sort dropdown
+            const sortLeaderboard = document.getElementById('sort-leaderboard');
+            if (sortLeaderboard) {
+                sortLeaderboard.addEventListener('change', function() {
+                    const sortOption = this.value;
+                    console.log('Sorting leaderboard by:', sortOption);
+                    // In a real application, you would sort the leaderboard based on the selected option
+                });
+            }
+
+            // Initialize any remaining UI components
+            console.log('Rewards page initialized successfully');
+
+            // Initialize progress bar animation
+            const progressBar = document.getElementById('pointsProgress');
+            if (progressBar) {
+                const targetWidth = progressBar.getAttribute('data-target-width');
+                setTimeout(() => { // Delay slightly for visual effect
+                    progressBar.style.width = targetWidth;
+                }, 300);
+            }
+
+            // Initialize Slick Carousels for Reward Cards
+             $(document).ready(function() {
+                function initRewardCarousel(selector) {
+                    $(selector).slick({
+                        dots: true,         // Show dots navigation
+                        arrows: false,        // Hide arrows navigation
+                        autoplay: true,     // Automatically rotate images
+                        autoplaySpeed: 3500, // Speed of rotation (ms)
+                        fade: true,         // Use fade effect
+                        cssEase: 'linear',  // Animation timing function
+                        pauseOnHover: true  // Pause autoplay on hover
+                    });
+                }
+
+                // Initialize each reward card carousel
+                initRewardCarousel('.reward-carousel-1');
+                initRewardCarousel('.reward-carousel-2');
+                initRewardCarousel('.reward-carousel-3');
+                initRewardCarousel('.reward-carousel-4');
+                initRewardCarousel('.reward-carousel-5');
+                initRewardCarousel('.reward-carousel-6');
+                
+                // REMOVED Hero Carousel Initialization
+            });
+
+        });
+    </script>
+</body>
+</html> 
