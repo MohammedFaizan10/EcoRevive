@@ -189,7 +189,7 @@
                         <span class="text-2xl font-bold text-primary">EcoRevive</span>
                     </a>
                     <div class="hidden md:ml-6 md:flex md:space-x-8 md:mx-auto justify-center">
-                        <a href="index.html" class="text-gray-500 hover:text-primary px-3 py-2 rounded-md text-sm font-medium">Home</a>
+                        <a href="home.html" class="text-gray-500 hover:text-primary px-3 py-2 rounded-md text-sm font-medium">Home</a>
                         <a href="donate.html" class="text-gray-500 hover:text-primary px-3 py-2 rounded-md text-sm font-medium">Donate</a>
                         <a href="scrap.html" class="text-primary border-b-2 border-primary px-3 py-2 rounded-md text-sm font-medium">Sell Scrap</a>
                         <a href="repair.html" class="text-gray-500 hover:text-primary px-3 py-2 rounded-md text-sm font-medium">Repair</a>
@@ -197,17 +197,12 @@
                     </div>
                 </div>
                 <div class="flex items-center">
-                    <!-- Moved Desktop Buttons here -->
-                    <div class="hidden md:flex items-center space-x-3 mr-4">
-                        <a href="login.html" class="px-4 py-2 text-sm font-medium text-primary border border-primary rounded-md hover:bg-primary hover:text-white transition duration-300">Sign In</a>
-                        <a href="login.html?form=signup" class="px-4 py-2 text-sm font-medium text-white bg-primary border border-primary rounded-md hover:bg-dark transition duration-300">Sign Up</a>
+                    <div id="userProfileAreaDesktop" class="md:flex items-center space-x-4">
+                        <a href="#" title="Profile" class="text-primary hover:text-dark transition duration-200"><i class="fas fa-user-circle text-2xl"></i></a>
+                        <button onclick="logout()" class="px-4 py-1.5 text-sm font-medium bg-dark text-white rounded-full shadow-sm hover:bg-opacity-80 transition duration-200 transform hover:scale-105">Logout</button>
                     </div>
                     <div class="md:hidden ml-2">
-                        <button id="mobileMenuBtn" class="text-gray-500 hover:text-primary">
-                            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                            </svg>
-                        </button>
+                        <button id="mobileMenuBtn" class="text-gray-500 hover:text-primary"><svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg></button>
                     </div>
                 </div>
             </div>
@@ -215,15 +210,15 @@
         <!-- Mobile menu -->
         <div id="mobileMenu" class="hidden md:hidden">
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <a href="index.html" class="text-gray-500 hover:text-primary block px-3 py-2 rounded-md text-base font-medium">Home</a>
+                <a href="home.html" class="text-gray-500 hover:text-primary block px-3 py-2 rounded-md text-base font-medium">Home</a>
                 <a href="donate.html" class="text-gray-500 hover:text-primary block px-3 py-2 rounded-md text-base font-medium">Donate</a>
                 <a href="scrap.html" class="text-primary block px-3 py-2 rounded-md text-base font-medium">Sell Scrap</a>
                 <a href="repair.html" class="text-gray-500 hover:text-primary block px-3 py-2 rounded-md text-base font-medium">Repair</a>
                 <a href="rewards.html" class="text-gray-500 hover:text-primary block px-3 py-2 rounded-md text-base font-medium">Rewards</a>
-                <!-- Added Sign In / Sign Up Buttons for Mobile -->
-                <div class="mt-4 pt-4 border-t border-gray-200 flex space-x-3 px-3">
-                    <a href="login.html" class="flex-1 text-center px-4 py-2 text-base font-medium text-primary border border-primary rounded-md hover:bg-primary hover:text-white transition duration-300">Sign In</a>
-                    <a href="login.html?form=signup" class="flex-1 text-center px-4 py-2 text-base font-medium text-white bg-primary border border-primary rounded-md hover:bg-dark transition duration-300">Sign Up</a>
+                <!-- Mobile User Profile/Logout Area -->
+                <div id="userProfileAreaMobile" class="mt-4 pt-4 border-t border-gray-200 flex items-center justify-between px-3">
+                    <a href="#" class="flex items-center text-primary hover:text-dark transition duration-200"><i class="fas fa-user-circle text-xl mr-2"></i><span class="text-sm font-medium">Profile</span></a>
+                    <button onclick="logout()" class="px-3 py-1 text-sm font-medium bg-dark text-white rounded-full shadow-sm hover:bg-opacity-80 transition duration-200 transform hover:scale-105">Logout</button>
                 </div>
             </div>
         </div>
@@ -232,7 +227,7 @@
     <!-- Back to Home Link -->
     <div class="pt-24 pb-4">
         <div class="container mx-auto px-4 lg:px-8">
-            <a href="index.html" class="inline-flex items-center text-primary hover:text-dark transition group">
+            <a href="home.html" class="inline-flex items-center text-primary hover:text-dark transition group">
                 <svg class="w-5 h-5 mr-2 transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
                 </svg>
@@ -568,19 +563,7 @@
      <!-- Contact / CTA Section -->
     <section class="py-16 bg-light">
         <div class="container mx-auto px-4 lg:px-8 text-center">
-             <div class="inline-block bg-primary/10 rounded-lg p-6 md:p-8 shadow-soft">
-                 <h2 class="text-2xl md:text-3xl font-bold text-primary mb-4">Ready to Sell Your Scrap?</h2>
-                 <p class="text-gray-700 mb-6 max-w-xl mx-auto">If you have any questions or want to arrange a pickup for your scrap materials, please get in touch with our team or contact a dealer directly.</p>
-                <div class="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4">
-                    <a href="tel:+15551234567" class="inline-flex items-center justify-center px-6 py-3 bg-primary text-white rounded-lg font-semibold hover:bg-dark transition shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
-                         <i class="fas fa-phone-alt mr-2"></i> Call Us: +1 (555) 123-4567
-                    </a>
-                     <a href="mailto:info@ecorevive.com" class="inline-flex items-center justify-center px-6 py-3 bg-secondary text-dark rounded-lg font-semibold hover:bg-accent hover:text-white transition shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
-                         <i class="fas fa-envelope mr-2"></i> Email Us: info@ecorevive.com
-                    </a>
-                </div>
-                 <p class="text-sm text-gray-600 mt-6">We support responsible and ethical recycling practices.</p>
-             </div>
+             <p class="text-xl font-semibold text-primary">To sell your scrap, please visit one of our nearby branches listed below.</p>
         </div>
     </section>
 
@@ -588,258 +571,108 @@
     <section class="py-12 bg-light/50">
         <div class="container mx-auto px-4 lg:px-8">
             <div class="text-center mb-10">
-                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Verified Scrap Dealers & Recycling Organizations</h2>
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Our Nearby Branches</h2>
                 <p class="text-gray-600 max-w-3xl mx-auto">
-                    Contact our trusted partners directly for immediate price quotes, pickup arrangements, and responsible recycling of your scrap materials.
+                    Contact our verified EcoRevive branches directly for immediate price quotes, pickup arrangements, and responsible recycling of your scrap materials.
                 </p>
             </div>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- Dealer 1 -->
-                <div class="dealer-card">
+                <div class="dealer-card border border-gray-200 overflow-hidden rounded-xl bg-gradient-to-br from-primary/5 via-white to-light/10 transition-all duration-300 hover:shadow-lg hover:border-primary/30 transform hover:scale-[1.01] hover:-translate-y-1 p-6">
                     <div class="flex items-center mb-4">
-                        <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mr-4">
-                            <i class="fas fa-recycle text-primary"></i>
+                        <div class="w-10 h-10 bg-primary text-white rounded-full flex items-center justify-center mr-3 shadow-sm">
+                            <i class="fas fa-store"></i>
                         </div>
-                        <div>
-                            <h3 class="font-bold text-lg text-gray-800">EcoScrap Solutions</h3>
-                            <span class="text-sm text-primary">Specializes in Electronics & Metal</span>
-                        </div>
+                        <h3 class="text-xl font-semibold text-gray-800">EcoRevive Branch 1</h3>
                     </div>
-                    <ul class="space-y-2 text-gray-600">
-                        <li class="flex items-start">
-                            <span class="text-gray-500 w-24 flex-shrink-0">Contact:</span>
-                            <span>David Miller</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-gray-500 w-24 flex-shrink-0">Phone:</span>
-                            <a href="tel:+15551234567" class="text-primary hover:underline">+1 (555) 123-4567</a>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-gray-500 w-24 flex-shrink-0">Location:</span>
-                            <span>123 Recycling Way, Green City</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-gray-500 w-24 flex-shrink-0">Website:</span>
-                            <a href="#" class="text-primary hover:underline">www.ecoscrap.com</a>
-                        </li>
-                    </ul>
-                    <div class="mt-4 pt-4 border-t border-gray-100">
-                        <a href="#" class="inline-flex items-center text-primary hover:underline">
-                            <span>Request Quote</span>
-                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                            </svg>
-                        </a>
-                    </div>
+                    <p class="text-sm text-gray-500 mb-2"><i class="fas fa-map-marker-alt mr-1 text-primary/80"></i> Dilsukhnagar, Hyderabad</p>
+                    <p class="text-sm text-gray-500 mb-4"><i class="fas fa-phone-alt mr-1 text-primary/80"></i> 9606158683</p>
+                    <p class="text-xs text-gray-600 bg-green-50 border border-green-100 rounded-md px-3 py-2">Accepts: All metals, electronics, batteries, plastics.</p>
+                    <a href="#scrap-form" class="mt-4 inline-block text-sm text-primary font-medium hover:text-dark transition">Request Pickup <i class="fas fa-arrow-right ml-1"></i></a>
                 </div>
-                
+
                 <!-- Dealer 2 -->
-                <div class="dealer-card">
+                <div class="dealer-card border border-gray-200 overflow-hidden rounded-xl bg-gradient-to-br from-primary/5 via-white to-light/10 transition-all duration-300 hover:shadow-lg hover:border-primary/30 transform hover:scale-[1.01] hover:-translate-y-1 p-6">
                     <div class="flex items-center mb-4">
-                        <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mr-4">
-                            <i class="fas fa-leaf text-primary"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-lg text-gray-800">GreenCycle Recyclers</h3>
-                            <span class="text-sm text-primary">Specializes in Paper & Plastic</span>
-                        </div>
-                    </div>
-                    <ul class="space-y-2 text-gray-600">
-                        <li class="flex items-start">
-                            <span class="text-gray-500 w-24 flex-shrink-0">Contact:</span>
-                            <span>Sarah Johnson</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-gray-500 w-24 flex-shrink-0">Phone:</span>
-                            <a href="tel:+15557654321" class="text-primary hover:underline">+1 (555) 765-4321</a>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-gray-500 w-24 flex-shrink-0">Location:</span>
-                            <span>456 Eco Avenue, Green City</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-gray-500 w-24 flex-shrink-0">Website:</span>
-                            <a href="#" class="text-primary hover:underline">www.greencycle.com</a>
-                        </li>
-                    </ul>
-                    <div class="mt-4 pt-4 border-t border-gray-100">
-                        <a href="#" class="inline-flex items-center text-primary hover:underline">
-                            <span>Request Quote</span>
-                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                            </svg>
-                        </a>
-                    </div>
+                         <div class="w-10 h-10 bg-primary text-white rounded-full flex items-center justify-center mr-3 shadow-sm">
+                             <i class="fas fa-store"></i>
+                         </div>
+                         <h3 class="text-xl font-semibold text-gray-800">EcoRevive Branch 2</h3>
+                     </div>
+                    <p class="text-sm text-gray-500 mb-2"><i class="fas fa-map-marker-alt mr-1 text-primary/80"></i> Tolichowki, Hyderabad</p>
+                    <p class="text-sm text-gray-500 mb-4"><i class="fas fa-phone-alt mr-1 text-primary/80"></i> 7411640793</p>
+                    <p class="text-xs text-gray-600 bg-green-50 border border-green-100 rounded-md px-3 py-2">Accepts: Paper, cardboard, metals, selected plastics.</p>
+                    <a href="#scrap-form" class="mt-4 inline-block text-sm text-primary font-medium hover:text-dark transition">Request Pickup <i class="fas fa-arrow-right ml-1"></i></a>
                 </div>
-                
+
                 <!-- Dealer 3 -->
-                <div class="dealer-card">
+                <div class="dealer-card border border-gray-200 overflow-hidden rounded-xl bg-gradient-to-br from-primary/5 via-white to-light/10 transition-all duration-300 hover:shadow-lg hover:border-primary/30 transform hover:scale-[1.01] hover:-translate-y-1 p-6">
                     <div class="flex items-center mb-4">
-                        <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mr-4">
-                            <i class="fas fa-bolt text-primary"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-lg text-gray-800">TechReclaim</h3>
-                            <span class="text-sm text-primary">Specializes in Electronic Waste</span>
-                        </div>
-                    </div>
-                    <ul class="space-y-2 text-gray-600">
-                        <li class="flex items-start">
-                            <span class="text-gray-500 w-24 flex-shrink-0">Contact:</span>
-                            <span>Michael Chen</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-gray-500 w-24 flex-shrink-0">Phone:</span>
-                            <a href="tel:+15559876543" class="text-primary hover:underline">+1 (555) 987-6543</a>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-gray-500 w-24 flex-shrink-0">Location:</span>
-                            <span>789 Tech Plaza, Green City</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-gray-500 w-24 flex-shrink-0">Website:</span>
-                            <a href="#" class="text-primary hover:underline">www.techreclaim.com</a>
-                        </li>
-                    </ul>
-                    <div class="mt-4 pt-4 border-t border-gray-100">
-                        <a href="#" class="inline-flex items-center text-primary hover:underline">
-                            <span>Request Quote</span>
-                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                            </svg>
-                        </a>
-                    </div>
+                         <div class="w-10 h-10 bg-primary text-white rounded-full flex items-center justify-center mr-3 shadow-sm">
+                             <i class="fas fa-store"></i>
+                         </div>
+                         <h3 class="text-xl font-semibold text-gray-800">EcoRevive Branch 3</h3>
+                     </div>
+                    <p class="text-sm text-gray-500 mb-2"><i class="fas fa-map-marker-alt mr-1 text-primary/80"></i> Gachibowli, Hyderabad</p>
+                    <p class="text-sm text-gray-500 mb-4"><i class="fas fa-phone-alt mr-1 text-primary/80"></i> 8309944063</p>
+                    <p class="text-xs text-gray-600 bg-green-50 border border-green-100 rounded-md px-3 py-2">Accepts: E-waste, appliances, wiring, metals.</p>
+                    <a href="#scrap-form" class="mt-4 inline-block text-sm text-primary font-medium hover:text-dark transition">Request Pickup <i class="fas fa-arrow-right ml-1"></i></a>
                 </div>
-                
+
                 <!-- Dealer 4 -->
-                <div class="dealer-card">
+                <div class="dealer-card border border-gray-200 overflow-hidden rounded-xl bg-gradient-to-br from-primary/5 via-white to-light/10 transition-all duration-300 hover:shadow-lg hover:border-primary/30 transform hover:scale-[1.01] hover:-translate-y-1 p-6">
                     <div class="flex items-center mb-4">
-                        <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mr-4">
-                            <i class="fas fa-tools text-primary"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-lg text-gray-800">MetalWorks Recycling</h3>
-                            <span class="text-sm text-primary">Specializes in Metal & Scrap</span>
-                        </div>
-                    </div>
-                    <ul class="space-y-2 text-gray-600">
-                        <li class="flex items-start">
-                            <span class="text-gray-500 w-24 flex-shrink-0">Contact:</span>
-                            <span>Robert Garcia</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-gray-500 w-24 flex-shrink-0">Phone:</span>
-                            <a href="tel:+15552345678" class="text-primary hover:underline">+1 (555) 234-5678</a>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-gray-500 w-24 flex-shrink-0">Location:</span>
-                            <span>321 Industrial Way, Green City</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-gray-500 w-24 flex-shrink-0">Website:</span>
-                            <a href="#" class="text-primary hover:underline">www.metalworks.com</a>
-                        </li>
-                    </ul>
-                    <div class="mt-4 pt-4 border-t border-gray-100">
-                        <a href="#" class="inline-flex items-center text-primary hover:underline">
-                            <span>Request Quote</span>
-                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                            </svg>
-                        </a>
-                    </div>
+                         <div class="w-10 h-10 bg-primary text-white rounded-full flex items-center justify-center mr-3 shadow-sm">
+                             <i class="fas fa-store"></i>
+                         </div>
+                         <h3 class="text-xl font-semibold text-gray-800">EcoRevive Branch 4</h3>
+                     </div>
+                    <p class="text-sm text-gray-500 mb-2"><i class="fas fa-map-marker-alt mr-1 text-primary/80"></i> Kavadiguda, Hyderabad</p>
+                    <p class="text-sm text-gray-500 mb-4"><i class="fas fa-phone-alt mr-1 text-primary/80"></i> 8045167636</p>
+                    <p class="text-xs text-gray-600 bg-green-50 border border-green-100 rounded-md px-3 py-2">Accepts: Metals (Iron, Steel, Copper, Aluminium), batteries.</p>
+                    <a href="#scrap-form" class="mt-4 inline-block text-sm text-primary font-medium hover:text-dark transition">Request Pickup <i class="fas fa-arrow-right ml-1"></i></a>
                 </div>
-                
+
                 <!-- Dealer 5 -->
-                <div class="dealer-card">
+                 <div class="dealer-card border border-gray-200 overflow-hidden rounded-xl bg-gradient-to-br from-primary/5 via-white to-light/10 transition-all duration-300 hover:shadow-lg hover:border-primary/30 transform hover:scale-[1.01] hover:-translate-y-1 p-6">
                     <div class="flex items-center mb-4">
-                        <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mr-4">
-                            <i class="fas fa-boxes text-primary"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-lg text-gray-800">BoxCycle</h3>
-                            <span class="text-sm text-primary">Specializes in Cardboard & Paper</span>
-                        </div>
-                    </div>
-                    <ul class="space-y-2 text-gray-600">
-                        <li class="flex items-start">
-                            <span class="text-gray-500 w-24 flex-shrink-0">Contact:</span>
-                            <span>Emily Torres</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-gray-500 w-24 flex-shrink-0">Phone:</span>
-                            <a href="tel:+15553456789" class="text-primary hover:underline">+1 (555) 345-6789</a>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-gray-500 w-24 flex-shrink-0">Location:</span>
-                            <span>567 Paper Lane, Green City</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-gray-500 w-24 flex-shrink-0">Website:</span>
-                            <a href="#" class="text-primary hover:underline">www.boxcycle.com</a>
-                        </li>
-                    </ul>
-                    <div class="mt-4 pt-4 border-t border-gray-100">
-                        <a href="#" class="inline-flex items-center text-primary hover:underline">
-                            <span>Request Quote</span>
-                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                            </svg>
-                        </a>
-                    </div>
+                         <div class="w-10 h-10 bg-primary text-white rounded-full flex items-center justify-center mr-3 shadow-sm">
+                             <i class="fas fa-store"></i>
+                         </div>
+                         <h3 class="text-xl font-semibold text-gray-800">EcoRevive Branch 5</h3>
+                     </div>
+                    <p class="text-sm text-gray-500 mb-2"><i class="fas fa-map-marker-alt mr-1 text-primary/80"></i> Sagar Ringroad, L.B nagar, Hyderabad</p>
+                    <p class="text-sm text-gray-500 mb-4"><i class="fas fa-phone-alt mr-1 text-primary/80"></i> 7949303908</p>
+                    <p class="text-xs text-gray-600 bg-green-50 border border-green-100 rounded-md px-3 py-2">Accepts: All types of scrap materials, large appliances.</p>
+                    <a href="#scrap-form" class="mt-4 inline-block text-sm text-primary font-medium hover:text-dark transition">Request Pickup <i class="fas fa-arrow-right ml-1"></i></a>
                 </div>
-                
+
                 <!-- Dealer 6 -->
-                <div class="dealer-card">
+                 <div class="dealer-card border border-gray-200 overflow-hidden rounded-xl bg-gradient-to-br from-primary/5 via-white to-light/10 transition-all duration-300 hover:shadow-lg hover:border-primary/30 transform hover:scale-[1.01] hover:-translate-y-1 p-6">
                     <div class="flex items-center mb-4">
-                        <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mr-4">
-                            <i class="fas fa-wine-bottle text-primary"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-lg text-gray-800">GlassWorks</h3>
-                            <span class="text-sm text-primary">Specializes in Glass & Plastic</span>
-                        </div>
-                    </div>
-                    <ul class="space-y-2 text-gray-600">
-                        <li class="flex items-start">
-                            <span class="text-gray-500 w-24 flex-shrink-0">Contact:</span>
-                            <span>Olivia Patel</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-gray-500 w-24 flex-shrink-0">Phone:</span>
-                            <a href="tel:+15558765432" class="text-primary hover:underline">+1 (555) 876-5432</a>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-gray-500 w-24 flex-shrink-0">Location:</span>
-                            <span>890 Clear View Rd, Green City</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-gray-500 w-24 flex-shrink-0">Website:</span>
-                            <a href="#" class="text-primary hover:underline">www.glassworks.com</a>
-                        </li>
-                    </ul>
-                    <div class="mt-4 pt-4 border-t border-gray-100">
-                        <a href="#" class="inline-flex items-center text-primary hover:underline">
-                            <span>Request Quote</span>
-                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                            </svg>
-                        </a>
-                    </div>
+                         <div class="w-10 h-10 bg-primary text-white rounded-full flex items-center justify-center mr-3 shadow-sm">
+                             <i class="fas fa-store"></i>
+                         </div>
+                         <h3 class="text-xl font-semibold text-gray-800">EcoRevive Branch 6</h3>
+                     </div>
+                    <p class="text-sm text-gray-500 mb-2"><i class="fas fa-map-marker-alt mr-1 text-primary/80"></i> Secunderabad</p>
+                    <p class="text-sm text-gray-500 mb-4"><i class="fas fa-phone-alt mr-1 text-primary/80"></i> 8043889296</p>
+                    <p class="text-xs text-gray-600 bg-green-50 border border-green-100 rounded-md px-3 py-2">Accepts: Tyres, vehicles, industrial scrap.</p>
+                    <a href="#scrap-form" class="mt-4 inline-block text-sm text-primary font-medium hover:text-dark transition">Request Pickup <i class="fas fa-arrow-right ml-1"></i></a>
                 </div>
             </div>
             
             <div class="text-center mt-10">
                 <div class="inline-block bg-primary/10 rounded-lg px-6 py-3 text-gray-700">
-                    <p>Can't find what you're looking for? Submit your scrap details below and we'll match you with the best recycler.</p>
+                    
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Scrap Content Section -->
-    <section class="py-12">
+    <section id="scrap-form" class="py-12">
         <div class="container mx-auto px-4 lg:px-8">
             <div class="text-center mb-12">
                 <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Submit Your Scrap Materials</h2>
@@ -884,12 +717,19 @@
                                     </select>
                                 </div>
                                 
-                                <!-- Phone Number -->
+                                <!-- Size Input -->
                                 <div>
-                                    <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Phone Number (Optional)</label>
-                                    <input type="tel" id="phone" name="phone" class="form-control" placeholder="(555) 123-4567">
+                                    <label for="scrap-size" class="block text-sm font-medium text-gray-700 mb-1">Estimated Size (kg)</label>
+                                    <input type="number" id="scrap-size" name="scrap-size" class="form-control" placeholder="e.g., 5 (Max 10kg for form)" min="0" max="10" step="0.1">
+                                    <p class="text-xs text-gray-500 mt-1">For quantities over 10kg, please contact a branch directly.</p>
                                 </div>
                             </div>
+                            
+                             <!-- Phone Number -->
+                             <div>
+                                 <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Phone Number (Optional)</label>
+                                 <input type="tel" id="phone" name="phone" class="form-control" placeholder="(555) 123-4567">
+                             </div>
                             
                             <!-- Upload Image -->
                             <div>
@@ -945,7 +785,7 @@
                         <p class="text-lg text-gray-600 mb-6">
                             Your scrap submission has been received! Our system will connect you to the nearest scrap dealer soon.
                         </p>
-                        <a href="index.html" class="inline-block px-6 py-3 bg-primary text-white rounded-lg font-semibold hover:bg-dark transition">
+                        <a href="home.html" class="inline-block px-6 py-3 bg-primary text-white rounded-lg font-semibold hover:bg-dark transition">
                             Return to Home
                         </a>
                     </div>
@@ -988,7 +828,7 @@
                 <div>
                     <h3 class="text-xl font-bold mb-4">Quick Links</h3>
                     <ul class="space-y-2">
-                        <li><a href="index.html" class="text-gray-300 hover:text-white transition">Home</a></li>
+                        <li><a href="home.html" class="text-gray-300 hover:text-white transition">Home</a></li>
                         <li><a href="index.html#services" class="text-gray-300 hover:text-white transition">Our Services</a></li>
                         <li><a href="index.html#how-it-works" class="text-gray-300 hover:text-white transition">How It Works</a></li>
                         <li><a href="index.html#about" class="text-gray-300 hover:text-white transition">About</a></li>
@@ -1046,9 +886,18 @@
                 });
             }
             
+            // Removed scrap form and image preview logic from this section as it might be elsewhere
             // Handle scrap form submission (if needed, similar to donate page)
             // Image preview functionality (if needed, similar to donate page)
         });
+
+        // Placeholder logout function
+        function logout() {
+            console.log('Logout action triggered');
+            // Add actual logout logic here
+            window.location.href = 'login.html'; 
+        }
+
     </script>
 </body>
 </html> 

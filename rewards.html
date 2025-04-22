@@ -203,11 +203,11 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
                 <div class="flex items-center">
-                    <a href="index.html" class="flex-shrink-0 flex items-center">
+                    <a href="home.html" class="flex-shrink-0 flex items-center">
                         <span class="text-2xl font-bold text-eco-green">EcoRevive</span>
                     </a>
                     <div class="hidden md:ml-6 md:flex md:space-x-8">
-                        <a href="index.html" class="text-gray-500 hover:text-eco-green px-3 py-2 rounded-md text-sm font-medium">Home</a>
+                        <a href="home.html" class="text-gray-500 hover:text-eco-green px-3 py-2 rounded-md text-sm font-medium">Home</a>
                         <a href="donate.html" class="text-gray-500 hover:text-eco-green px-3 py-2 rounded-md text-sm font-medium">Donate</a>
                         <a href="scrap.html" class="text-gray-500 hover:text-eco-green px-3 py-2 rounded-md text-sm font-medium">Sell Scrap</a>
                         <a href="repair.html" class="text-gray-500 hover:text-eco-green px-3 py-2 rounded-md text-sm font-medium">Repair</a>
@@ -215,13 +215,17 @@
                     </div>
                 </div>
                 <div class="flex items-center">
-                    <!-- Moved Desktop Buttons here -->
-                    <div class="hidden md:flex items-center space-x-3 mr-4"> <!-- Added mr-4 for spacing -->
-                        <a href="login.html" class="px-4 py-2 text-sm font-medium text-primary border border-primary rounded-md hover:bg-primary hover:text-white transition duration-300">Sign In</a>
-                        <a href="login.html?form=signup" class="px-4 py-2 text-sm font-medium text-white bg-primary border border-primary rounded-md hover:bg-dark transition duration-300">Sign Up</a>
+                    <div id="userProfileAreaDesktop" class="md:flex items-center space-x-4">
+                        <a href="#" title="Profile" class="text-primary hover:text-dark transition duration-200"><i class="fas fa-user-circle text-2xl"></i></a>
+                        <button onclick="logout()" class="px-4 py-1.5 text-sm font-medium bg-dark text-white rounded-full shadow-sm hover:bg-opacity-80 transition duration-200 transform hover:scale-105">Logout</button>
                     </div>
+                     <!-- Removed Fallback for non-logged-in state -->
+                    <!-- <div id="signInUpButtonsDesktop" class="md:flex items-center space-x-3">
+                        <a href="login.html" id="signInBtnDesktop" class="px-4 py-2 text-sm font-medium text-primary border border-primary rounded-md hover:bg-primary hover:text-white transition duration-300">Sign In</a>
+                        <a href="login.html?form=signup" id="signUpBtnDesktop" class="px-4 py-2 text-sm font-medium text-white bg-primary border border-primary rounded-md hover:bg-dark transition duration-300">Sign Up</a>
+                    </div> -->
                     <div class="md:hidden ml-2">
-                        <button id="mobileMenuBtn" class="text-gray-500 hover:text-eco-green">
+                        <button id="mobileMenuBtn" class="text-gray-500 hover:text-primary transition-colors duration-300 p-1 rounded-md hover:bg-gray-100">
                             <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                             </svg>
@@ -233,7 +237,7 @@
         <!-- Mobile menu -->
         <div id="mobileMenu" class="hidden md:hidden">
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <a href="index.html" class="text-gray-500 hover:text-eco-green block px-3 py-2 rounded-md text-base font-medium">Home</a>
+                <a href="home.html" class="text-gray-500 hover:text-eco-green block px-3 py-2 rounded-md text-base font-medium">Home</a>
                 <a href="donate.html" class="text-gray-500 hover:text-eco-green block px-3 py-2 rounded-md text-base font-medium">Donate</a>
                 <a href="scrap.html" class="text-gray-500 hover:text-eco-green block px-3 py-2 rounded-md text-base font-medium">Sell Scrap</a>
                 <a href="repair.html" class="text-gray-500 hover:text-eco-green block px-3 py-2 rounded-md text-base font-medium">Repair</a>
@@ -249,7 +253,7 @@
 
     <!-- Back to Home Link -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4">
-        <a href="index.html" class="inline-flex items-center text-eco-green hover:text-eco-dark">
+        <a href="home.html" class="inline-flex items-center text-eco-green hover:text-eco-dark">
             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
             </svg>
@@ -1102,7 +1106,7 @@
                 <div class="col-span-1">
                     <h3 class="text-lg font-bold text-gray-800 mb-4">Quick Links</h3>
                     <ul class="space-y-2">
-                        <li><a href="index.html" class="text-gray-600 hover:text-eco-green">Home</a></li>
+                        <li><a href="home.html" class="text-gray-600 hover:text-eco-green">Home</a></li>
                         <li><a href="#" class="text-gray-600 hover:text-eco-green">Our Services</a></li>
                         <li><a href="#" class="text-gray-600 hover:text-eco-green">How It Works</a></li>
                         <li><a href="#" class="text-gray-600 hover:text-eco-green">About</a></li>
@@ -1358,6 +1362,32 @@
             });
 
         });
+    </script>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        if (mobileMenuBtn && mobileMenu) {
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+
+        // Placeholder logout function
+        function logout() {
+            console.log('Logout action triggered');
+            // Add actual logout logic here
+            window.location.href = 'login.html'; 
+        }
+
+        // Removed toggleUserArea function and associated DOMContentLoaded logic
+
+        // Any other rewards.html specific JS...
+        document.addEventListener('DOMContentLoaded', () => {
+            // Example: initialize sliders or handle reward redemptions if needed
+        });
+
     </script>
 </body>
 </html> 

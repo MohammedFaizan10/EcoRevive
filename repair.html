@@ -169,7 +169,7 @@
         }
         
         .repair-shop-card {
-            @apply bg-white rounded-lg p-5 shadow-soft border border-gray-100 transition hover:shadow-md;
+            @apply bg-white rounded-lg p-6 shadow-soft border border-gray-100;
         }
     </style>
 </head>
@@ -183,7 +183,7 @@
                         <span class="text-2xl font-bold text-primary">EcoRevive</span>
                     </a>
                     <div class="hidden md:ml-6 md:flex md:space-x-8 md:mx-auto justify-center">
-                        <a href="index.html" class="text-gray-500 hover:text-primary px-3 py-2 rounded-md text-sm font-medium">Home</a>
+                        <a href="home.html" class="text-gray-500 hover:text-primary px-3 py-2 rounded-md text-sm font-medium">Home</a>
                         <a href="donate.html" class="text-gray-500 hover:text-primary px-3 py-2 rounded-md text-sm font-medium">Donate</a>
                         <a href="scrap.html" class="text-gray-500 hover:text-primary px-3 py-2 rounded-md text-sm font-medium">Sell Scrap</a>
                         <a href="repair.html" class="text-primary border-b-2 border-primary px-3 py-2 rounded-md text-sm font-medium">Repair</a>
@@ -191,13 +191,12 @@
                     </div>
                 </div>
                 <div class="flex items-center">
-                    <!-- Moved Desktop Buttons here -->
-                    <div class="hidden md:flex items-center space-x-3 mr-4">
-                        <a href="login.html" class="px-4 py-2 text-sm font-medium text-primary border border-primary rounded-md hover:bg-primary hover:text-white transition duration-300">Sign In</a>
-                        <a href="login.html?form=signup" class="px-4 py-2 text-sm font-medium text-white bg-primary border border-primary rounded-md hover:bg-dark transition duration-300">Sign Up</a>
+                    <div id="userProfileAreaDesktop" class="md:flex items-center space-x-4">
+                        <a href="#" title="Profile" class="text-primary hover:text-dark transition duration-200"><i class="fas fa-user-circle text-2xl"></i></a>
+                        <button onclick="logout()" class="px-4 py-1.5 text-sm font-medium bg-dark text-white rounded-full shadow-sm hover:bg-opacity-80 transition duration-200 transform hover:scale-105">Logout</button>
                     </div>
                     <div class="md:hidden ml-2">
-                        <button id="mobileMenuBtn" class="text-gray-500 hover:text-primary">
+                        <button id="mobileMenuBtn" class="text-gray-500 hover:text-primary transition-colors duration-300 p-1 rounded-md hover:bg-gray-100">
                             <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                             </svg>
@@ -209,15 +208,15 @@
         <!-- Mobile menu -->
         <div id="mobileMenu" class="hidden md:hidden">
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <a href="index.html" class="text-gray-500 hover:text-primary block px-3 py-2 rounded-md text-base font-medium">Home</a>
+                <a href="home.html" class="text-gray-500 hover:text-primary block px-3 py-2 rounded-md text-base font-medium">Home</a>
                 <a href="donate.html" class="text-gray-500 hover:text-primary block px-3 py-2 rounded-md text-base font-medium">Donate</a>
                 <a href="scrap.html" class="text-gray-500 hover:text-primary block px-3 py-2 rounded-md text-base font-medium">Sell Scrap</a>
                 <a href="repair.html" class="text-primary block px-3 py-2 rounded-md text-base font-medium">Repair</a>
                 <a href="rewards.html" class="text-gray-500 hover:text-primary block px-3 py-2 rounded-md text-base font-medium">Rewards</a>
-                <!-- Added Sign In / Sign Up Buttons for Mobile -->
-                <div class="mt-4 pt-4 border-t border-gray-200 flex space-x-3 px-3">
-                    <a href="login.html" class="flex-1 text-center px-4 py-2 text-base font-medium text-primary border border-primary rounded-md hover:bg-primary hover:text-white transition duration-300">Sign In</a>
-                    <a href="login.html?form=signup" class="flex-1 text-center px-4 py-2 text-base font-medium text-white bg-primary border border-primary rounded-md hover:bg-dark transition duration-300">Sign Up</a>
+                <!-- Mobile User Profile/Logout Area -->
+                <div id="userProfileAreaMobile" class="mt-4 pt-4 border-t border-gray-200 flex items-center justify-between px-3">
+                    <a href="#" class="flex items-center text-primary hover:text-dark transition duration-200"><i class="fas fa-user-circle text-xl mr-2"></i><span class="text-sm font-medium">Profile</span></a>
+                    <button onclick="logout()" class="px-3 py-1 text-sm font-medium bg-dark text-white rounded-full shadow-sm hover:bg-opacity-80 transition duration-200 transform hover:scale-105">Logout</button>
                 </div>
             </div>
         </div>
@@ -226,7 +225,7 @@
     <!-- Back to Home Link -->
     <div class="pt-24 pb-4">
         <div class="container mx-auto px-4 lg:px-8">
-            <a href="index.html" class="inline-flex items-center text-primary hover:text-dark transition group">
+            <a href="home.html" class="inline-flex items-center text-primary hover:text-dark transition group">
                 <svg class="w-5 h-5 mr-2 transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
                 </svg>
@@ -317,405 +316,255 @@
         </div>
     </section>
 
-    <!-- Repair Shops & Booking Section -->
-    <section class="py-12 bg-serviceLight">
+    <!-- Verified Repair Shops Section -->
+    <section class="py-16 bg-light/50">
         <div class="container mx-auto px-4 lg:px-8">
             <div class="text-center mb-12">
-                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Need Help? Contact Nearby Repair Shops</h2>
-                <p class="text-lg text-gray-700 max-w-3xl mx-auto">
-                    For more complex repairs, our network of trusted repair professionals is ready to help. Browse our list of certified repair shops or book a repair service directly.
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Verified EcoRevive Repair Branches</h2>
+                <p class="text-gray-600 max-w-3xl mx-auto">
+                    Connect with our trusted EcoRevive branches specializing in various repair services to extend the life of your items.
                 </p>
             </div>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- Repair Shop 1 -->
-                <div class="repair-shop-card">
+                 <div class="repair-shop-card border border-gray-200 overflow-hidden rounded-xl bg-gradient-to-br from-amber-50 via-white to-amber-50/30 transition-all duration-300 hover:shadow-lg hover:border-amber-300 transform hover:scale-[1.01] hover:-translate-y-1 p-6">
                     <div class="flex items-center mb-4">
-                        <div class="w-12 h-12 rounded-full bg-amber-100 flex items-center justify-center mr-4">
-                            <i class="fas fa-tools text-amber-600"></i>
+                        <div class="w-10 h-10 bg-amber-500 text-white rounded-full flex items-center justify-center mr-3 shadow-sm">
+                            <i class="fas fa-tools"></i>
                         </div>
-                        <div>
-                            <h3 class="font-bold text-lg text-gray-800">FixIt Pro</h3>
-                            <span class="text-sm text-amber-600">Electronics & Appliances</span>
+                        <h3 class="text-xl font-semibold text-gray-800">EcoRevive Branch 1</h3>
+                    </div>
+                    <p class="text-sm text-gray-500 mb-2"><i class="fas fa-tag mr-1 text-amber-600/80"></i> Specializes in: Electronics & Appliances</p>
+                    <p class="text-sm text-gray-500 mb-2"><i class="fas fa-map-marker-alt mr-1 text-amber-600/80"></i> Shaikpet,Hyderabad</p>
+                    <p class="text-sm text-gray-500 mb-4"><i class="fas fa-phone-alt mr-1 text-amber-600/80"></i> 9700983304</p>
+                    <div class="flex items-center text-sm text-gray-500 mb-4">
+                        <span class="mr-2"><i class="fas fa-star mr-1 text-amber-500"></i> Rating:</span>
+                        <div class="flex text-amber-400">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                            <span class="text-gray-600 ml-1">(4.5)</span>
                         </div>
                     </div>
-                    <ul class="space-y-2 text-gray-600">
-                        <li class="flex items-start">
-                            <span class="text-gray-500 w-24 flex-shrink-0">Contact:</span>
-                            <span>Michael Johnson</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-gray-500 w-24 flex-shrink-0">Phone:</span>
-                            <a href="tel:+15551234567" class="text-primary hover:underline">+1 (555) 123-4567</a>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-gray-500 w-24 flex-shrink-0">Address:</span>
-                            <span>123 Repair Street, Green City</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-gray-500 w-24 flex-shrink-0">Rating:</span>
-                            <div class="flex text-amber-400">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star-half-alt"></i>
-                                <span class="text-gray-600 ml-1">(4.5)</span>
-                            </div>
-                        </li>
-                    </ul>
-                    <div class="mt-4 pt-4 border-t border-gray-100">
-                        <a href="#booking-form" class="inline-flex items-center text-amber-600 hover:underline">
-                            <span>Book a Repair</span>
-                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                            </svg>
-                        </a>
-                    </div>
+                    <a href="#booking-form" class="inline-block text-sm text-amber-600 font-medium hover:text-amber-700 transition">Book Service <i class="fas fa-arrow-right ml-1"></i></a>
                 </div>
-                
+
                 <!-- Repair Shop 2 -->
-                <div class="repair-shop-card">
+                <div class="repair-shop-card border border-gray-200 overflow-hidden rounded-xl bg-gradient-to-br from-amber-50 via-white to-amber-50/30 transition-all duration-300 hover:shadow-lg hover:border-amber-300 transform hover:scale-[1.01] hover:-translate-y-1 p-6">
                     <div class="flex items-center mb-4">
-                        <div class="w-12 h-12 rounded-full bg-amber-100 flex items-center justify-center mr-4">
-                            <i class="fas fa-couch text-amber-600"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-lg text-gray-800">Furniture Revival</h3>
-                            <span class="text-sm text-amber-600">Furniture & Woodwork</span>
-                        </div>
-                    </div>
-                    <ul class="space-y-2 text-gray-600">
-                        <li class="flex items-start">
-                            <span class="text-gray-500 w-24 flex-shrink-0">Contact:</span>
-                            <span>Emma Martinez</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-gray-500 w-24 flex-shrink-0">Phone:</span>
-                            <a href="tel:+15557654321" class="text-primary hover:underline">+1 (555) 765-4321</a>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-gray-500 w-24 flex-shrink-0">Address:</span>
-                            <span>456 Woodwork Ave, Green City</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-gray-500 w-24 flex-shrink-0">Rating:</span>
-                            <div class="flex text-amber-400">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <span class="text-gray-600 ml-1">(5.0)</span>
-                            </div>
-                        </li>
-                    </ul>
-                    <div class="mt-4 pt-4 border-t border-gray-100">
-                        <a href="#booking-form" class="inline-flex items-center text-amber-600 hover:underline">
-                            <span>Book a Repair</span>
-                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                            </svg>
-                        </a>
-                    </div>
+                         <div class="w-10 h-10 bg-amber-500 text-white rounded-full flex items-center justify-center mr-3 shadow-sm">
+                             <i class="fas fa-couch"></i>
+                         </div>
+                         <h3 class="text-xl font-semibold text-gray-800">EcoRevive Branch 2</h3>
+                     </div>
+                    <p class="text-sm text-gray-500 mb-2"><i class="fas fa-tag mr-1 text-amber-600/80"></i> Specializes in: Furniture Repair</p>
+                    <p class="text-sm text-gray-500 mb-2"><i class="fas fa-map-marker-alt mr-1 text-amber-600/80"></i> Upperpally, RangaReddy, Hyderabad</p>
+                    <p class="text-sm text-gray-500 mb-4"><i class="fas fa-phone-alt mr-1 text-amber-600/80"></i> 7411830995</p>
+                    <div class="flex items-center text-sm text-gray-500 mb-4">
+                         <span class="mr-2"><i class="fas fa-star mr-1 text-amber-500"></i> Rating:</span>
+                         <div class="flex text-amber-400">
+                             <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                             <span class="text-gray-600 ml-1">(5.0)</span>
+                         </div>
+                     </div>
+                    <a href="#booking-form" class="inline-block text-sm text-amber-600 font-medium hover:text-amber-700 transition">Book Service <i class="fas fa-arrow-right ml-1"></i></a>
                 </div>
                 
                 <!-- Repair Shop 3 -->
-                <div class="repair-shop-card">
+                 <div class="repair-shop-card border border-gray-200 overflow-hidden rounded-xl bg-gradient-to-br from-amber-50 via-white to-amber-50/30 transition-all duration-300 hover:shadow-lg hover:border-amber-300 transform hover:scale-[1.01] hover:-translate-y-1 p-6">
                     <div class="flex items-center mb-4">
-                        <div class="w-12 h-12 rounded-full bg-amber-100 flex items-center justify-center mr-4">
-                            <i class="fas fa-tshirt text-amber-600"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-lg text-gray-800">Stitch Fix</h3>
-                            <span class="text-sm text-amber-600">Clothing & Textiles</span>
-                        </div>
-                    </div>
-                    <ul class="space-y-2 text-gray-600">
-                        <li class="flex items-start">
-                            <span class="text-gray-500 w-24 flex-shrink-0">Contact:</span>
-                            <span>Sarah Kim</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-gray-500 w-24 flex-shrink-0">Phone:</span>
-                            <a href="tel:+15559876543" class="text-primary hover:underline">+1 (555) 987-6543</a>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-gray-500 w-24 flex-shrink-0">Address:</span>
-                            <span>789 Fashion Blvd, Green City</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-gray-500 w-24 flex-shrink-0">Rating:</span>
-                            <div class="flex text-amber-400">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="far fa-star"></i>
-                                <span class="text-gray-600 ml-1">(4.0)</span>
-                            </div>
-                        </li>
-                    </ul>
-                    <div class="mt-4 pt-4 border-t border-gray-100">
-                        <a href="#booking-form" class="inline-flex items-center text-amber-600 hover:underline">
-                            <span>Book a Repair</span>
-                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                            </svg>
-                        </a>
-                    </div>
+                         <div class="w-10 h-10 bg-amber-500 text-white rounded-full flex items-center justify-center mr-3 shadow-sm">
+                             <i class="fas fa-tshirt"></i>
+                         </div>
+                         <h3 class="text-xl font-semibold text-gray-800">EcoRevive Branch 3</h3>
+                     </div>
+                    <p class="text-sm text-gray-500 mb-2"><i class="fas fa-tag mr-1 text-amber-600/80"></i> Specializes in: Clothing & Textiles</p>
+                    <p class="text-sm text-gray-500 mb-2"><i class="fas fa-map-marker-alt mr-1 text-amber-600/80"></i> RangaReddy, Hyderabad</p>
+                    <p class="text-sm text-gray-500 mb-4"><i class="fas fa-phone-alt mr-1 text-amber-600/80"></i> 8688551582</p>
+                     <div class="flex items-center text-sm text-gray-500 mb-4">
+                         <span class="mr-2"><i class="fas fa-star mr-1 text-amber-500"></i> Rating:</span>
+                         <div class="flex text-amber-400">
+                             <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>
+                             <span class="text-gray-600 ml-1">(4.0)</span>
+                         </div>
+                     </div>
+                    <a href="#booking-form" class="inline-block text-sm text-amber-600 font-medium hover:text-amber-700 transition">Book Service <i class="fas fa-arrow-right ml-1"></i></a>
                 </div>
-                
+
                 <!-- Repair Shop 4 -->
-                <div class="repair-shop-card">
-                    <div class="flex items-center mb-4">
-                        <div class="w-12 h-12 rounded-full bg-amber-100 flex items-center justify-center mr-4">
-                            <i class="fas fa-mobile-alt text-amber-600"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-lg text-gray-800">PhoneFix Express</h3>
-                            <span class="text-sm text-amber-600">Mobile & Tablets</span>
-                        </div>
-                    </div>
-                    <ul class="space-y-2 text-gray-600">
-                        <li class="flex items-start">
-                            <span class="text-gray-500 w-24 flex-shrink-0">Contact:</span>
-                            <span>David Chen</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-gray-500 w-24 flex-shrink-0">Phone:</span>
-                            <a href="tel:+15553456789" class="text-primary hover:underline">+1 (555) 345-6789</a>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-gray-500 w-24 flex-shrink-0">Address:</span>
-                            <span>101 Tech Road, Green City</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-gray-500 w-24 flex-shrink-0">Rating:</span>
-                            <div class="flex text-amber-400">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star-half-alt"></i>
-                                <span class="text-gray-600 ml-1">(4.7)</span>
-                            </div>
-                        </li>
-                    </ul>
-                    <div class="mt-4 pt-4 border-t border-gray-100">
-                        <a href="#booking-form" class="inline-flex items-center text-amber-600 hover:underline">
-                            <span>Book a Repair</span>
-                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                            </svg>
-                        </a>
-                    </div>
+                 <div class="repair-shop-card border border-gray-200 overflow-hidden rounded-xl bg-gradient-to-br from-amber-50 via-white to-amber-50/30 transition-all duration-300 hover:shadow-lg hover:border-amber-300 transform hover:scale-[1.01] hover:-translate-y-1 p-6">
+                     <div class="flex items-center mb-4">
+                         <div class="w-10 h-10 bg-amber-500 text-white rounded-full flex items-center justify-center mr-3 shadow-sm">
+                             <i class="fas fa-mobile-alt"></i>
+                         </div>
+                         <h3 class="text-xl font-semibold text-gray-800">EcoRevive Branch 4</h3>
+                     </div>
+                    <p class="text-sm text-gray-500 mb-2"><i class="fas fa-tag mr-1 text-amber-600/80"></i> Specializes in: Mobile & Tablets</p>
+                    <p class="text-sm text-gray-500 mb-2"><i class="fas fa-map-marker-alt mr-1 text-amber-600/80"></i> Attapur, Hyderabad</p>
+                    <p class="text-sm text-gray-500 mb-4"><i class="fas fa-phone-alt mr-1 text-amber-600/80"></i> 7947129553</p>
+                     <div class="flex items-center text-sm text-gray-500 mb-4">
+                         <span class="mr-2"><i class="fas fa-star mr-1 text-amber-500"></i> Rating:</span>
+                         <div class="flex text-amber-400">
+                             <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                             <span class="text-gray-600 ml-1">(4.7)</span>
+                         </div>
+                     </div>
+                    <a href="#booking-form" class="inline-block text-sm text-amber-600 font-medium hover:text-amber-700 transition">Book Service <i class="fas fa-arrow-right ml-1"></i></a>
                 </div>
                 
                 <!-- Repair Shop 5 -->
-                <div class="repair-shop-card">
+                 <div class="repair-shop-card border border-gray-200 overflow-hidden rounded-xl bg-gradient-to-br from-amber-50 via-white to-amber-50/30 transition-all duration-300 hover:shadow-lg hover:border-amber-300 transform hover:scale-[1.01] hover:-translate-y-1 p-6">
                     <div class="flex items-center mb-4">
-                        <div class="w-12 h-12 rounded-full bg-amber-100 flex items-center justify-center mr-4">
-                            <i class="fas fa-bicycle text-amber-600"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-lg text-gray-800">Cycle Works</h3>
-                            <span class="text-sm text-amber-600">Bikes & Sporting Goods</span>
-                        </div>
-                    </div>
-                    <ul class="space-y-2 text-gray-600">
-                        <li class="flex items-start">
-                            <span class="text-gray-500 w-24 flex-shrink-0">Contact:</span>
-                            <span>James Wilson</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-gray-500 w-24 flex-shrink-0">Phone:</span>
-                            <a href="tel:+15558765432" class="text-primary hover:underline">+1 (555) 876-5432</a>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-gray-500 w-24 flex-shrink-0">Address:</span>
-                            <span>222 Sports Lane, Green City</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-gray-500 w-24 flex-shrink-0">Rating:</span>
-                            <div class="flex text-amber-400">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="far fa-star"></i>
-                                <span class="text-gray-600 ml-1">(4.2)</span>
-                            </div>
-                        </li>
-                    </ul>
-                    <div class="mt-4 pt-4 border-t border-gray-100">
-                        <a href="#booking-form" class="inline-flex items-center text-amber-600 hover:underline">
-                            <span>Book a Repair</span>
-                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                            </svg>
-                        </a>
-                    </div>
+                         <div class="w-10 h-10 bg-amber-500 text-white rounded-full flex items-center justify-center mr-3 shadow-sm">
+                             <i class="fas fa-bicycle"></i>
+                         </div>
+                         <h3 class="text-xl font-semibold text-gray-800">EcoRevive Branch 5</h3>
+                     </div>
+                    <p class="text-sm text-gray-500 mb-2"><i class="fas fa-tag mr-1 text-amber-600/80"></i> Specializes in: Bikes & Sporting Goods</p>
+                    <p class="text-sm text-gray-500 mb-2"><i class="fas fa-map-marker-alt mr-1 text-amber-600/80"></i> Yousufguda, Hyderabad</p>
+                    <p class="text-sm text-gray-500 mb-4"><i class="fas fa-phone-alt mr-1 text-amber-600/80"></i> 7947145838</p>
+                    <div class="flex items-center text-sm text-gray-500 mb-4">
+                         <span class="mr-2"><i class="fas fa-star mr-1 text-amber-500"></i> Rating:</span>
+                         <div class="flex text-amber-400">
+                             <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>
+                             <span class="text-gray-600 ml-1">(4.2)</span>
+                         </div>
+                     </div>
+                    <a href="#booking-form" class="inline-block text-sm text-amber-600 font-medium hover:text-amber-700 transition">Book Service <i class="fas fa-arrow-right ml-1"></i></a>
                 </div>
                 
                 <!-- Repair Shop 6 -->
-                <div class="repair-shop-card">
-                    <div class="flex items-center mb-4">
-                        <div class="w-12 h-12 rounded-full bg-amber-100 flex items-center justify-center mr-4">
-                            <i class="fas fa-blender text-amber-600"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-lg text-gray-800">Appliance Masters</h3>
-                            <span class="text-sm text-amber-600">Home Appliances</span>
-                        </div>
-                    </div>
-                    <ul class="space-y-2 text-gray-600">
-                        <li class="flex items-start">
-                            <span class="text-gray-500 w-24 flex-shrink-0">Contact:</span>
-                            <span>Robert Garcia</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-gray-500 w-24 flex-shrink-0">Phone:</span>
-                            <a href="tel:+15552468013" class="text-primary hover:underline">+1 (555) 246-8013</a>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-gray-500 w-24 flex-shrink-0">Address:</span>
-                            <span>333 Home Street, Green City</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-gray-500 w-24 flex-shrink-0">Rating:</span>
-                            <div class="flex text-amber-400">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star-half-alt"></i>
-                                <i class="far fa-star"></i>
-                                <span class="text-gray-600 ml-1">(3.5)</span>
-                            </div>
-                        </li>
-                    </ul>
-                    <div class="mt-4 pt-4 border-t border-gray-100">
-                        <a href="#booking-form" class="inline-flex items-center text-amber-600 hover:underline">
-                            <span>Book a Repair</span>
-                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                            </svg>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Booking Form -->
-            <div id="booking-form" class="max-w-4xl mx-auto">
-                <div class="card p-8 md:p-10 bg-gradient-to-b from-white to-serviceLight/30">
-                    <h3 class="text-2xl md:text-3xl font-bold text-gray-800 mb-6">Book a Repair Service</h3>
-                    
-                    <!-- Form Container with Border and Background -->
-                    <div class="p-6 bg-white border border-secondary rounded-lg shadow-soft">
-                        <form id="repair-form" class="space-y-6">
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <!-- Name Input -->
-                                <div>
-                                    <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
-                                    <input type="text" id="name" name="name" class="form-control" placeholder="Your full name" required>
-                                </div>
-                                
-                                <!-- Email Input -->
-                                <div>
-                                    <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
-                                    <input type="email" id="email" name="email" class="form-control" placeholder="your@email.com" required>
-                                </div>
-                            </div>
-                            
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <!-- Item Type Dropdown -->
-                                <div>
-                                    <label for="item-type" class="block text-sm font-medium text-gray-700 mb-1">Item Type</label>
-                                    <select id="item-type" name="item-type" class="form-control" required>
-                                        <option value="" disabled selected>Select item type</option>
-                                        <option value="electronics">Electronics</option>
-                                        <option value="appliance">Home Appliance</option>
-                                        <option value="furniture">Furniture</option>
-                                        <option value="clothing">Clothing</option>
-                                        <option value="mobile">Mobile Phone</option>
-                                        <option value="bicycle">Bicycle</option>
-                                        <option value="other">Other</option>
-                                    </select>
-                                </div>
-                                
-                                <!-- Phone Number -->
-                                <div>
-                                    <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
-                                    <input type="tel" id="phone" name="phone" class="form-control" placeholder="(555) 123-4567" required>
-                                </div>
-                            </div>
-                            
-                            <!-- Upload Image -->
-                            <div>
-                                <label for="item-image" class="block text-sm font-medium text-gray-700 mb-1">Upload Image of Item</label>
-                                <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-200 border-dashed rounded-lg bg-white">
-                                    <div class="space-y-1 text-center">
-                                        <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
-                                            <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                                        </svg>
-                                        <div class="flex text-sm text-gray-600 justify-center">
-                                            <label for="file-upload" class="relative cursor-pointer bg-white rounded-md font-medium text-primary hover:text-dark focus-within:outline-none">
-                                                <span>Upload a file</span>
-                                                <input id="file-upload" name="file-upload" type="file" class="sr-only" accept="image/*">
-                                            </label>
-                                            <p class="pl-1">or drag and drop</p>
-                                        </div>
-                                        <p class="text-xs text-gray-500">
-                                            PNG, JPG, GIF up to 5MB
-                                        </p>
-                                    </div>
-                                </div>
-                                <div id="image-preview" class="mt-3 hidden">
-                                    <img id="preview-img" src="#" alt="Preview" class="h-40 rounded-lg object-cover">
-                                    <button type="button" id="remove-img" class="mt-2 text-sm text-red-500 hover:text-red-700 flex items-center">
-                                        <i class="fas fa-times mr-1"></i> Remove image
-                                    </button>
-                                </div>
-                            </div>
-                            
-                            <!-- Description Textarea -->
-                            <div>
-                                <label for="description" class="block text-sm font-medium text-gray-700 mb-1">Issue Description</label>
-                                <textarea id="description" name="description" rows="4" class="form-control" placeholder="Please describe the issue with your item, including when it started and any relevant details." required></textarea>
-                            </div>
-                            
-                            <!-- Submit Button -->
-                            <div class="text-center">
-                                <button type="submit" class="py-4 px-10 btn-secondary text-lg font-semibold">
-                                    Submit Repair Request
-                                </button>
-                            </div>
-                        </form>
-                    </div> <!-- End Form Container -->
-                    
-                    <!-- Thank You Message (Hidden by default) -->
-                    <div id="thank-you-message" class="thank-you-message text-center py-8">
-                        <div class="text-amber-600 mb-4">
-                            <svg class="w-16 h-16 mx-auto" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                            </svg>
-                        </div>
-                        <h3 class="text-2xl font-bold text-gray-800 mb-2">Thank You for Your Repair Request!</h3>
-                        <p class="text-lg text-gray-600 mb-6">
-                            Your repair request has been received. One of our partner repair shops will contact you shortly to discuss next steps.
-                        </p>
-                        <a href="index.html" class="inline-block px-6 py-3 bg-amber-600 text-white rounded-lg font-semibold hover:bg-amber-700 transition">
-                            Return to Home
-                        </a>
-                    </div>
-                </div>
-                
-                <div class="mt-8 text-center text-gray-600 text-sm">
-                    By submitting this form, you agree to our <a href="#" class="text-primary hover:underline">Terms of Service</a> and <a href="#" class="text-primary hover:underline">Privacy Policy</a>.
+                <div class="repair-shop-card border border-gray-200 overflow-hidden rounded-xl bg-gradient-to-br from-amber-50 via-white to-amber-50/30 transition-all duration-300 hover:shadow-lg hover:border-amber-300 transform hover:scale-[1.01] hover:-translate-y-1 p-6">
+                     <div class="flex items-center mb-4">
+                         <div class="w-10 h-10 bg-amber-500 text-white rounded-full flex items-center justify-center mr-3 shadow-sm">
+                             <i class="fas fa-blender"></i>
+                         </div>
+                         <h3 class="text-xl font-semibold text-gray-800">EcoRevive Branch 6</h3>
+                     </div>
+                    <p class="text-sm text-gray-500 mb-2"><i class="fas fa-tag mr-1 text-amber-600/80"></i> Specializes in: Home Appliances</p>
+                    <p class="text-sm text-gray-500 mb-2"><i class="fas fa-map-marker-alt mr-1 text-amber-600/80"></i> Gachibowli, Hyderabad</p>
+                    <p class="text-sm text-gray-500 mb-4"><i class="fas fa-phone-alt mr-1 text-amber-600/80"></i> 8197494214</p>
+                    <div class="flex items-center text-sm text-gray-500 mb-4">
+                         <span class="mr-2"><i class="fas fa-star mr-1 text-amber-500"></i> Rating:</span>
+                         <div class="flex text-amber-400">
+                             <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i><i class="far fa-star"></i>
+                             <span class="text-gray-600 ml-1">(3.5)</span>
+                         </div>
+                     </div>
+                    <a href="#booking-form" class="inline-block text-sm text-amber-600 font-medium hover:text-amber-700 transition">Book Service <i class="fas fa-arrow-right ml-1"></i></a>
                 </div>
             </div>
         </div>
     </section>
+
+    <!-- Booking Form -->
+    <div id="booking-form" class="max-w-4xl mx-auto">
+        <div class="card p-8 md:p-10 bg-gradient-to-b from-white to-serviceLight/30">
+            <h3 class="text-2xl md:text-3xl font-bold text-gray-800 mb-6">Book a Repair Service</h3>
+            
+            <!-- Form Container with Border and Background -->
+            <div class="p-6 bg-white border border-secondary rounded-lg shadow-soft">
+                <form id="repair-form" class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Name Input -->
+                        <div>
+                            <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                            <input type="text" id="name" name="name" class="form-control" placeholder="Your full name" required>
+                        </div>
+                        
+                        <!-- Email Input -->
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                            <input type="email" id="email" name="email" class="form-control" placeholder="your@email.com" required>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Item Type Dropdown -->
+                        <div>
+                            <label for="item-type" class="block text-sm font-medium text-gray-700 mb-1">Item Type</label>
+                            <select id="item-type" name="item-type" class="form-control" required>
+                                <option value="" disabled selected>Select item type</option>
+                                <option value="electronics">Electronics</option>
+                                <option value="appliance">Home Appliance</option>
+                                <option value="furniture">Furniture</option>
+                                <option value="clothing">Clothing</option>
+                                <option value="mobile">Mobile Phone</option>
+                                <option value="bicycle">Bicycle</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <!-- Phone Number -->
+                        <div>
+                            <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+                            <input type="tel" id="phone" name="phone" class="form-control" placeholder="(555) 123-4567" required>
+                        </div>
+                    </div>
+                    
+                    <!-- Upload Image -->
+                    <div>
+                        <label for="item-image" class="block text-sm font-medium text-gray-700 mb-1">Upload Image of Item</label>
+                        <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-200 border-dashed rounded-lg bg-white">
+                            <div class="space-y-1 text-center">
+                                <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
+                                    <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                                <div class="flex text-sm text-gray-600 justify-center">
+                                    <label for="file-upload" class="relative cursor-pointer bg-white rounded-md font-medium text-primary hover:text-dark focus-within:outline-none">
+                                        <span>Upload a file</span>
+                                        <input id="file-upload" name="file-upload" type="file" class="sr-only" accept="image/*">
+                                    </label>
+                                    <p class="pl-1">or drag and drop</p>
+                                </div>
+                                <p class="text-xs text-gray-500">
+                                    PNG, JPG, GIF up to 5MB
+                                </p>
+                            </div>
+                        </div>
+                        <div id="image-preview" class="mt-3 hidden">
+                            <img id="preview-img" src="#" alt="Preview" class="h-40 rounded-lg object-cover">
+                            <button type="button" id="remove-img" class="mt-2 text-sm text-red-500 hover:text-red-700 flex items-center">
+                                <i class="fas fa-times mr-1"></i> Remove image
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Description Textarea -->
+                    <div>
+                        <label for="description" class="block text-sm font-medium text-gray-700 mb-1">Issue Description</label>
+                        <textarea id="description" name="description" rows="4" class="form-control" placeholder="Please describe the issue with your item, including when it started and any relevant details." required></textarea>
+                    </div>
+                    
+                    <!-- Submit Button -->
+                    <div class="text-center">
+                        <button type="submit" class="py-4 px-10 btn-secondary text-lg font-semibold">
+                            Submit Repair Request
+                        </button>
+                    </div>
+                </form>
+            </div> <!-- End Form Container -->
+            
+            <!-- Thank You Message (Hidden by default) -->
+            <div id="thank-you-message" class="thank-you-message text-center py-8">
+                <div class="text-amber-600 mb-4">
+                    <svg class="w-16 h-16 mx-auto" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                    </svg>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-800 mb-2">Thank You for Your Repair Request!</h3>
+                <p class="text-lg text-gray-600 mb-6">
+                    Your repair request has been received. One of our partner repair shops will contact you shortly to discuss next steps.
+                </p>
+                <a href="home.html" class="inline-block px-6 py-3 bg-amber-600 text-white rounded-lg font-semibold hover:bg-amber-700 transition">
+                    Return to Home
+                </a>
+            </div>
+        </div>
+        
+        <div class="mt-8 text-center text-gray-600 text-sm">
+            By submitting this form, you agree to our <a href="#" class="text-primary hover:underline">Terms of Service</a> and <a href="#" class="text-primary hover:underline">Privacy Policy</a>.
+        </div>
+    </div>
 
     <!-- Footer Section -->
     <footer id="contact" class="bg-gray-800 text-white py-12 mt-16">
@@ -747,7 +596,7 @@
                 <div>
                     <h3 class="text-xl font-bold mb-4">Quick Links</h3>
                     <ul class="space-y-2">
-                        <li><a href="index.html" class="text-gray-300 hover:text-white transition">Home</a></li>
+                        <li><a href="home.html" class="text-gray-300 hover:text-white transition">Home</a></li>
                         <li><a href="index.html#services" class="text-gray-300 hover:text-white transition">Our Services</a></li>
                         <li><a href="index.html#how-it-works" class="text-gray-300 hover:text-white transition">How It Works</a></li>
                         <li><a href="index.html#about" class="text-gray-300 hover:text-white transition">About</a></li>
@@ -809,6 +658,16 @@
             
             // Add form submission and image preview logic if necessary (similar to donate/scrap)
         });
+
+        // Placeholder logout function
+        function logout() {
+            console.log('Logout action triggered');
+            // Add actual logout logic here
+            window.location.href = 'login.html'; 
+        }
+
+        // Removed toggleUserArea function and associated DOMContentLoaded logic
+
     </script>
 </body>
 </html> 

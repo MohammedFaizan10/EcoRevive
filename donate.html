@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Donate Items - EcoRevive</title>
+    <title>Donate Items & Support NGOs - EcoRevive</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <script>
@@ -11,172 +11,119 @@
             theme: {
                 extend: {
                     colors: {
-                        primary: '#2E7D32',
-                        secondary: '#81C784',
+                        primary: '#2E7D32', // EcoRevive Green
+                        secondary: '#A5D6A7',
                         accent: '#4CAF50',
                         dark: '#1B5E20',
-                        light: '#E8F5E9'
+                        light: '#E8F5E9',
+                        // Adding subtle background colors for NGO cards
+                        ngo_bg_1: '#f0fdf4', // light green
+                        ngo_bg_2: '#f0f9ff', // light blue
+                        ngo_bg_3: '#fefce8', // light yellow
+                        ngo_bg_4: '#fdf2f8', // light pink
+                        ngo_bg_5: '#f5f3ff', // light purple
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'Roboto', 'system-ui', 'sans-serif']
                     },
                     boxShadow: {
                         'soft': '0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.03)',
-                        'card': '0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+                        'card': '0 15px 30px -10px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05)',
+                        'hover': '0 25px 50px -12px rgba(0, 0, 0, 0.2)',
                     }
                 }
             }
         }
     </script>
     <style>
-        html {
-            scroll-behavior: smooth;
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        html { scroll-behavior: smooth; }
+        body { @apply antialiased; }
+        
+        /* Original Form Styles */
+        .form-control { @apply w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition duration-200 bg-white shadow-sm; }
+        .btn-primary { @apply bg-primary text-white py-3 px-6 rounded-lg font-semibold text-base shadow-md hover:bg-dark hover:shadow-lg transition duration-300 transform hover:-translate-y-0.5; }
+        .card { @apply bg-white rounded-xl shadow-card overflow-hidden; }
+        .bg-gradient-soft { @apply bg-gradient-to-br from-light via-white to-secondary/10; }
+        .thank-you-message { display: none; @apply text-center p-10; }
+        
+        /* Enhanced Premium NGO Card Styles */
+        .ngo-card-premium {
+            /* Base styles: border, shadow, margin, transition */
+            @apply bg-white rounded-xl border border-gray-200 shadow-card overflow-hidden transition-all duration-300 ease-in-out mb-10 relative; 
+             /* Adding a subtle top border accent */
+             /* border-t-4 border-transparent; */
+        }
+        .ngo-card-premium:hover {
+             /* Enhanced hover: more shadow, lift effect, subtle scale, accent border */
+             @apply shadow-hover border-primary/40 transform -translate-y-2 scale-[1.02];
+        }
+         /* Add a colored top border that appears on hover for each card */
+        .ngo-card-1:hover { @apply border-t-4 border-green-500; }
+        .ngo-card-2:hover { @apply border-t-4 border-blue-500; }
+        .ngo-card-3:hover { @apply border-t-4 border-yellow-500; }
+        .ngo-card-4:hover { @apply border-t-4 border-pink-500; }
+        .ngo-card-5:hover { @apply border-t-4 border-purple-500; }
+
+        .ngo-card-header {
+            /* Removed gradient, using solid subtle bg for cleaner look */
+            @apply p-5 border-b border-gray-200/80;
+        }
+        /* Specific header backgrounds (subtle) */
+        .ngo-card-1 .ngo-card-header { @apply bg-green-50; }
+        .ngo-card-2 .ngo-card-header { @apply bg-blue-50; }
+        .ngo-card-3 .ngo-card-header { @apply bg-yellow-50; }
+        .ngo-card-4 .ngo-card-header { @apply bg-pink-50; }
+        .ngo-card-5 .ngo-card-header { @apply bg-purple-50; }
+
+        .ngo-card-title-premium { 
+            @apply text-2xl font-semibold text-dark; /* Slightly bolder */
+         }
+        .ngo-card-content-premium { 
+            @apply p-6 flex flex-col h-full;
+        }
+        .ngo-card-description-premium { 
+            @apply text-gray-700 text-base mb-4 flex-grow leading-relaxed;
+        }
+        .ngo-card-accepts-premium { 
+            @apply text-sm text-gray-800 font-medium mb-5 flex items-center;
+        }
+         .ngo-card-accepts-premium i { @apply mr-2 text-primary text-lg; }
+
+        .ngo-donate-btn-premium {
+             /* Enhanced button style */
+             @apply mt-auto inline-block w-full text-center bg-gradient-to-r from-primary to-accent text-white py-3 px-6 rounded-lg font-semibold text-base shadow-md hover:shadow-lg hover:from-dark hover:to-primary transition-all duration-300 transform hover:scale-105 hover:-translate-y-0.5;
         }
         
-        .modal {
-            opacity: 0;
-            visibility: hidden;
-        }
-        
-        /* Auth Modal Styling */
-        .auth-modal {
-            @apply fixed inset-0 z-50 flex items-center justify-center bg-black/60 opacity-0 invisible transition-opacity duration-300;
-        }
-        
-        .auth-modal.active {
-            @apply opacity-100 visible;
-        }
-        
-        .modal-container {
-            @apply bg-gradient-to-br from-dark to-primary w-full max-w-md mx-4 rounded-2xl shadow-2xl overflow-hidden opacity-0 transform translate-y-8 transition-all duration-300;
-        }
-        
-        .modal-container.active {
-            @apply opacity-100 translate-y-0;
-        }
-        
-        .modal-header {
-            @apply relative p-6 text-white;
-        }
-        
-        .modal-body {
-            @apply p-6 bg-white rounded-t-3xl;
-        }
-        
-        .btn-close {
-            @apply absolute top-6 right-6 p-1 text-white/80 hover:text-white hover:bg-white/20 rounded-full transition-colors duration-300;
-        }
-        
-        .form-group {
-            @apply mb-5;
-        }
-        
-        .form-label {
-            @apply block text-sm font-medium text-gray-700 mb-1;
-        }
-        
-        .form-input {
-            @apply w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors duration-200;
-        }
-        
-        .form-input.error {
-            @apply border-red-500 focus:ring-red-500;
-        }
-        
-        .form-input.success {
-            @apply border-green-500 focus:ring-green-500;
-        }
-        
-        .form-error {
-            @apply text-sm text-red-500 mt-1 hidden;
-        }
-        
-        .form-error.visible {
-            @apply block;
-        }
-        
-        .input-icon {
-            @apply absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400;
-        }
-        
-        .divider {
-            @apply flex items-center my-6;
-        }
-        
-        .divider::before, .divider::after {
-            @apply content-[''] flex-1 border-t border-gray-200;
-        }
-        
-        .divider-text {
-            @apply px-3 text-sm text-gray-500;
-        }
-        
-        .btn-social {
-            @apply w-full py-3 px-4 flex items-center justify-center border border-gray-200 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors duration-300;
-        }
-        
-        .toggle-link {
-            @apply text-primary hover:text-dark font-medium cursor-pointer transition-colors duration-300;
-        }
-        
-        .checkbox-container {
-            @apply flex items-center;
-        }
-        
-        .checkbox {
-            @apply h-4 w-4 text-primary focus:ring-primary rounded mr-2;
-        }
-        
-        .checkbox-label {
-            @apply text-sm text-gray-700;
-        }
-        
-        .success-message {
-            @apply flex items-center text-green-500 text-sm bg-green-50 p-3 rounded-lg mb-4 invisible;
-        }
-        
-        .success-message.visible {
-            @apply visible;
-        }
-        
-        .thank-you-message {
-            display: none;
-        }
-        
-        .bg-gradient-soft {
-            @apply bg-gradient-to-br from-light via-white to-light;
-        }
-        
-        .card {
-            @apply bg-white rounded-xl shadow-card;
-        }
     </style>
 </head>
 <body class="bg-gradient-soft font-sans">
+
     <!-- Navigation -->
-    <nav class="bg-white shadow-md">
+    <nav class="bg-white shadow-md sticky top-0 z-40 transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
                 <div class="flex items-center">
                     <a href="index.html" class="flex-shrink-0 flex items-center">
-                        <span class="text-2xl font-bold text-eco-green">EcoRevive</span>
+                        <span class="text-2xl font-bold text-primary">EcoRevive</span>
                     </a>
-                    <div class="hidden md:ml-6 md:flex md:space-x-8">
-                        <a href="index.html" class="text-gray-500 hover:text-eco-green px-3 py-2 rounded-md text-sm font-medium">Home</a>
-                        <a href="donate.html" class="text-eco-green border-b-2 border-eco-green px-3 py-2 rounded-md text-sm font-medium">Donate</a>
-                        <a href="scrap.html" class="text-gray-500 hover:text-eco-green px-3 py-2 rounded-md text-sm font-medium">Sell Scrap</a>
-                        <a href="repair.html" class="text-gray-500 hover:text-eco-green px-3 py-2 rounded-md text-sm font-medium">Repair</a>
-                        <a href="rewards.html" class="text-gray-500 hover:text-eco-green px-3 py-2 rounded-md text-sm font-medium">Rewards</a>
+                    <div class="hidden md:ml-6 md:flex md:space-x-8 md:mx-auto justify-center">
+                         <a href="home.html" class="text-gray-500 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 hover:border-b-2 hover:border-primary transform hover:translate-y-[-2px]">Home</a>
+                        <!-- Updated: Donate now points to this page -->
+                        <a href="donate.html" class="text-primary border-b-2 border-primary px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 transform hover:translate-y-[-2px]">Donate</a>
+                        <a href="scrap.html" class="text-gray-500 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 hover:border-b-2 hover:border-primary transform hover:translate-y-[-2px]">Sell Scrap</a>
+                        <a href="repair.html" class="text-gray-500 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 hover:border-b-2 hover:border-primary transform hover:translate-y-[-2px]">Repair</a>
+                        <a href="rewards.html" class="text-gray-500 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 hover:border-b-2 hover:border-primary transform hover:translate-y-[-2px]">Rewards</a>
                     </div>
                 </div>
                 <div class="flex items-center">
-                    <!-- Moved Desktop Buttons here -->
-                    <div class="hidden md:flex items-center space-x-3 mr-4">
-                        <a href="login.html" class="px-4 py-2 text-sm font-medium text-primary border border-primary rounded-md hover:bg-primary hover:text-white transition duration-300">Sign In</a>
-                        <a href="login.html?form=signup" class="px-4 py-2 text-sm font-medium text-white bg-primary border border-primary rounded-md hover:bg-dark transition duration-300">Sign Up</a>
+                    <div id="userProfileAreaDesktop" class="md:flex items-center space-x-4">
+                        <a href="#" title="Profile" class="text-primary hover:text-dark transition duration-200"><i class="fas fa-user-circle text-2xl"></i></a>
+                        <button onclick="logout()" class="px-4 py-1.5 text-sm font-medium bg-dark text-white rounded-full shadow-sm hover:bg-opacity-80 transition duration-200 transform hover:scale-105">Logout</button>
                     </div>
                     <div class="md:hidden ml-2">
-                        <button id="mobileMenuBtn" class="text-gray-500 hover:text-eco-green">
-                            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                            </svg>
+                        <button id="mobileMenuBtn" class="text-gray-500 hover:text-primary transition-colors duration-300 p-1 rounded-md hover:bg-gray-100">
+                            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
                         </button>
                     </div>
                 </div>
@@ -184,254 +131,301 @@
         </div>
         <!-- Mobile menu -->
         <div id="mobileMenu" class="hidden md:hidden">
-            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <a href="index.html" class="text-gray-500 hover:text-eco-green block px-3 py-2 rounded-md text-base font-medium">Home</a>
-                <a href="donate.html" class="text-eco-green block px-3 py-2 rounded-md text-base font-medium">Donate</a>
-                <a href="scrap.html" class="text-gray-500 hover:text-eco-green block px-3 py-2 rounded-md text-base font-medium">Sell Scrap</a>
-                <a href="repair.html" class="text-gray-500 hover:text-eco-green block px-3 py-2 rounded-md text-base font-medium">Repair</a>
-                <a href="rewards.html" class="text-gray-500 hover:text-eco-green block px-3 py-2 rounded-md text-base font-medium">Rewards</a>
-                <!-- Added Sign In / Sign Up Buttons for Mobile -->
-                <div class="mt-4 pt-4 border-t border-gray-200 flex space-x-3 px-3">
-                    <a href="login.html" class="flex-1 text-center px-4 py-2 text-base font-medium text-primary border border-primary rounded-md hover:bg-primary hover:text-white transition duration-300">Sign In</a>
-                    <a href="login.html?form=signup" class="flex-1 text-center px-4 py-2 text-base font-medium text-white bg-primary border border-primary rounded-md hover:bg-dark transition duration-300">Sign Up</a>
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white shadow-inner">
+                <a href="home.html" class="text-gray-500 hover:text-primary hover:bg-gray-50 block px-3 py-2 rounded-md text-base font-medium transition-colors duration-300 hover:border-l-4 hover:border-primary">Home</a>
+                <a href="donate.html" class="text-primary block px-3 py-2 rounded-md text-base font-medium border-l-4 border-primary">Donate</a>
+                <a href="scrap.html" class="text-gray-500 hover:text-primary hover:bg-gray-50 block px-3 py-2 rounded-md text-base font-medium transition-colors duration-300 hover:border-l-4 hover:border-primary">Sell Scrap</a>
+                <a href="repair.html" class="text-gray-500 hover:text-primary hover:bg-gray-50 block px-3 py-2 rounded-md text-base font-medium transition-colors duration-300 hover:border-l-4 hover:border-primary">Repair</a>
+                <a href="rewards.html" class="text-gray-500 hover:text-primary hover:bg-gray-50 block px-3 py-2 rounded-md text-base font-medium transition-colors duration-300 hover:border-l-4 hover:border-primary">Rewards</a>
+                
+                <!-- Mobile User Profile/Logout Area -->
+                <div id="userProfileAreaMobile" class="mt-4 pt-4 border-t border-gray-200 flex items-center justify-between px-3">
+                    <a href="#" class="flex items-center text-primary hover:text-dark transition duration-200"><i class="fas fa-user-circle text-xl mr-2"></i><span class="text-sm font-medium">Profile</span></a>
+                    <button onclick="logout()" class="px-3 py-1 text-sm font-medium bg-dark text-white rounded-full shadow-sm hover:bg-opacity-80 transition duration-200 transform hover:scale-105">Logout</button>
                 </div>
             </div>
         </div>
     </nav>
 
-    <!-- Back to Home Link -->
-    <div class="pt-24 pb-4">
-        <div class="container mx-auto px-4 lg:px-8">
-            <a href="index.html" class="inline-flex items-center text-primary hover:text-dark transition group">
-                <svg class="w-5 h-5 mr-2 transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-                </svg>
-                <span class="font-medium">Back to Home</span>
-            </a>
-        </div>
-    </div>
-
-    <!-- Hero Donation Image Section -->
-    <section class="pb-8 pt-4">
-        <div class="container mx-auto px-4 lg:px-8">
-            <div class="card overflow-hidden">
-                <div class="relative w-full h-64 md:h-96 max-h-96 lg:max-h-[500px] bg-gradient-to-r from-primary/20 to-secondary/20">
-                    <img src="https://images.unsplash.com/photo-1532629345422-7515f3d16bb6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1500&q=80" alt="People helping each other" class="w-full h-full object-cover opacity-90">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent flex items-end">
-                        <div class="p-6 md:p-10 text-white max-w-3xl">
-                            <h1 class="text-3xl md:text-4xl font-bold mb-3 leading-tight">
-                                Give Your Items a New Purpose
-                            </h1>
-                            <p class="text-lg md:text-xl text-white/90">
-                                Your unused or refurbished items can bring hope to someone in need. Join our donation drive and make a real-world impact.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Content Section with Left-Right Layout -->
-    <section class="py-16">
+    <!-- Top Section with Image and Description -->
+    <section class="pt-24 pb-16 md:pt-32 md:pb-20 bg-gradient-to-b from-light to-white">
         <div class="container mx-auto px-4 lg:px-8">
             <div class="flex flex-col lg:flex-row items-center gap-12">
-                <!-- Left Side: Content -->
-                <div class="lg:w-1/2">
-                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-6">Make a Difference With Your Donations</h2>
-                    <p class="text-lg text-gray-600 mb-6">
-                        Your unused or gently used items can bring joy and relief to those in need. Join our donation network and help create a more sustainable, caring community.
+                <div class="lg:w-1/2 text-center lg:text-left">
+                    <h1 class="text-4xl md:text-5xl font-bold text-dark leading-tight mb-5">Extend the Life of Your Items</h1>
+                    <p class="text-xl text-gray-700 mb-8 leading-relaxed">
+                        Your unwanted items can find a new home and purpose. Donate them through EcoRevive to support communities and reduce waste, or contribute directly to trusted NGOs making a global impact.
                     </p>
-                    
-                    <div class="space-y-6 mb-8">
-                        <div class="flex items-start">
-                            <div class="flex-shrink-0 w-12 h-12 bg-light rounded-full flex items-center justify-center mr-4">
-                                <i class="fas fa-heart text-primary text-xl"></i>
-                            </div>
-                            <div>
-                                <h3 class="font-semibold text-lg text-gray-800 mb-2">Support Communities</h3>
-                                <p class="text-gray-600">Your donations directly help people in need, creating positive change in communities around the world.</p>
-                            </div>
-                        </div>
-                        
-                        <div class="flex items-start">
-                            <div class="flex-shrink-0 w-12 h-12 bg-light rounded-full flex items-center justify-center mr-4">
-                                <i class="fas fa-leaf text-primary text-xl"></i>
-                            </div>
-                            <div>
-                                <h3 class="font-semibold text-lg text-gray-800 mb-2">Environmental Impact</h3>
-                                <p class="text-gray-600">By extending the life of your items, you help reduce waste and conserve valuable resources.</p>
-                            </div>
-                        </div>
-                        
-                        <div class="flex items-start">
-                            <div class="flex-shrink-0 w-12 h-12 bg-light rounded-full flex items-center justify-center mr-4">
-                                <i class="fas fa-award text-primary text-xl"></i>
-                            </div>
-                            <div>
-                                <h3 class="font-semibold text-lg text-gray-800 mb-2">Earn Rewards</h3>
-                                <p class="text-gray-600">Get eco-points for your contributions that you can redeem for exclusive benefits and offers.</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <a href="#donation-form" class="btn-primary inline-flex items-center">
-                        Start Donating Now
-                        <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                        </svg>
+                    <a href="#donation-form-section" class="btn-primary text-lg inline-flex items-center">
+                        Donate Items Now 
+                        <i class="fas fa-arrow-down ml-2"></i>
                     </a>
                 </div>
-                
-                <!-- Right Side: Image -->
                 <div class="lg:w-1/2">
-                    <div class="rounded-xl overflow-hidden shadow-card">
-                        <img src="img/donation_1 (1).jpg" alt="Donation impact" class="w-full h-auto object-cover">
-                    </div>
+                    <img src="img/donation_1 (4).jpg" alt="Community donation drive" class="rounded-xl shadow-card w-full h-auto max-h-[450px] object-cover">
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Donation Content Section -->
-    <section class="py-10">
+    <!-- Original Donation Form Section -->
+     <section id="donation-form-section" class="py-16 md:py-20 bg-gradient-soft">
         <div class="container mx-auto px-4 lg:px-8">
+             <div class="text-center mb-12 md:mb-16">
+                 <h2 class="text-3xl md:text-4xl font-bold text-dark mb-3">Donate Your Items via EcoRevive</h2>
+                 <p class="text-lg text-gray-600 max-w-2xl mx-auto">Fill out the form below to give your unused items a second life.</p>
+            </div>
             <div class="flex flex-col lg:flex-row gap-10">
                 <!-- Left Column - Info -->
-                <div class="lg:w-1/2">
-                    <div class="card p-8 md:p-10 h-full">
-                        <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-6">Why Donate With Us?</h2>
-                        
+                 <div class="lg:w-1/2">
+                     <div class="card p-8 md:p-10 h-full bg-gradient-to-br from-gray-50 via-white to-light border border-gray-200/50 transition-all duration-300 hover:shadow-xl hover:border-primary/30">
+                        <h3 class="text-2xl font-semibold text-gray-800 mb-6">Why Donate With Us?</h3>
                         <div class="space-y-6">
                             <div class="flex items-start">
-                                <div class="flex-shrink-0 w-12 h-12 bg-light rounded-full flex items-center justify-center mr-4">
-                                    <i class="fas fa-heart text-primary text-xl"></i>
+                                <div class="flex-shrink-0 w-12 h-12 bg-light rounded-full flex items-center justify-center mr-4 text-primary text-xl shadow-sm">
+                                    <i class="fas fa-heart"></i>
                                 </div>
                                 <div>
-                                    <h3 class="font-semibold text-lg text-gray-800 mb-2">Support Communities</h3>
-                                    <p class="text-gray-600">Your donations directly help people in need, creating positive change in communities around the world.</p>
+                                    <h4 class="font-medium text-lg text-gray-800 mb-1">Support Communities</h4>
+                                    <p class="text-gray-600 text-sm">Your donations directly help people in need.</p>
                                 </div>
                             </div>
-                            
+                             <div class="flex items-start">
+                                <div class="flex-shrink-0 w-12 h-12 bg-light rounded-full flex items-center justify-center mr-4 text-primary text-xl shadow-sm">
+                                    <i class="fas fa-leaf"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium text-lg text-gray-800 mb-1">Reduce Waste</h4>
+                                    <p class="text-gray-600 text-sm">Extend item life and conserve resources.</p>
+                                </div>
+                            </div>
                             <div class="flex items-start">
-                                <div class="flex-shrink-0 w-12 h-12 bg-light rounded-full flex items-center justify-center mr-4">
-                                    <i class="fas fa-leaf text-primary text-xl"></i>
+                                <div class="flex-shrink-0 w-12 h-12 bg-light rounded-full flex items-center justify-center mr-4 text-primary text-xl shadow-sm">
+                                    <i class="fas fa-award"></i>
                                 </div>
                                 <div>
-                                    <h3 class="font-semibold text-lg text-gray-800 mb-2">Environmental Impact</h3>
-                                    <p class="text-gray-600">By extending the life of your items, you help reduce waste and conserve valuable resources.</p>
+                                    <h4 class="font-medium text-lg text-gray-800 mb-1">Earn Rewards</h4>
+                                    <p class="text-gray-600 text-sm">Get eco-points for your contributions.</p>
                                 </div>
                             </div>
-                            
-                            <div class="flex items-start">
-                                <div class="flex-shrink-0 w-12 h-12 bg-light rounded-full flex items-center justify-center mr-4">
-                                    <i class="fas fa-award text-primary text-xl"></i>
-                                </div>
-                                <div>
-                                    <h3 class="font-semibold text-lg text-gray-800 mb-2">Earn Rewards</h3>
-                                    <p class="text-gray-600">Get eco-points for your contributions that you can redeem for exclusive benefits and offers.</p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="mt-8 pt-6 border-t border-gray-100">
-                            <p class="text-gray-700 italic">
-                                "Give new life to old treasures — together we can create a sustainable and caring world."
-                            </p>
                         </div>
                     </div>
                 </div>
-                
                 <!-- Right Column - Form -->
                 <div class="lg:w-1/2">
-                    <div class="card p-8 md:p-10">
-                        <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-6">Donation Form</h2>
-                        
-                        <!-- Form Container with Border and Background -->
-                        <div class="p-6 bg-white border border-secondary rounded-lg shadow-soft">
-                            <!-- Donation Form -->
-                            <form id="donation-form" class="space-y-6">
-                                <!-- Name Input -->
-                                <div>
-                                    <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
-                                    <input type="text" id="name" name="name" class="form-control" placeholder="Your full name" required>
-                                </div>
-                                
-                                <!-- Email Input -->
-                                <div>
-                                    <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
-                                    <input type="email" id="email" name="email" class="form-control" placeholder="your@email.com" required>
-                                </div>
-                                
-                                <!-- Item Type Dropdown -->
-                                <div>
-                                    <label for="item-type" class="block text-sm font-medium text-gray-700 mb-1">Item Type</label>
-                                    <select id="item-type" name="item-type" class="form-control" required>
-                                        <option value="" disabled selected>Select item type</option>
-                                        <option value="electronics">Electronics</option>
-                                        <option value="clothing">Clothing</option>
-                                        <option value="furniture">Furniture</option>
-                                        <option value="books">Books</option>
-                                        <option value="other">Other</option>
-                                    </select>
-                                </div>
-                                
-                                <!-- Upload Image -->
-                                <div>
-                                    <label for="item-image" class="block text-sm font-medium text-gray-700 mb-1">Upload Image of Item</label>
-                                    <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-200 border-dashed rounded-lg">
-                                        <div class="space-y-1 text-center">
-                                            <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
-                                                <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                                            </svg>
-                                            <div class="flex text-sm text-gray-600 justify-center">
-                                                <label for="file-upload" class="relative cursor-pointer bg-white rounded-md font-medium text-primary hover:text-dark focus-within:outline-none">
-                                                    <span>Upload a file</span>
-                                                    <input id="file-upload" name="file-upload" type="file" class="sr-only" accept="image/*">
-                                                </label>
-                                                <p class="pl-1">or drag and drop</p>
-                                            </div>
-                                            <p class="text-xs text-gray-500">
-                                                PNG, JPG, GIF up to 5MB
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div id="image-preview" class="mt-3 hidden">
-                                        <img id="preview-img" src="#" alt="Preview" class="h-40 rounded-lg object-cover">
-                                        <button type="button" id="remove-img" class="mt-2 text-sm text-red-500 hover:text-red-700 flex items-center">
-                                            <i class="fas fa-times mr-1"></i> Remove image
-                                        </button>
-                                    </div>
-                                </div>
-                                
-                                <!-- Description Textarea -->
-                                <div>
-                                    <label for="description" class="block text-sm font-medium text-gray-700 mb-1">Description</label>
-                                    <textarea id="description" name="description" rows="4" class="form-control" placeholder="Please provide a detailed description of your item, including its condition, age, and any other relevant information." required></textarea>
-                                </div>
-                                
-                                <!-- Submit Button -->
-                                <div>
-                                    <button type="submit" class="w-full py-4 btn-primary text-lg font-semibold">
-                                        Submit Donation
-                                    </button>
-                                </div>
-                            </form>
-                        </div> <!-- End Form Container -->
-                        
-                        <!-- Thank You Message (Hidden by default) -->
-                        <div id="thank-you-message" class="thank-you-message text-center py-8">
-                            <div class="text-primary mb-4">
-                                <svg class="w-16 h-16 mx-auto" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                                </svg>
+                     <div class="card p-8 md:p-10 bg-gradient-to-r from-light/50 via-white to-light/30 border border-gray-200/50 shadow-lg hover:shadow-xl transition-all duration-300">
+                        <form id="donation-form" class="space-y-6">
+                            <div class="form-group transition-all duration-200 transform hover:-translate-y-1">
+                                <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                                <input type="text" id="name" name="name" class="form-control focus:ring-2 focus:ring-primary/40" placeholder="Your full name" required>
                             </div>
-                            <h3 class="text-2xl font-bold text-gray-800 mb-2">Thank You for Your Contribution!</h3>
-                            <p class="text-lg text-gray-600 mb-6">
-                                Your donation will be reviewed and delivered to those in need.
-                            </p>
-                            <a href="index.html" class="inline-block px-6 py-3 bg-primary text-white rounded-lg font-semibold hover:bg-dark transition">
-                                Return to Home
+                            <div class="form-group transition-all duration-200 transform hover:-translate-y-1">
+                                <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                                <input type="email" id="email" name="email" class="form-control focus:ring-2 focus:ring-primary/40" placeholder="your@email.com" required>
+                            </div>
+                            <div class="form-group transition-all duration-200 transform hover:-translate-y-1">
+                                <label for="pickup-address" class="block text-sm font-medium text-gray-700 mb-1">
+                                    <span class="flex items-center">
+                                        Pickup Address
+                                        <span class="text-xs bg-green-100 text-green-800 px-2 py-0.5 rounded-full ml-2 font-normal">New</span>
+                                    </span>
+                                </label>
+                                <textarea id="pickup-address" name="pickup-address" rows="2" class="form-control focus:ring-2 focus:ring-primary/40" placeholder="Enter your complete address for item pickup" required></textarea>
+                                <p class="mt-1 text-xs text-gray-500">Our team will coordinate with you for convenient pickup timing.</p>
+                            </div>
+                            <div class="form-group transition-all duration-200 transform hover:-translate-y-1">
+                                <label for="item-type" class="block text-sm font-medium text-gray-700 mb-1">Item Type</label>
+                                <select id="item-type" name="item-type" class="form-control focus:ring-2 focus:ring-primary/40" required>
+                                    <option value="" disabled selected>Select item type</option>
+                                    <option value="electronics">Electronics</option>
+                                    <option value="clothing">Clothing</option>
+                                    <option value="furniture">Furniture</option>
+                                    <option value="books">Books</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div class="form-group transition-all duration-200 transform hover:-translate-y-1">
+                                <label for="item-image" class="block text-sm font-medium text-gray-700 mb-1">Upload Image of Item</label>
+                                <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-lg hover:border-primary/50 transition duration-200 bg-white/80 hover:bg-white">
+                                    <div class="space-y-1 text-center">
+                                        <svg class="mx-auto h-10 w-10 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true"><path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg>
+                                        <div class="flex text-sm text-gray-600 justify-center">
+                                            <label for="file-upload" class="relative cursor-pointer bg-white rounded-md font-medium text-primary hover:text-dark focus-within:outline-none"><span>Upload a file</span><input id="file-upload" name="file-upload" type="file" class="sr-only" accept="image/*"></label>
+                                            <p class="pl-1">or drag and drop</p>
+                                        </div>
+                                        <p class="text-xs text-gray-500">PNG, JPG, GIF up to 5MB</p>
+                                    </div>
+                                </div>
+                                <div id="image-preview" class="mt-3 hidden"><img id="preview-img" src="#" alt="Preview" class="h-40 rounded-lg object-cover"><button type="button" id="remove-img" class="mt-2 text-sm text-red-500 hover:text-red-700 flex items-center"><i class="fas fa-times mr-1"></i> Remove image</button></div>
+                            </div>
+                            <div class="form-group transition-all duration-200 transform hover:-translate-y-1">
+                                <label for="description" class="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                                <textarea id="description" name="description" rows="3" class="form-control focus:ring-2 focus:ring-primary/40" placeholder="Describe the item, its condition, etc." required></textarea>
+                            </div>
+                            <div>
+                                <button type="submit" class="w-full py-3.5 px-6 bg-gradient-to-r from-primary to-accent text-white rounded-lg font-semibold text-base shadow-md hover:shadow-lg transition-all duration-300 transform hover:translate-y-[-2px] hover:from-dark hover:to-primary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+                                    <span class="flex items-center justify-center">
+                                        <i class="fas fa-gift mr-2"></i>
+                                        Submit Donation
+                                    </span>
+                                </button>
+                            </div>
+                        </form>
+                         <!-- Thank You Message (Initially Hidden) -->
+                        <div id="thank-you-message" class="thank-you-message">
+                            <div class="text-primary mb-4"><svg class="w-16 h-16 mx-auto" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg></div>
+                            <h3 class="text-2xl font-bold text-gray-800 mb-2">Thank You!</h3>
+                            <p class="text-lg text-gray-600 mb-6">Your donation details have been received. We'll be in touch about pickup arrangements soon.</p>
+                            <a href="home.html" class="inline-block px-6 py-3 bg-primary text-white rounded-lg font-semibold hover:bg-dark transition">Return to Home</a>
+                        </div>
+                    </div> 
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- ***** Premium NGO Section ***** -->
+    <section id="support-ngos" class="py-16 sm:py-24 bg-white">
+        <div class="container mx-auto px-4 lg:px-8">
+            <div class="text-center mb-12 sm:mb-16">
+                <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-dark mb-4">Support Trusted NGOs Directly</h2>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+                    You can also choose to donate directly to these reputable organizations making a significant impact.
+                </p>
+            </div>
+
+            <!-- Premium NGO Vertical List -->
+            <div class="max-w-4xl mx-auto space-y-6">
+                <!-- NGO 1: UNICEF India -->
+                <div class="ngo-card-premium border border-gray-200 overflow-hidden rounded-xl bg-gradient-to-r from-green-50 to-white transition-all duration-300 hover:shadow-xl hover:border-green-300 transform hover:scale-[1.02] hover:-translate-y-1">
+                    <div class="p-6 sm:p-8">
+                        <div class="flex items-center space-x-4 mb-5">
+                            <div class="p-3 rounded-full bg-green-100 text-green-600 shadow-sm">
+                                <i class="fas fa-hand-holding-heart text-xl"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold text-gray-800">UNICEF India</h3>
+                        </div>
+                        
+                        <p class="text-gray-700 mb-6 leading-relaxed">Works relentlessly for the rights and well-being of every child across India, focusing on critical areas like health, nutrition, education, and protection from violence and exploitation.</p>
+                        
+                        <div class="flex items-center justify-between flex-wrap gap-4">
+                            <div class="py-2 px-4 bg-green-100 rounded-lg inline-flex items-center border border-green-200">
+                                <i class="fas fa-hand-holding-usd mr-2 text-green-600"></i>
+                                <span class="font-medium text-gray-800">They accept: <span class="text-green-700">Monetary Donations</span></span>
+                            </div>
+                            
+                            <a href="https://www.unicef.org/india/take-action/donate-to-unicef" target="_blank" rel="noopener noreferrer" 
+                               class="inline-block text-center bg-gradient-to-r from-green-600 to-green-500 text-white py-3 px-6 rounded-lg font-semibold shadow-md 
+                                      transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-green-200/50 hover:from-green-700 hover:to-green-600">
+                                Donate to UNICEF
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- NGO 2: Donatekart -->
+                <div class="ngo-card-premium border border-gray-200 overflow-hidden rounded-xl bg-gradient-to-r from-blue-50 to-white transition-all duration-300 hover:shadow-xl hover:border-blue-300 transform hover:scale-[1.02] hover:-translate-y-1">
+                    <div class="p-6 sm:p-8">
+                        <div class="flex items-center space-x-4 mb-5">
+                            <div class="p-3 rounded-full bg-blue-100 text-blue-600 shadow-sm">
+                                <i class="fas fa-box-open text-xl"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold text-gray-800">Donatekart</h3>
+                        </div>
+                        
+                        <p class="text-gray-700 mb-6 leading-relaxed">India's unique platform connecting donors directly with NGOs needing specific products for their beneficiaries. Ensures transparency by allowing donations of essential items rather than just money.</p>
+                        
+                        <div class="flex items-center justify-between flex-wrap gap-4">
+                            <div class="py-2 px-4 bg-blue-100 rounded-lg inline-flex items-center border border-blue-200">
+                                <i class="fas fa-box-open mr-2 text-blue-600"></i>
+                                <span class="font-medium text-gray-800">They accept: <span class="text-blue-700">Products & Essentials</span></span>
+                            </div>
+                            
+                            <a href="https://www.donatekart.com" target="_blank" rel="noopener noreferrer" 
+                               class="inline-block text-center bg-gradient-to-r from-blue-600 to-blue-500 text-white py-3 px-6 rounded-lg font-semibold shadow-md 
+                                      transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-blue-200/50 hover:from-blue-700 hover:to-blue-600">
+                                Donate via Donatekart
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- NGO 3: Digital Daan by DEF -->
+                <div class="ngo-card-premium border border-gray-200 overflow-hidden rounded-xl bg-gradient-to-r from-yellow-50 to-white transition-all duration-300 hover:shadow-xl hover:border-yellow-300 transform hover:scale-[1.02] hover:-translate-y-1">
+                    <div class="p-6 sm:p-8">
+                        <div class="flex items-center space-x-4 mb-5">
+                            <div class="p-3 rounded-full bg-yellow-100 text-yellow-600 shadow-sm">
+                                <i class="fas fa-laptop text-xl"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold text-gray-800">Digital Daan (DEF)</h3>
+                        </div>
+                        
+                        <p class="text-gray-700 mb-6 leading-relaxed">An initiative by the Digital Empowerment Foundation aimed at bridging India's digital divide. They collect and refurbish old smartphones, tablets, and laptops for underprivileged students.</p>
+                        
+                        <div class="flex items-center justify-between flex-wrap gap-4">
+                            <div class="py-2 px-4 bg-yellow-100 rounded-lg inline-flex items-center border border-yellow-200">
+                                <i class="fas fa-laptop mr-2 text-yellow-600"></i>
+                                <span class="font-medium text-gray-800">They accept: <span class="text-yellow-700">Digital Devices</span></span>
+                            </div>
+                            
+                            <a href="https://digitaldaan.in/" target="_blank" rel="noopener noreferrer" 
+                               class="inline-block text-center bg-gradient-to-r from-yellow-600 to-yellow-500 text-white py-3 px-6 rounded-lg font-semibold shadow-md 
+                                      transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-yellow-200/50 hover:from-yellow-700 hover:to-yellow-600">
+                                Donate Devices
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- NGO 4: DonateInKind -->
+                <div class="ngo-card-premium border border-gray-200 overflow-hidden rounded-xl bg-gradient-to-r from-pink-50 to-white transition-all duration-300 hover:shadow-xl hover:border-pink-300 transform hover:scale-[1.02] hover:-translate-y-1">
+                    <div class="p-6 sm:p-8">
+                        <div class="flex items-center space-x-4 mb-5">
+                            <div class="p-3 rounded-full bg-pink-100 text-pink-600 shadow-sm">
+                                <i class="fas fa-tshirt text-xl"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold text-gray-800">DonateInKind</h3>
+                        </div>
+                        
+                        <p class="text-gray-700 mb-6 leading-relaxed">Facilitates the donation of goods by connecting individuals and corporates with verified NGOs across India, ensuring that items reach those genuinely in need.</p>
+                        
+                        <div class="flex items-center justify-between flex-wrap gap-4">
+                            <div class="py-2 px-4 bg-pink-100 rounded-lg inline-flex items-center border border-pink-200">
+                                <i class="fas fa-tshirt mr-2 text-pink-600"></i>
+                                <span class="font-medium text-gray-800">They accept: <span class="text-pink-700">Food, Clothes, Furniture</span></span>
+                            </div>
+                            
+                            <a href="https://www.donateinkind.in" target="_blank" rel="noopener noreferrer" 
+                               class="inline-block text-center bg-gradient-to-r from-pink-600 to-pink-500 text-white py-3 px-6 rounded-lg font-semibold shadow-md 
+                                      transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-pink-200/50 hover:from-pink-700 hover:to-pink-600">
+                                Donate Goods In Kind
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- NGO 5: The Salvation Army -->
+                <div class="ngo-card-premium border border-gray-200 overflow-hidden rounded-xl bg-gradient-to-r from-purple-50 to-white transition-all duration-300 hover:shadow-xl hover:border-purple-300 transform hover:scale-[1.02] hover:-translate-y-1">
+                    <div class="p-6 sm:p-8">
+                        <div class="flex items-center space-x-4 mb-5">
+                            <div class="p-3 rounded-full bg-purple-100 text-purple-600 shadow-sm">
+                                <i class="fas fa-hand-holding-heart text-xl"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold text-gray-800">The Salvation Army</h3>
+                        </div>
+                        
+                        <p class="text-gray-700 mb-6 leading-relaxed">An international movement and evangelical part of the universal Christian Church. Provides spiritual and material aid to people in need without discrimination worldwide.</p>
+                        
+                        <div class="flex items-center justify-between flex-wrap gap-4">
+                            <div class="py-2 px-4 bg-purple-100 rounded-lg inline-flex items-center border border-purple-200">
+                                <i class="fas fa-hand-holding-heart mr-2 text-purple-600"></i>
+                                <span class="font-medium text-gray-800">They accept: <span class="text-purple-700">Monetary Donations, Supplies</span></span>
+                            </div>
+                            
+                            <a href="https://www.salvationarmy.org/ihq/donate" target="_blank" rel="noopener noreferrer" 
+                               class="inline-block text-center bg-gradient-to-r from-purple-600 to-purple-500 text-white py-3 px-6 rounded-lg font-semibold shadow-md 
+                                      transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-purple-200/50 hover:from-purple-700 hover:to-purple-600">
+                                Donate to Salvation Army
                             </a>
                         </div>
                     </div>
@@ -441,42 +435,31 @@
     </section>
 
     <!-- Footer Section -->
-    <footer id="contact" class="bg-gray-800 text-white py-12 mt-16">
-        <div class="container mx-auto px-4 lg:px-8">
+    <footer id="contact" class="bg-gray-800 text-white py-12">
+        <div class="container mx-auto px-4">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                 <!-- Company Info -->
                 <div>
                     <h3 class="text-xl font-bold mb-4">EcoRevive 🌱</h3>
-                    <p class="text-gray-300 mb-4">
-                        Building a sustainable future, one item at a time.
-                    </p>
+                    <p class="text-gray-300 mb-4">Building a sustainable future, one item at a time.</p>
                     <div class="flex space-x-4">
-                        <a href="#" class="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center text-gray-300 hover:bg-gray-600 hover:text-white transition">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center text-gray-300 hover:bg-gray-600 hover:text-white transition">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center text-gray-300 hover:bg-gray-600 hover:text-white transition">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center text-gray-300 hover:bg-gray-600 hover:text-white transition">
-                            <i class="fab fa-linkedin-in"></i>
-                        </a>
+                        <a href="#" class="text-gray-300 hover:text-white transition"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-gray-300 hover:text-white transition"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-300 hover:text-white transition"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-gray-300 hover:text-white transition"><i class="fab fa-linkedin-in"></i></a>
                     </div>
                 </div>
-                
                 <!-- Quick Links -->
-                <div>
+                 <div>
                     <h3 class="text-xl font-bold mb-4">Quick Links</h3>
                     <ul class="space-y-2">
-                        <li><a href="index.html" class="text-gray-300 hover:text-white transition">Home</a></li>
-                        <li><a href="index.html#services" class="text-gray-300 hover:text-white transition">Our Services</a></li>
-                        <li><a href="index.html#how-it-works" class="text-gray-300 hover:text-white transition">How It Works</a></li>
-                        <li><a href="index.html#about" class="text-gray-300 hover:text-white transition">About</a></li>
+                        <li><a href="home.html" class="text-gray-300 hover:text-white transition">Home</a></li>
+                        <li><a href="donate.html" class="text-gray-300 hover:text-white transition">Donate</a></li>
+                        <li><a href="scrap.html" class="text-gray-300 hover:text-white transition">Sell Scrap</a></li>
+                        <li><a href="repair.html" class="text-gray-300 hover:text-white transition">Repair</a></li>
+                        <li><a href="rewards.html" class="text-gray-300 hover:text-white transition">Rewards</a></li>
                     </ul>
                 </div>
-                
                 <!-- Legal -->
                 <div>
                     <h3 class="text-xl font-bold mb-4">Legal</h3>
@@ -486,42 +469,28 @@
                         <li><a href="#" class="text-gray-300 hover:text-white transition">Cookie Policy</a></li>
                     </ul>
                 </div>
-                
                 <!-- Contact -->
                 <div>
                     <h3 class="text-xl font-bold mb-4">Contact Us</h3>
                     <ul class="space-y-2">
-                        <li class="flex items-start">
-                            <i class="fas fa-map-marker-alt mr-2 mt-1"></i>
-                            <span>123 Eco Street, Green City</span>
-                        </li>
-                        <li class="flex items-start">
-                            <i class="fas fa-envelope mr-2 mt-1"></i>
-                            <span>info@ecorevive.com</span>
-                        </li>
-                        <li class="flex items-start">
-                            <i class="fas fa-phone-alt mr-2 mt-1"></i>
-                            <span>+1 (555) 123-4567</span>
-                        </li>
+                        <li class="flex items-start"><i class="fas fa-map-marker-alt mr-2 mt-1"></i><span>123 Eco Street, Green City</span></li>
+                        <li class="flex items-start"><i class="fas fa-envelope mr-2 mt-1"></i><span>info@ecorevive.com</span></li>
+                        <li class="flex items-start"><i class="fas fa-phone-alt mr-2 mt-1"></i><span>+1 (555) 123-4567</span></li>
                     </ul>
                 </div>
             </div>
-            
             <div class="border-t border-gray-700 mt-12 pt-8 text-center">
                 <p>&copy; 2023 EcoRevive. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
-    <!-- JavaScript for basic functionality -->
+    <!-- Script for Form and Mobile Menu -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('DOM Content Loaded - Initializing page');
-            
             // Mobile menu toggle
             const mobileMenu = document.getElementById('mobileMenu');
             const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-            
             if (mobileMenuBtn && mobileMenu) {
                 mobileMenuBtn.addEventListener('click', function() {
                     mobileMenu.classList.toggle('hidden');
@@ -531,20 +500,20 @@
             // Handle donation form submission
             const donationForm = document.getElementById('donation-form');
             const thankYouMessage = document.getElementById('thank-you-message');
+            const formCard = donationForm?.closest('.card > div:has(#donation-form)'); // Find the direct parent card div containing the form
 
-            if (donationForm && thankYouMessage) {
+            if (donationForm && thankYouMessage && formCard) {
                 donationForm.addEventListener('submit', function(e) {
                     e.preventDefault();
                     
-                    // Hide the form and show thank you message
-                    donationForm.classList.add('hidden');
-                    if (thankYouMessage) {
-                        thankYouMessage.classList.remove('hidden');
-                    }
-                    
-                    // Scroll to thank you message
-                    if (thankYouMessage) {
-                        thankYouMessage.scrollIntoView({ behavior: 'smooth' });
+                     // Hide the form itself and show thank you message within the same card
+                    donationForm.classList.add('hidden'); 
+                    thankYouMessage.style.display = 'block'; // Make thank you message visible
+
+                    // Scroll the card into view if needed
+                    const cardElement = formCard.closest('.card');
+                    if (cardElement) {
+                        cardElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
                     }
                 });
             }
@@ -565,17 +534,27 @@
                             previewImg.src = e.target.result;
                             imagePreview.classList.remove('hidden');
                         };
-                        
                         reader.readAsDataURL(file);
                     }
                 });
 
                 removeImg.addEventListener('click', function() {
-                    fileUpload.value = '';
+                    fileUpload.value = ''; // Clear the file input
                     imagePreview.classList.add('hidden');
+                    previewImg.src = '#'; // Reset image source
                 });
             }
-        });
+
+        }); // End of DOMContentLoaded listener
+
+        // Placeholder logout function
+        function logout() {
+            console.log('Logout action triggered');
+            // Add actual logout logic here (e.g., clear session, redirect to login)
+            window.location.href = 'login.html'; 
+        }
+
     </script>
+
 </body>
 </html> 
