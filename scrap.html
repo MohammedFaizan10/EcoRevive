@@ -17,15 +17,20 @@
                         dark: '#1B5E20',
                         light: '#E8F5E9'
                     },
+                    fontFamily: {
+                        sans: ['Inter', 'Roboto', 'system-ui', 'sans-serif']
+                    },
                     boxShadow: {
                         'soft': '0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.03)',
-                        'card': '0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+                        'card': '0 12px 20px -8px rgba(46, 125, 50, 0.15)',
+                        'price-card': '0 4px 12px rgba(0, 0, 0, 0.08)'
                     }
                 }
             }
         }
     </script>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
         html {
             scroll-behavior: smooth;
         }
@@ -163,11 +168,20 @@
         .dealer-card {
             @apply bg-white rounded-lg p-5 shadow-soft border border-gray-100 transition hover:shadow-md;
         }
+
+        /* Styles for the new price list grid */
+        /* Base styles applied directly via classes now */
+         .price-card h3 {
+             @apply text-lg font-semibold text-gray-800 mt-4 mb-1;
+         }
+         .price-card p {
+             @apply text-xl font-bold text-primary mb-4;
+         }
     </style>
 </head>
 <body class="bg-gradient-soft font-sans">
     <!-- Navigation Bar -->
-    <nav class="bg-white shadow-md fixed top-0 w-full z-50">
+    <nav class="bg-white shadow-md sticky top-0 w-full z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
                 <div class="flex items-center">
@@ -292,7 +306,7 @@
                     </div>
                     
                     <a href="#scrap-form" class="btn-primary inline-flex items-center">
-                        Sell Your Scrap
+                        Submit Scrap Details
                         <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
                         </svg>
@@ -306,6 +320,267 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </section>
+
+    <!-- Page Title Section -->
+    <section class="py-12 bg-white">
+        <div class="container mx-auto px-4 lg:px-8 text-center">
+             <h2 class="text-3xl md:text-4xl font-bold text-primary mb-4">Scrap Price Guide</h2>
+             <p class="text-lg text-gray-600 max-w-2xl mx-auto">Indicative prices for common scrap materials. Actual value depends on quality, quantity, and market conditions.</p>
+        </div>
+    </section>
+
+    <!-- Scrap Price List Grid -->
+    <section class="pb-16 bg-white">
+        <div class="container mx-auto px-4 lg:px-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+                
+                <!-- Newspaper -->
+                <div class="price-card bg-white rounded-lg shadow-md overflow-hidden text-center border border-gray-200 transition-all duration-300 ease-in-out hover:scale-105 hover:border-secondary hover:shadow-xl">
+                    <img src="img/newspaper-scrap (1).webp" alt="Newspaper Scrap" class="h-32 w-full object-cover">
+                    <div class="p-4">
+                        <h3>Newspaper</h3>
+                        <p>₹10 / Kg</p>
+                    </div>
+                </div>
+
+                <!-- Books -->
+                <div class="price-card bg-white rounded-lg shadow-md overflow-hidden text-center border border-gray-200 transition-all duration-300 ease-in-out hover:scale-105 hover:border-secondary hover:shadow-xl">
+                    <img src="img/old-books.webp" alt="Books Scrap" class="h-32 w-full object-cover">
+                    <div class="p-4">
+                        <h3>Books</h3>
+                        <p>₹7 / Kg</p>
+                    </div>
+                </div>
+
+                <!-- Plastic (Soft) -->
+                <div class="price-card bg-white rounded-lg shadow-md overflow-hidden text-center border border-gray-200 transition-all duration-300 ease-in-out hover:scale-105 hover:border-secondary hover:shadow-xl">
+                    <img src="img/plastic-scrap.webp" alt="Plastic Scrap" class="h-32 w-full object-cover">
+                    <div class="p-4">
+                        <h3>Plastic (Soft)</h3>
+                        <p>₹7 / Kg</p>
+                    </div>
+                </div>
+                
+                <!-- Plastic (Hard) -->
+                <div class="price-card bg-white rounded-lg shadow-md overflow-hidden text-center border border-gray-200 transition-all duration-300 ease-in-out hover:scale-105 hover:border-secondary hover:shadow-xl">
+                    <img src="img/hard-plastic-scrap.webp" alt="Hard Plastic Scrap" class="h-32 w-full object-cover">
+                    <div class="p-4">
+                        <h3>Plastic (Hard)</h3>
+                        <p>₹2 / Kg</p>
+                    </div>
+                </div>
+
+                <!-- Cardboard -->
+                <div class="price-card bg-white rounded-lg shadow-md overflow-hidden text-center border border-gray-200 transition-all duration-300 ease-in-out hover:scale-105 hover:border-secondary hover:shadow-xl">
+                     <img src="img/cardboard-scrap.webp" alt="Cardboard Scrap" class="h-32 w-full object-cover">
+                     <div class="p-4">
+                        <h3>Cardboard</h3>
+                        <p>₹4 / Kg</p>
+                    </div>
+                </div>
+
+                <!-- Iron -->
+                <div class="price-card bg-white rounded-lg shadow-md overflow-hidden text-center border border-gray-200 transition-all duration-300 ease-in-out hover:scale-105 hover:border-secondary hover:shadow-xl">
+                    <img src="img/iron-scrap.webp" alt="Iron Scrap" class="h-32 w-full object-cover">
+                    <div class="p-4">
+                        <h3>Iron</h3>
+                        <p>₹22 / Kg</p>
+                    </div>
+                </div>
+                
+                <!-- Tin -->
+                 <div class="price-card bg-white rounded-lg shadow-md overflow-hidden text-center border border-gray-200 transition-all duration-300 ease-in-out hover:scale-105 hover:border-secondary hover:shadow-xl">
+                    <img src="img/tin-scrap.webp" alt="Tin Scrap" class="h-32 w-full object-cover">
+                    <div class="p-4">
+                        <h3>Tin</h3>
+                        <p>₹16 / Kg</p>
+                    </div>
+                </div>
+
+                <!-- Copper -->
+                 <div class="price-card bg-white rounded-lg shadow-md overflow-hidden text-center border border-gray-200 transition-all duration-300 ease-in-out hover:scale-105 hover:border-secondary hover:shadow-xl">
+                     <img src="img/copper-scrap.webp" alt="Copper Scrap" class="h-32 w-full object-cover">
+                     <div class="p-4">
+                        <h3>Copper</h3>
+                        <p>₹500 / Kg</p>
+                    </div>
+                </div>
+
+                <!-- Brass -->
+                <div class="price-card bg-white rounded-lg shadow-md overflow-hidden text-center border border-gray-200 transition-all duration-300 ease-in-out hover:scale-105 hover:border-secondary hover:shadow-xl">
+                    <img src="img/brass-scrap.webp" alt="Brass Scrap" class="h-32 w-full object-cover">
+                    <div class="p-4">
+                        <h3>Brass</h3>
+                        <p>₹350 / Kg</p>
+                    </div>
+                </div>
+
+                <!-- Aluminium -->
+                <div class="price-card bg-white rounded-lg shadow-md overflow-hidden text-center border border-gray-200 transition-all duration-300 ease-in-out hover:scale-105 hover:border-secondary hover:shadow-xl">
+                    <img src="img/aluminium-scrap.webp" alt="Aluminium Scrap" class="h-32 w-full object-cover">
+                    <div class="p-4">
+                        <h3>Aluminium</h3>
+                        <p>₹110 / Kg</p>
+                    </div>
+                </div>
+
+                 <!-- Stainless Steel -->
+                 <div class="price-card bg-white rounded-lg shadow-md overflow-hidden text-center border border-gray-200 transition-all duration-300 ease-in-out hover:scale-105 hover:border-secondary hover:shadow-xl">
+                    <img src="img/stainless-steel-scrap.webp" alt="Stainless Steel Scrap" class="h-32 w-full object-cover">
+                    <div class="p-4">
+                        <h3>Stainless Steel</h3>
+                        <p>₹45 / Kg</p>
+                    </div>
+                </div>
+
+                <!-- Battery -->
+                 <div class="price-card bg-white rounded-lg shadow-md overflow-hidden text-center border border-gray-200 transition-all duration-300 ease-in-out hover:scale-105 hover:border-secondary hover:shadow-xl">
+                    <img src="img/battery-scrap.webp" alt="Battery Scrap" class="h-32 w-full object-cover">
+                    <div class="p-4">
+                        <h3>Battery</h3>
+                        <p>₹80 - ₹130 / Kg</p>
+                    </div>
+                </div>
+                
+                <!-- Electrical Wiring -->
+                 <div class="price-card bg-white rounded-lg shadow-md overflow-hidden text-center border border-gray-200 transition-all duration-300 ease-in-out hover:scale-105 hover:border-secondary hover:shadow-xl">
+                    <img src="img/electrical-wiring-scrap.webp" alt="Electrical Wiring Scrap" class="h-32 w-full object-cover">
+                    <div class="p-4">
+                        <h3>Electrical Wiring</h3>
+                        <p>₹100 - ₹300 / Kg</p>
+                    </div>
+                </div>
+                
+                <!-- E-waste (Mixed) -->
+                 <div class="price-card bg-white rounded-lg shadow-md overflow-hidden text-center border border-gray-200 transition-all duration-300 ease-in-out hover:scale-105 hover:border-secondary hover:shadow-xl">
+                    <img src="img/ewaste.webp" alt="E-waste Scrap" class="h-32 w-full object-cover">
+                    <div class="p-4">
+                        <h3>E-waste (Mixed)</h3>
+                        <p>₹20 / Kg</p>
+                    </div>
+                </div>
+                
+                <!-- CPU (Complete) -->
+                 <div class="price-card bg-white rounded-lg shadow-md overflow-hidden text-center border border-gray-200 transition-all duration-300 ease-in-out hover:scale-105 hover:border-secondary hover:shadow-xl">
+                    <img src="img/CPU-scrap.webp" alt="CPU Scrap" class="h-32 w-full object-cover">
+                    <div class="p-4">
+                        <h3>CPU (Complete)</h3>
+                        <p>₹35 / Kg</p>
+                    </div>
+                </div>
+
+                <!-- Laptop -->
+                 <div class="price-card bg-white rounded-lg shadow-md overflow-hidden text-center border border-gray-200 transition-all duration-300 ease-in-out hover:scale-105 hover:border-secondary hover:shadow-xl">
+                     <img src="img/all-in-one-PC.webp" alt="Laptop Scrap" class="h-32 w-full object-cover"> <!-- Using All-in-one PC image -->
+                     <div class="p-4">
+                        <h3>Laptop</h3>
+                        <p>₹200 - ₹8k / Unit</p>
+                    </div>
+                </div>
+                
+                 <!-- Mobile Phone -->
+                 <div class="price-card bg-white rounded-lg shadow-md overflow-hidden text-center border border-gray-200 transition-all duration-300 ease-in-out hover:scale-105 hover:border-secondary hover:shadow-xl">
+                    <img src="img/-mobile-scrap.webp" alt="Mobile Phone Scrap" class="h-32 w-full object-cover">
+                     <div class="p-4">
+                        <h3>Mobile / Tablet</h3>
+                        <p>₹15 - ₹50 / Unit</p>
+                    </div>
+                </div>
+                
+                 <!-- TV (CRT) -->
+                 <div class="price-card bg-white rounded-lg shadow-md overflow-hidden text-center border border-gray-200 transition-all duration-300 ease-in-out hover:scale-105 hover:border-secondary hover:shadow-xl">
+                    <img src="img/old-TV-scrap.webp" alt="CRT TV Scrap" class="h-32 w-full object-cover">
+                     <div class="p-4">
+                        <h3>Television (CRT)</h3>
+                        <p>₹100 - ₹200 / Unit</p>
+                    </div>
+                </div>
+
+                <!-- TV (LCD/LED) -->
+                 <div class="price-card bg-white rounded-lg shadow-md overflow-hidden text-center border border-gray-200 transition-all duration-300 ease-in-out hover:scale-105 hover:border-secondary hover:shadow-xl">
+                    <img src="img/LCD-monitor-scrap.webp" alt="LCD/LED TV Scrap" class="h-32 w-full object-cover">
+                     <div class="p-4">
+                        <h3>TV (LCD/LED)</h3>
+                        <p>₹100 - ₹2k / Unit</p>
+                    </div>
+                </div>
+
+                <!-- Fridge -->
+                 <div class="price-card bg-white rounded-lg shadow-md overflow-hidden text-center border border-gray-200 transition-all duration-300 ease-in-out hover:scale-105 hover:border-secondary hover:shadow-xl">
+                    <img src="img/fridge-scrap.webp" alt="Fridge Scrap" class="h-32 w-full object-cover">
+                     <div class="p-4">
+                        <h3>Fridge</h3>
+                        <p>₹500 - ₹9k / Unit</p>
+                    </div>
+                </div>
+
+                <!-- Washing Machine -->
+                 <div class="price-card bg-white rounded-lg shadow-md overflow-hidden text-center border border-gray-200 transition-all duration-300 ease-in-out hover:scale-105 hover:border-secondary hover:shadow-xl">
+                    <img src="img/scrap_1 (1).jpg" alt="Washing Machine Scrap" class="h-32 w-full object-cover"> <!-- Placeholder -->
+                     <div class="p-4">
+                        <h3>Washing Machine</h3>
+                        <p>₹700 - ₹800 / Unit</p>
+                    </div>
+                </div>
+
+                <!-- AC Unit -->
+                 <div class="price-card bg-white rounded-lg shadow-md overflow-hidden text-center border border-gray-200 transition-all duration-300 ease-in-out hover:scale-105 hover:border-secondary hover:shadow-xl">
+                    <img src="img/split-AC-scrap.webp" alt="AC Scrap" class="h-32 w-full object-cover">
+                     <div class="p-4">
+                        <h3>Air Conditioner</h3>
+                        <p>₹2.5k - ₹4.5k / Unit</p>
+                    </div>
+                </div>
+                
+                <!-- Tyre -->
+                <div class="price-card bg-white rounded-lg shadow-md overflow-hidden text-center border border-gray-200 transition-all duration-300 ease-in-out hover:scale-105 hover:border-secondary hover:shadow-xl">
+                    <img src="img/two-wheeler-scrap.webp" alt="Tyre Scrap" class="h-32 w-full object-cover"> <!-- Using bike img for tyre -->
+                    <div class="p-4">
+                        <h3>Tyre</h3>
+                        <p>₹3 / Kg</p>
+                    </div>
+                </div>
+                
+                 <!-- Two Wheeler -->
+                 <div class="price-card bg-white rounded-lg shadow-md overflow-hidden text-center border border-gray-200 transition-all duration-300 ease-in-out hover:scale-105 hover:border-secondary hover:shadow-xl">
+                    <img src="img/two-wheeler-scrap.webp" alt="Two Wheeler Scrap" class="h-32 w-full object-cover">
+                     <div class="p-4">
+                        <h3>Two Wheeler</h3>
+                        <p>₹800 - ₹3.5k / Unit</p>
+                    </div>
+                </div>
+
+                 <!-- Microwave -->
+                 <div class="price-card bg-white rounded-lg shadow-md overflow-hidden text-center border border-gray-200 transition-all duration-300 ease-in-out hover:scale-105 hover:border-secondary hover:shadow-xl">
+                    <img src="img/microwave-scrap.webp" alt="Microwave Scrap" class="h-32 w-full object-cover">
+                     <div class="p-4">
+                        <h3>Microwave</h3>
+                        <p>₹150 - ₹450 / Unit</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+     <!-- Contact / CTA Section -->
+    <section class="py-16 bg-light">
+        <div class="container mx-auto px-4 lg:px-8 text-center">
+             <div class="inline-block bg-primary/10 rounded-lg p-6 md:p-8 shadow-soft">
+                 <h2 class="text-2xl md:text-3xl font-bold text-primary mb-4">Ready to Sell Your Scrap?</h2>
+                 <p class="text-gray-700 mb-6 max-w-xl mx-auto">If you have any questions or want to arrange a pickup for your scrap materials, please get in touch with our team or contact a dealer directly.</p>
+                <div class="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4">
+                    <a href="tel:+15551234567" class="inline-flex items-center justify-center px-6 py-3 bg-primary text-white rounded-lg font-semibold hover:bg-dark transition shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
+                         <i class="fas fa-phone-alt mr-2"></i> Call Us: +1 (555) 123-4567
+                    </a>
+                     <a href="mailto:info@ecorevive.com" class="inline-flex items-center justify-center px-6 py-3 bg-secondary text-dark rounded-lg font-semibold hover:bg-accent hover:text-white transition shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
+                         <i class="fas fa-envelope mr-2"></i> Email Us: info@ecorevive.com
+                    </a>
+                </div>
+                 <p class="text-sm text-gray-600 mt-6">We support responsible and ethical recycling practices.</p>
+             </div>
         </div>
     </section>
 

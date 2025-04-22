@@ -158,9 +158,9 @@
                     </div>
                 </div>
                 <div class="flex items-center">
-                    <div class="hidden md:flex items-center space-x-3 mr-4">
-                        <a href="login.html" class="px-4 py-2 text-sm font-medium text-primary border border-primary rounded-md hover:bg-primary hover:text-white transition duration-300">Sign In</a>
-                        <a href="login.html?form=signup" class="px-4 py-2 text-sm font-medium text-white bg-primary border border-primary rounded-md hover:bg-dark transition duration-300">Sign Up</a>
+                    <div id="signInUpButtonsDesktop" class="md:flex items-center space-x-3 mr-4">
+                        <a href="login.html" id="signInBtnDesktop" class="px-4 py-2 text-sm font-medium text-primary border border-primary rounded-md hover:bg-primary hover:text-white transition duration-300">Sign In</a>
+                        <a href="login.html?form=signup" id="signUpBtnDesktop" class="px-4 py-2 text-sm font-medium text-white bg-primary border border-primary rounded-md hover:bg-dark transition duration-300">Sign Up</a>
                     </div>
                     <div class="md:hidden ml-2">
                         <button id="mobileMenuBtn" class="text-gray-500 hover:text-primary transition-colors duration-300 p-1 rounded-md hover:bg-gray-100">
@@ -181,9 +181,9 @@
                 <a href="repair.html" class="text-gray-500 hover:text-primary hover:bg-gray-50 block px-3 py-2 rounded-md text-base font-medium transition-colors duration-300 hover:border-l-4 hover:border-primary">Repair</a>
                 <a href="rewards.html" class="text-gray-500 hover:text-primary hover:bg-gray-50 block px-3 py-2 rounded-md text-base font-medium transition-colors duration-300 hover:border-l-4 hover:border-primary">Rewards</a>
                 <!-- Added Sign In / Sign Up Buttons for Mobile -->
-                <div class="mt-4 pt-4 border-t border-gray-200 flex space-x-3 px-3">
-                    <a href="login.html" class="flex-1 text-center px-4 py-2 text-base font-medium text-primary border border-primary rounded-md hover:bg-primary hover:text-white transition duration-300">Sign In</a>
-                    <a href="login.html?form=signup" class="flex-1 text-center px-4 py-2 text-base font-medium text-white bg-primary border border-primary rounded-md hover:bg-dark transition duration-300">Sign Up</a>
+                <div id="signInUpButtonsMobile" class="mt-4 pt-4 border-t border-gray-200 flex space-x-3 px-3">
+                    <a href="login.html" id="signInBtnMobile" class="flex-1 text-center px-4 py-2 text-base font-medium text-primary border border-primary rounded-md hover:bg-primary hover:text-white transition duration-300">Sign In</a>
+                    <a href="login.html?form=signup" id="signUpBtnMobile" class="flex-1 text-center px-4 py-2 text-base font-medium text-white bg-primary border border-primary rounded-md hover:bg-dark transition duration-300">Sign Up</a>
                 </div>
             </div>
         </div>
@@ -444,11 +444,11 @@
     <!-- JavaScript for basic functionality -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+
+    <!-- Mobile Menu Toggling and Carousels -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('DOM Content Loaded - Initializing page');
-            
-            // Mobile menu toggle
+            // Only handle mobile menu toggle
             const mobileMenu = document.getElementById('mobileMenu');
             const mobileMenuBtn = document.getElementById('mobileMenuBtn');
             
@@ -458,9 +458,9 @@
                 });
             }
             
-            // Initialize slick carousels
-            $(document).ready(function() {
-                $('.donation-carousel').slick({
+            // Initialize carousels
+            if (typeof $ !== 'undefined' && typeof $.fn.slick !== 'undefined') {
+                $('.donation-carousel, .scrap-carousel, .repair-carousel, .rewards-carousel').slick({
                     dots: true,
                     arrows: true,
                     autoplay: true,
@@ -468,35 +468,121 @@
                     fade: true,
                     cssEase: 'linear'
                 });
-
-                $('.scrap-carousel').slick({
-                    dots: true,
-                    arrows: true,
-                    autoplay: true,
-                    autoplaySpeed: 4500,
-                    fade: true,
-                    cssEase: 'linear'
-                });
-
-                $('.repair-carousel').slick({
-                    dots: true,
-                    arrows: true,
-                    autoplay: true,
-                    autoplaySpeed: 5000,
-                    fade: true,
-                    cssEase: 'linear'
-                });
-
-                $('.rewards-carousel').slick({
-                    dots: true,
-                    arrows: true,
-                    autoplay: true,
-                    autoplaySpeed: 3500,
-                    fade: true,
-                    cssEase: 'linear'
-                });
-            });
+            }
         });
     </script>
+
+    <!-- Sign In Modal -->
+    <div id="signInModal" class="auth-modal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h2 class="text-2xl font-bold">Sign In</h2>
+                <button class="btn-close">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Success Message -->
+                <div id="signInSuccessMessage" class="success-message">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    <span>Successfully signed in! Redirecting...</span>
+                </div>
+                
+                <form id="signInForm">
+                    <div class="form-group">
+                        <label for="signInEmail" class="form-label">Email Address</label>
+                        <input type="email" id="signInEmail" class="form-input" placeholder="Enter your email">
+                        <p class="form-error" id="signInEmailError">Please enter a valid email address.</p>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="signInPassword" class="form-label">Password</label>
+                        <input type="password" id="signInPassword" class="form-input" placeholder="Enter your password">
+                        <p class="form-error" id="signInPasswordError">Password must be at least is 6 characters.</p>
+                    </div>
+                    
+                    <div class="form-error hidden" id="signInError">Invalid email or password.</div>
+                    
+                    <div class="mb-6">
+                        <button type="submit" class="w-full py-3 bg-primary text-white rounded-lg font-medium hover:bg-dark transition-colors duration-300">
+                            Sign In
+                        </button>
+                    </div>
+                </form>
+                
+                <div class="divider">
+                    <span class="divider-text">OR</span>
+                </div>
+                
+                <p class="text-center text-sm text-gray-600">
+                    Don't have an account? <a id="switchToSignUp" class="toggle-link">Sign Up</a>
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Sign Up Modal -->
+    <div id="signUpModal" class="auth-modal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h2 class="text-2xl font-bold">Sign Up</h2>
+                <button class="btn-close">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Success Message -->
+                <div id="signUpSuccessMessage" class="success-message">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    <span>Account created successfully! Redirecting...</span>
+                </div>
+                
+                <form id="signUpForm">
+                    <div class="form-group">
+                        <label for="signUpEmail" class="form-label">Email Address</label>
+                        <input type="email" id="signUpEmail" class="form-input" placeholder="Enter your email">
+                        <p class="form-error" id="signUpEmailError">Please enter a valid email address.</p>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="signUpPassword" class="form-label">Password</label>
+                        <input type="password" id="signUpPassword" class="form-input" placeholder="Enter your password">
+                        <p class="form-error" id="signUpPasswordError">Password must be at least 6 characters.</p>
+                    </div>
+                    
+                    <div class="form-group checkbox-container">
+                        <input type="checkbox" id="termsCheckbox" class="checkbox">
+                        <label for="termsCheckbox" class="checkbox-label">
+                            I agree to the <a href="#" class="toggle-link">Terms & Conditions</a>
+                        </label>
+                    </div>
+                    
+                    <div class="form-error hidden" id="signUpError">Please fix the errors above.</div>
+                    
+                    <div class="mb-6">
+                        <button type="submit" class="w-full py-3 bg-primary text-white rounded-lg font-medium hover:bg-dark transition-colors duration-300">
+                            Sign Up
+                        </button>
+                    </div>
+                </form>
+                
+                <div class="divider">
+                    <span class="divider-text">OR</span>
+                </div>
+                
+                <p class="text-center text-sm text-gray-600">
+                    Already have an account? <a id="switchToSignIn" class="toggle-link">Sign In</a>
+                </p>
+            </div>
+        </div>
+    </div>
 </body>
 </html> 
